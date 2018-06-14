@@ -1,3 +1,6 @@
 redis-4.0.10/*
 node_modules/*
 package-lock.json
+*~
+#*#
+appendonly.aof

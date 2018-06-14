@@ -1,0 +1,280 @@
+.pool {
+    display: grid;
+    /* grid-area: pool; */
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 4px;
+    margin: 24px;
+  }
+
+  .list-wrapper {
+    /* grid-area: list; */
+    display: grid;
+    grid-template-areas: "left center right";
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  #left {
+    grid-area: left;
+    /* background-color: red; */
+  }
+  #right {
+    grid-area: right;
+    /* background-color: blue; */
+  }
+  #center {
+    grid-area: center;
+    /* background-color: yellow; */
+  }
+  .list {
+    /* grid-area: list; */
+    margin: 8px;
+    padding: 8px;
+    /*border: 2px solid #696f9b;*/
+  }
+
+  #bot {
+    padding: 32px;
+    border: 5px solid var(--brick);
+    /* border-style: solid double solid double; */
+
+  }
+/*define colors as in https://stackoverflow.com/questions/1875852/how-can-i-define-colors-as-variables-in-css */
+/*pallet from http://colorbrewer2.org/#type=qualitative&scheme=Set3&n=12 */
+   :root {
+     --teal:#8dd3c7;
+     --lght_yellow:#ffed6f;
+     --violet:#bebada;
+     --brick:#fb8072;
+     --blue:#80b1d3;
+     --orange:#fdb462;
+     --green:#b3de69;
+     --pink:#fccde5;
+     --gray:#d9d9d9;
+     --purple:#bc80bd;
+     --mint#ccebc5;
+     --yellow#ffed6f;
+ }
+  .object {
+    /*background-color: #4ABDAC;*/
+    background-color: var(--teal);
+    padding: 12px;
+    margin: 8px;
+    color: #ffffff;
+    text-align: center;
+    font-size: 100%;
+    font-weight: normal;
+    font-family:sans-serif;
+    box-shadow: 5px 10px 10px #a1a1a1;
+    border: 1px solid;
+    border-color: var(--teal);
+  }
+
+  tr#head th:nth-child(1) {background-color: var(--teal);}
+  tr#head th:nth-child(2) {background-color: var(--teal);}
+  tr#head th:nth-child(3) {
+      background-color: var(--teal);
+      width:200px}
+  tr#head th:nth-child(4){background-color: var(--lght_yellow);}
+  tr#head th:nth-child(5){background-color: var(--violet);}
+  tr#head th:nth-child(6){background-color: var(--brick);}
+  tr#head th:nth-child(7){background-color: var(--blue);}
+  tr#head th:nth-child(8){background-color: var(--orange);}
+  tr#head th:nth-child(9){background-color: var(--green);}
+  tr#head th:nth-child(10){background-color: var(--pink);}
+  tr#head th:nth-child(11){background-color: var(--gray);}
+  tr#head th:nth-child(12){background-color: var(--purple);}
+  tr#head th:nth-child(13){background-color: var(--lght_yellow);}
+  tr#head th:nth-child(14){background-color: var(--violet);}
+  tr#head th:nth-child(15){background-color: var(--brick);}
+  tr#head th:nth-child(16){background-color: var(--blue);}
+  tr#head th:nth-child(17){background-color: var(--orange);}
+  tr#head th:nth-child(18){background-color: var(--green);}
+  tr#head th:nth-child(19){background-color: var(--pink);}
+  tr#head th:nth-child(20){background-color: var(--gray);}
+  tr#head th:nth-child(21){background-color: var(--purple);}
+  tr#head th:nth-child(22){background-color: var(--lght_yellow);}
+  tr#head th:nth-child(23){background-color: var(--violet);}
+  tr#head th:nth-child(24){background-color: var(--brick);}
+  tr#head th:nth-child(25){background-color: var(--blue);}
+  tr#head th:nth-child(26){background-color: var(--orange);}
+ 
+  .bar-chart-bar{
+      min-width:200px;
+}
+  .object:hover {
+    border: 1px solid;
+    border-color: white;
+
+  }
+
+  .noSelect {
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: move;
+  }
+
+  .submit{
+      background-color: var(--brick);
+  }
+  .scrollingDragInner {
+    max-height: 80vh;
+    /*max-width: 200px;    */
+    overflow-y: auto;
+  }
+
+  .box {
+    margin: 16px;
+    padding: 8px;
+    border: 4px solid var(--brick);
+    -moz-border-radius: 4px;
+	  -webkit-border-radius: 4px;
+  }
+
+  .viewBackround {
+    margin: 0px 16px 16px;
+    background-color: #e1e1e1;
+	  font-weight: bold;
+	  padding: 8px;
+	  -moz-border-radius: 5px;
+	  -webkit-border-radius: 5px;
+  }
+
+  .ghost {
+    opacity: .5;
+  }
+
+    .footer {
+      background:#181818;
+      text-align: center;
+      font-size: 120%;
+      color:#E3F2F4;
+    }
+
+
+    .page-header h1 {
+      padding: 0px 60px 0px;
+      color: white;
+      font-size: 40px;
+      margin: 0;
+      display: inline-block;
+    }
+
+    .page-header{
+      background-color: #2980B9;
+    }
+
+    .middleNav {
+      margin: 2px 0px;
+      padding-right: 405px;
+      position: absolute;
+      margin-left: auto;
+      margin-right: auto;
+      right: 0;
+    }
+
+    #build-container {
+      display: grid;
+      grid-template-areas:
+        "build-top build-top"
+        "build-left build-right";
+      grid-template-columns: 3fr 2fr;
+    }
+
+    #build-left {
+      grid-area: build-left;
+    }
+
+    #build-right {
+      grid-area: build-right;
+    }
+
+    .build-pool-header {
+      grid-area: build-top;
+      background-color: var(--teal);
+      min-height: 160px;
+      padding: 16px;
+    }
+
+    .build-list-header {
+      min-height: 82px;
+      padding: 16px;
+    }
+
+    /* Pairwise content */
+    .pairwise {
+      display: grid;
+      grid-template-areas: "_ high low";
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    .high {
+      grid-area: high;
+      padding: 8px;
+    }
+    .low {
+      grid-area: low;
+      padding: 8px;
+    }
+    /* .pw-wrapper {
+      display: grid;
+      grid-template-areas: "_ pwl  pwl"
+                           "_ more more";
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    } */
+    .pwx {
+      display: grid;
+      grid-template-areas: "pw x";
+      grid-template-columns: 1fr 56px;
+      grid-gap: 0 16px;
+      margin: 16px;
+    }
+    .pw {
+      grid-area: pw;
+      display: grid;
+      grid-template-areas: "high low";
+      grid-template-columns: 1fr 1fr;
+      border: 5px solid var(--brick);
+      /* margin: 16px; */
+    }
+    .x {
+      grid-area: x;
+      display: none;
+      margin: auto;
+    }
+    .pwx:hover .x {
+      /* background-color: blue; */
+      display: inline-block;
+    }
+    #more {
+      grid-area: more;
+      /* padding: 12px; */
+      margin-bottom: 48px;
+      background-color: var(--brick);
+    }
+
+    .lcb {
+      height: 60vh;
+    }
+    .ccb {
+      height: 19vh;
+    }
+
+    #build-method .active {
+      background: var(--brick);
+      color: #fff;
+      text-align: center;
+    }
+
+.data-pool-popover table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.data-pool-popover td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
