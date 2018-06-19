@@ -1,0 +1,2072 @@
+[
+  {
+    "Title": "Princeton University",
+    "City": "Princeton",
+    "State": "NJ",
+    "USNews Rank": 1,
+    "In State Tuition": 47140,
+    "Out of State Tuition": 47140,
+    "Enrollment": 5400
+  },
+  {
+    "Title": "Harvard University",
+    "City": "Cambridge",
+    "State": "MA",
+    "USNews Rank": 2,
+    "In State Tuition": 48949,
+    "Out of State Tuition": 48949,
+    "Enrollment": 6710
+  },
+  {
+    "Title": "University of Chicago",
+    "City": "Chicago",
+    "State": "IL",
+    "USNews Rank": 3,
+    "In State Tuition": 54825,
+    "Out of State Tuition": 54825,
+    "Enrollment": 5941
+  },
+  {
+    "Title": "Yale University",
+    "City": "New Haven",
+    "State": "CT",
+    "USNews Rank": 3,
+    "In State Tuition": 51400,
+    "Out of State Tuition": 51400,
+    "Enrollment": 5472
+  },
+  {
+    "Title": "Columbia University",
+    "City": "New York",
+    "State": "NY",
+    "USNews Rank": 5,
+    "In State Tuition": 57208,
+    "Out of State Tuition": 57208,
+    "Enrollment": 6113
+  },
+  {
+    "Title": "Massachusetts Institute of Technology",
+    "City": "Cambridge",
+    "State": "MA",
+    "USNews Rank": 5,
+    "In State Tuition": 49892,
+    "Out of State Tuition": 49892,
+    "Enrollment": 4524
+  },
+  {
+    "Title": "Stanford University",
+    "City": "Stanford",
+    "State": "CA",
+    "USNews Rank": 5,
+    "In State Tuition": 49617,
+    "Out of State Tuition": 49617,
+    "Enrollment": 7034
+  },
+  {
+    "Title": "University of Pennsylvania",
+    "City": "Philadelphia",
+    "State": "PA",
+    "USNews Rank": 8,
+    "In State Tuition": 53534,
+    "Out of State Tuition": 53534,
+    "Enrollment": 10019
+  },
+  {
+    "Title": "Duke University",
+    "City": "Durham",
+    "State": "NC",
+    "USNews Rank": 9,
+    "In State Tuition": 53744,
+    "Out of State Tuition": 53744,
+    "Enrollment": 6609
+  },
+  {
+    "Title": "California Institute of Technology",
+    "City": "Pasadena",
+    "State": "CA",
+    "USNews Rank": 10,
+    "In State Tuition": 49908,
+    "Out of State Tuition": 49908,
+    "Enrollment": 979
+  },
+  {
+    "Title": "Dartmouth College",
+    "City": "Hanover",
+    "State": "NH",
+    "USNews Rank": 11,
+    "In State Tuition": 52950,
+    "Out of State Tuition": 52950,
+    "Enrollment": 4310
+  },
+  {
+    "Title": "Johns Hopkins University",
+    "City": "Baltimore",
+    "State": "MD",
+    "USNews Rank": 11,
+    "In State Tuition": 52170,
+    "Out of State Tuition": 52170,
+    "Enrollment": 6117
+  },
+  {
+    "Title": "Northwestern University",
+    "City": "Evanston",
+    "State": "IL",
+    "USNews Rank": 11,
+    "In State Tuition": 52678,
+    "Out of State Tuition": 52678,
+    "Enrollment": 8353
+  },
+  {
+    "Title": "Brown University",
+    "City": "Providence",
+    "State": "RI",
+    "USNews Rank": 14,
+    "In State Tuition": 53419,
+    "Out of State Tuition": 53419,
+    "Enrollment": 6926
+  },
+  {
+    "Title": "Cornell University",
+    "City": "Ithaca",
+    "State": "NY",
+    "USNews Rank": 14,
+    "In State Tuition": 52853,
+    "Out of State Tuition": 52853,
+    "Enrollment": 14566
+  },
+  {
+    "Title": "Rice University",
+    "City": "Houston",
+    "State": "TX",
+    "USNews Rank": 14,
+    "In State Tuition": 45608,
+    "Out of State Tuition": 45608,
+    "Enrollment": 3893
+  },
+  {
+    "Title": "Vanderbilt University",
+    "City": "Nashville",
+    "State": "TN",
+    "USNews Rank": 14,
+    "In State Tuition": 47664,
+    "Out of State Tuition": 47664,
+    "Enrollment": 6871
+  },
+  {
+    "Title": "University of Notre Dame",
+    "City": "Notre Dame",
+    "State": "IN",
+    "USNews Rank": 18,
+    "In State Tuition": 51505,
+    "Out of State Tuition": 51505,
+    "Enrollment": 8530
+  },
+  {
+    "Title": "Washington University in St. Louis",
+    "City": "St. Louis",
+    "State": "MO",
+    "USNews Rank": 18,
+    "In State Tuition": 51533,
+    "Out of State Tuition": 51533,
+    "Enrollment": 7540
+  },
+  {
+    "Title": "Georgetown University",
+    "City": "Washington",
+    "State": "DC",
+    "USNews Rank": 20,
+    "In State Tuition": 52300,
+    "Out of State Tuition": 52300,
+    "Enrollment": 7453
+  },
+  {
+    "Title": "Emory University",
+    "City": "Atlanta",
+    "State": "GA",
+    "USNews Rank": 21,
+    "In State Tuition": 49392,
+    "Out of State Tuition": 49392,
+    "Enrollment": 6861
+  },
+  {
+    "Title": "University of Southern California",
+    "City": "Los Angeles",
+    "State": "CA",
+    "USNews Rank": 21,
+    "In State Tuition": 54259,
+    "Out of State Tuition": 54259,
+    "Enrollment": 18794
+  },
+  {
+    "Title": "Carnegie Mellon University",
+    "City": "Pittsburgh",
+    "State": "PA",
+    "USNews Rank": 25,
+    "In State Tuition": 53910,
+    "Out of State Tuition": 53910,
+    "Enrollment": 6673
+  },
+  {
+    "Title": "Wake Forest University",
+    "City": "Winston-Salem",
+    "State": "NC",
+    "USNews Rank": 27,
+    "In State Tuition": 51400,
+    "Out of State Tuition": 51400,
+    "Enrollment": 4955
+  },
+  {
+    "Title": "Tufts University",
+    "City": "Medford",
+    "State": "MA",
+    "USNews Rank": 29,
+    "In State Tuition": 54318,
+    "Out of State Tuition": 54318,
+    "Enrollment": 5508
+  },
+  {
+    "Title": "New York University",
+    "City": "New York",
+    "State": "NY",
+    "USNews Rank": 30,
+    "In State Tuition": 50464,
+    "Out of State Tuition": 50464,
+    "Enrollment": 26135
+  },
+  {
+    "Title": "Boston College",
+    "City": "Chestnut Hill",
+    "State": "MA",
+    "USNews Rank": 32,
+    "In State Tuition": 53346,
+    "Out of State Tuition": 53346,
+    "Enrollment": 9309
+  },
+  {
+    "Title": "Brandeis University",
+    "City": "Waltham",
+    "State": "MA",
+    "USNews Rank": 34,
+    "In State Tuition": 53582,
+    "Out of State Tuition": 53582,
+    "Enrollment": 3608
+  },
+  {
+    "Title": "University of Rochester",
+    "City": "Rochester",
+    "State": "NY",
+    "USNews Rank": 34,
+    "In State Tuition": 52020,
+    "Out of State Tuition": 52020,
+    "Enrollment": 6386
+  },
+  {
+    "Title": "Boston University",
+    "City": "Boston",
+    "State": "MA",
+    "USNews Rank": 37,
+    "In State Tuition": 52082,
+    "Out of State Tuition": 52082,
+    "Enrollment": 17944
+  },
+  {
+    "Title": "Case Western Reserve University",
+    "City": "Cleveland",
+    "State": "OH",
+    "USNews Rank": 37,
+    "In State Tuition": 47500,
+    "Out of State Tuition": 47500,
+    "Enrollment": 5152
+  },
+  {
+    "Title": "Northeastern University",
+    "City": "Boston",
+    "State": "MA",
+    "USNews Rank": 40,
+    "In State Tuition": 49497,
+    "Out of State Tuition": 49497,
+    "Enrollment": 13473
+  },
+  {
+    "Title": "Tulane University",
+    "City": "New Orleans",
+    "State": "LA",
+    "USNews Rank": 40,
+    "In State Tuition": 52960,
+    "Out of State Tuition": 52960,
+    "Enrollment": 6377
+  },
+  {
+    "Title": "Rensselaer Polytechnic Institute",
+    "City": "Troy",
+    "State": "NY",
+    "USNews Rank": 42,
+    "In State Tuition": 52305,
+    "Out of State Tuition": 52305,
+    "Enrollment": 6265
+  },
+  {
+    "Title": "Lehigh University",
+    "City": "Bethlehem",
+    "State": "PA",
+    "USNews Rank": 46,
+    "In State Tuition": 50740,
+    "Out of State Tuition": 50740,
+    "Enrollment": 5080
+  },
+  {
+    "Title": "Pepperdine University",
+    "City": "Malibu",
+    "State": "CA",
+    "USNews Rank": 46,
+    "In State Tuition": 51992,
+    "Out of State Tuition": 51992,
+    "Enrollment": 3542
+  },
+  {
+    "Title": "University of Miami",
+    "City": "Coral Gables",
+    "State": "FL",
+    "USNews Rank": 46,
+    "In State Tuition": 48484,
+    "Out of State Tuition": 48484,
+    "Enrollment": 10849
+  },
+  {
+    "Title": "Villanova University",
+    "City": "Villanova",
+    "State": "PA",
+    "USNews Rank": 46,
+    "In State Tuition": 51434,
+    "Out of State Tuition": 51434,
+    "Enrollment": 6999
+  },
+  {
+    "Title": "George Washington University",
+    "City": "Washington",
+    "State": "DC",
+    "USNews Rank": 56,
+    "In State Tuition": 53518,
+    "Out of State Tuition": 53518,
+    "Enrollment": 11504
+  },
+  {
+    "Title": "Brigham Young University--Provo",
+    "City": "Provo",
+    "State": "UT",
+    "USNews Rank": 61,
+    "In State Tuition": 5460,
+    "Out of State Tuition": 5460,
+    "Enrollment": 30979
+  },
+  {
+    "Title": "Fordham University",
+    "City": "New York",
+    "State": "NY",
+    "USNews Rank": 61,
+    "In State Tuition": 50601,
+    "Out of State Tuition": 50601,
+    "Enrollment": 9258
+  },
+  {
+    "Title": "Southern Methodist University",
+    "City": "Dallas",
+    "State": "TX",
+    "USNews Rank": 61,
+    "In State Tuition": 52498,
+    "Out of State Tuition": 52498,
+    "Enrollment": 6521
+  },
+  {
+    "Title": "Syracuse University",
+    "City": "Syracuse",
+    "State": "NY",
+    "USNews Rank": 61,
+    "In State Tuition": 46755,
+    "Out of State Tuition": 46755,
+    "Enrollment": 15218
+  },
+  {
+    "Title": "Worcester Polytechnic Institute",
+    "City": "Worcester",
+    "State": "MA",
+    "USNews Rank": 61,
+    "In State Tuition": 48628,
+    "Out of State Tuition": 48628,
+    "Enrollment": 4432
+  },
+  {
+    "Title": "American University",
+    "City": "Washington",
+    "State": "DC",
+    "USNews Rank": 69,
+    "In State Tuition": 46615,
+    "Out of State Tuition": 46615,
+    "Enrollment": 7901
+  },
+  {
+    "Title": "Stevens Institute of Technology",
+    "City": "Hoboken",
+    "State": "NJ",
+    "USNews Rank": 69,
+    "In State Tuition": 50554,
+    "Out of State Tuition": 50554,
+    "Enrollment": 3021
+  },
+  {
+    "Title": "Baylor University",
+    "City": "Waco",
+    "State": "TX",
+    "USNews Rank": 75,
+    "In State Tuition": 43790,
+    "Out of State Tuition": 43790,
+    "Enrollment": 14348
+  },
+  {
+    "Title": "Texas Christian University",
+    "City": "Fort Worth",
+    "State": "TX",
+    "USNews Rank": 78,
+    "In State Tuition": 44760,
+    "Out of State Tuition": 44760,
+    "Enrollment": 8891
+  },
+  {
+    "Title": "Clark University",
+    "City": "Worcester",
+    "State": "MA",
+    "USNews Rank": 81,
+    "In State Tuition": 44400,
+    "Out of State Tuition": 44400,
+    "Enrollment": 2289
+  },
+  {
+    "Title": "University of Denver",
+    "City": "Denver",
+    "State": "CO",
+    "USNews Rank": 87,
+    "In State Tuition": 48669,
+    "Out of State Tuition": 48669,
+    "Enrollment": 5754
+  },
+  {
+    "Title": "University of Tulsa",
+    "City": "Tulsa",
+    "State": "OK",
+    "USNews Rank": 87,
+    "In State Tuition": 39502,
+    "Out of State Tuition": 39502,
+    "Enrollment": 3406
+  },
+  {
+    "Title": "Marquette University",
+    "City": "Milwaukee",
+    "State": "WI",
+    "USNews Rank": 90,
+    "In State Tuition": 39900,
+    "Out of State Tuition": 39900,
+    "Enrollment": 8238
+  },
+  {
+    "Title": "University of San Diego",
+    "City": "San Diego",
+    "State": "CA",
+    "USNews Rank": 90,
+    "In State Tuition": 47708,
+    "Out of State Tuition": 47708,
+    "Enrollment": 5711
+  },
+  {
+    "Title": "Drexel University",
+    "City": "Philadelphia",
+    "State": "PA",
+    "USNews Rank": 94,
+    "In State Tuition": 52002,
+    "Out of State Tuition": 52002,
+    "Enrollment": 13251
+  },
+  {
+    "Title": "Saint Louis University",
+    "City": "St. Louis",
+    "State": "MO",
+    "USNews Rank": 94,
+    "In State Tuition": 42166,
+    "Out of State Tuition": 42166,
+    "Enrollment": 7454
+  },
+  {
+    "Title": "Yeshiva University",
+    "City": "New York",
+    "State": "NY",
+    "USNews Rank": 94,
+    "In State Tuition": 42000,
+    "Out of State Tuition": 42000,
+    "Enrollment": 2714
+  },
+  {
+    "Title": "Rochester Institute of Technology",
+    "City": "Rochester",
+    "State": "NY",
+    "USNews Rank": 97,
+    "In State Tuition": 40068,
+    "Out of State Tuition": 40068,
+    "Enrollment": 12410
+  },
+  {
+    "Title": "Illinois Institute of Technology",
+    "City": "Chicago",
+    "State": "IL",
+    "USNews Rank": 103,
+    "In State Tuition": 45864,
+    "Out of State Tuition": 45864,
+    "Enrollment": 2944
+  },
+  {
+    "Title": "Loyola University Chicago",
+    "City": "Chicago",
+    "State": "IL",
+    "USNews Rank": 103,
+    "In State Tuition": 42828,
+    "Out of State Tuition": 42828,
+    "Enrollment": 11129
+  },
+  {
+    "Title": "Howard University",
+    "City": "Washington",
+    "State": "DC",
+    "USNews Rank": 110,
+    "In State Tuition": 25697,
+    "Out of State Tuition": 25697,
+    "Enrollment": 5899
+  },
+  {
+    "Title": "University of San Francisco",
+    "City": "San Francisco",
+    "State": "CA",
+    "USNews Rank": 110,
+    "In State Tuition": 46250,
+    "Out of State Tuition": 46250,
+    "Enrollment": 6745
+  },
+  {
+    "Title": "University of the Pacific",
+    "City": "Stockton",
+    "State": "CA",
+    "USNews Rank": 110,
+    "In State Tuition": 46346,
+    "Out of State Tuition": 46346,
+    "Enrollment": 3483
+  },
+  {
+    "Title": "University of St. Thomas",
+    "City": "St. Paul",
+    "State": "MN",
+    "USNews Rank": 115,
+    "In State Tuition": 41133,
+    "Out of State Tuition": 41133,
+    "Enrollment": 6111
+  },
+  {
+    "Title": "The Catholic University of America",
+    "City": "Washington",
+    "State": "DC",
+    "USNews Rank": 120,
+    "In State Tuition": 44060,
+    "Out of State Tuition": 44060,
+    "Enrollment": 3241
+  },
+  {
+    "Title": "DePaul University",
+    "City": "Chicago",
+    "State": "IL",
+    "USNews Rank": 120,
+    "In State Tuition": 39010,
+    "Out of State Tuition": 39010,
+    "Enrollment": 15407
+  },
+  {
+    "Title": "Duquesne University",
+    "City": "Pittsburgh",
+    "State": "PA",
+    "USNews Rank": 120,
+    "In State Tuition": 36394,
+    "Out of State Tuition": 36394,
+    "Enrollment": 6039
+  },
+  {
+    "Title": "Clarkson University",
+    "City": "Potsdam",
+    "State": "NY",
+    "USNews Rank": 124,
+    "In State Tuition": 47950,
+    "Out of State Tuition": 47950,
+    "Enrollment": 3268
+  },
+  {
+    "Title": "Seton Hall University",
+    "City": "South Orange",
+    "State": "NJ",
+    "USNews Rank": 124,
+    "In State Tuition": 40588,
+    "Out of State Tuition": 40588,
+    "Enrollment": 5956
+  },
+  {
+    "Title": "University of Dayton",
+    "City": "Dayton",
+    "State": "OH",
+    "USNews Rank": 124,
+    "In State Tuition": 41750,
+    "Out of State Tuition": 41750,
+    "Enrollment": 8330
+  },
+  {
+    "Title": "Hofstra University",
+    "City": "Hempstead",
+    "State": "NY",
+    "USNews Rank": 132,
+    "In State Tuition": 43960,
+    "Out of State Tuition": 43960,
+    "Enrollment": 6899
+  },
+  {
+    "Title": "Mercer University",
+    "City": "Macon",
+    "State": "GA",
+    "USNews Rank": 133,
+    "In State Tuition": 36000,
+    "Out of State Tuition": 36000,
+    "Enrollment": 4706
+  },
+  {
+    "Title": "The New School",
+    "City": "New York",
+    "State": "NY",
+    "USNews Rank": 133,
+    "In State Tuition": 47330,
+    "Out of State Tuition": 47330,
+    "Enrollment": 7014
+  },
+  {
+    "Title": "St. John Fisher College",
+    "City": "Rochester",
+    "State": "NY",
+    "USNews Rank": 145,
+    "In State Tuition": 33120,
+    "Out of State Tuition": 33120,
+    "Enrollment": 2786
+  },
+  {
+    "Title": "Adelphi University",
+    "City": "Garden City",
+    "State": "NY",
+    "USNews Rank": 151,
+    "In State Tuition": 37170,
+    "Out of State Tuition": 37170,
+    "Enrollment": 5205
+  },
+  {
+    "Title": "Florida Institute of Technology",
+    "City": "Melbourne",
+    "State": "FL",
+    "USNews Rank": 151,
+    "In State Tuition": 41240,
+    "Out of State Tuition": 41240,
+    "Enrollment": 3629
+  },
+  {
+    "Title": "Seattle Pacific University",
+    "City": "Seattle",
+    "State": "WA",
+    "USNews Rank": 151,
+    "In State Tuition": 40893,
+    "Out of State Tuition": 40893,
+    "Enrollment": 3095
+  },
+  {
+    "Title": "Biola University",
+    "City": "La Mirada",
+    "State": "CA",
+    "USNews Rank": 159,
+    "In State Tuition": 38448,
+    "Out of State Tuition": 38448,
+    "Enrollment": 4091
+  },
+  {
+    "Title": "University of La Verne",
+    "City": "La Verne",
+    "State": "CA",
+    "USNews Rank": 159,
+    "In State Tuition": 41450,
+    "Out of State Tuition": 41450,
+    "Enrollment": 2809
+  },
+  {
+    "Title": "Immaculata University",
+    "City": "Immaculata",
+    "State": "PA",
+    "USNews Rank": 165,
+    "In State Tuition": 27350,
+    "Out of State Tuition": 27350,
+    "Enrollment": 1555
+  },
+  {
+    "Title": "Maryville University of St. Louis",
+    "City": "St Louis",
+    "State": "MO",
+    "USNews Rank": 165,
+    "In State Tuition": 28470,
+    "Out of State Tuition": 28470,
+    "Enrollment": 2967
+  },
+  {
+    "Title": "St. John's University",
+    "City": "Queens",
+    "State": "NY",
+    "USNews Rank": 165,
+    "In State Tuition": 40790,
+    "Out of State Tuition": 40790,
+    "Enrollment": 16440
+  },
+  {
+    "Title": "Robert Morris University",
+    "City": "Moon Township",
+    "State": "PA",
+    "USNews Rank": 176,
+    "In State Tuition": 29420,
+    "Out of State Tuition": 29420,
+    "Enrollment": 4384
+  },
+  {
+    "Title": "Union University",
+    "City": "Jackson",
+    "State": "TN",
+    "USNews Rank": 176,
+    "In State Tuition": 31580,
+    "Out of State Tuition": 31580,
+    "Enrollment": 2214
+  },
+  {
+    "Title": "University of Hartford",
+    "City": "West Hartford",
+    "State": "CT",
+    "USNews Rank": 176,
+    "In State Tuition": 38910,
+    "Out of State Tuition": 38910,
+    "Enrollment": 5150
+  },
+  {
+    "Title": "Edgewood College",
+    "City": "Madison",
+    "State": "WI",
+    "USNews Rank": 181,
+    "In State Tuition": 28500,
+    "Out of State Tuition": 28500,
+    "Enrollment": 1661
+  },
+  {
+    "Title": "Lesley University",
+    "City": "Cambridge",
+    "State": "MA",
+    "USNews Rank": 181,
+    "In State Tuition": 26550,
+    "Out of State Tuition": 26550,
+    "Enrollment": 1929
+  },
+  {
+    "Title": "Lipscomb University",
+    "City": "Nashville",
+    "State": "TN",
+    "USNews Rank": 181,
+    "In State Tuition": 30932,
+    "Out of State Tuition": 30932,
+    "Enrollment": 2986
+  },
+  {
+    "Title": "Suffolk University",
+    "City": "Boston",
+    "State": "MA",
+    "USNews Rank": 181,
+    "In State Tuition": 37270,
+    "Out of State Tuition": 37270,
+    "Enrollment": 5290
+  },
+  {
+    "Title": "Azusa Pacific University",
+    "City": "Azusa",
+    "State": "CA",
+    "USNews Rank": 187,
+    "In State Tuition": 36120,
+    "Out of State Tuition": 36120,
+    "Enrollment": 5770
+  },
+  {
+    "Title": "Pace University",
+    "City": "New York",
+    "State": "NY",
+    "USNews Rank": 187,
+    "In State Tuition": 44036,
+    "Out of State Tuition": 44036,
+    "Enrollment": 8914
+  },
+  {
+    "Title": "Andrews University",
+    "City": "Berrien Springs",
+    "State": "MI",
+    "USNews Rank": 192,
+    "In State Tuition": 28436,
+    "Out of State Tuition": 28436,
+    "Enrollment": 1688
+  },
+  {
+    "Title": "Widener University",
+    "City": "Chester",
+    "State": "PA",
+    "USNews Rank": 192,
+    "In State Tuition": 44166,
+    "Out of State Tuition": 44166,
+    "Enrollment": 3591
+  },
+  {
+    "Title": "Nova Southeastern University",
+    "City": "Ft. Lauderdale",
+    "State": "FL",
+    "USNews Rank": 198,
+    "In State Tuition": 29940,
+    "Out of State Tuition": 29940,
+    "Enrollment": 4295
+  },
+  {
+    "Title": "Dallas Baptist University",
+    "City": "Dallas",
+    "State": "TX",
+    "USNews Rank": 202,
+    "In State Tuition": 27480,
+    "Out of State Tuition": 27480,
+    "Enrollment": 3223
+  },
+  {
+    "Title": "Ashland University",
+    "City": "Ashland",
+    "State": "OH",
+    "USNews Rank": 223,
+    "In State Tuition": 20700,
+    "Out of State Tuition": 20700,
+    "Enrollment": 4536
+  },
+  {
+    "Title": "Benedictine University",
+    "City": "Lisle",
+    "State": "IL",
+    "USNews Rank": 223,
+    "In State Tuition": 33900,
+    "Out of State Tuition": 33900,
+    "Enrollment": 3171
+  },
+  {
+    "Title": "Gardner-Webb University",
+    "City": "Boiling Springs",
+    "State": "NC",
+    "USNews Rank": 223,
+    "In State Tuition": 30740,
+    "Out of State Tuition": 30740,
+    "Enrollment": 2362
+  },
+  {
+    "Title": "Shenandoah University",
+    "City": "Winchester",
+    "State": "VA",
+    "USNews Rank": 223,
+    "In State Tuition": 31920,
+    "Out of State Tuition": 31920,
+    "Enrollment": 2099
+  },
+  {
+    "Title": "University of California--Berkeley",
+    "City": "Berkeley",
+    "State": "CA",
+    "USNews Rank": 21,
+    "In State Tuition": 42112,
+    "Out of State Tuition": 14098,
+    "Enrollment": 29311
+  },
+  {
+    "Title": "University of California--Los Angeles",
+    "City": "Los Angeles",
+    "State": "CA",
+    "USNews Rank": 21,
+    "In State Tuition": 41270,
+    "Out of State Tuition": 13256,
+    "Enrollment": 30873
+  },
+  {
+    "Title": "University of Virginia",
+    "City": "Charlottesville",
+    "State": "VA",
+    "USNews Rank": 25,
+    "In State Tuition": 46975,
+    "Out of State Tuition": 16146,
+    "Enrollment": 16331
+  },
+  {
+    "Title": "University of Michigan--Ann Arbor",
+    "City": "Ann Arbor",
+    "State": "MI",
+    "USNews Rank": 28,
+    "In State Tuition": 47476,
+    "Out of State Tuition": 14826,
+    "Enrollment": 28983
+  },
+  {
+    "Title": "University of North Carolina--Chapel Hill",
+    "City": "Chapel Hill",
+    "State": "NC",
+    "USNews Rank": 30,
+    "In State Tuition": 34588,
+    "Out of State Tuition": 9005,
+    "Enrollment": 18523
+  },
+  {
+    "Title": "College of William and Mary",
+    "City": "Williamsburg",
+    "State": "VA",
+    "USNews Rank": 32,
+    "In State Tuition": 43099,
+    "Out of State Tuition": 20287,
+    "Enrollment": 6276
+  },
+  {
+    "Title": "Georgia Institute of Technology",
+    "City": "Atlanta",
+    "State": "GA",
+    "USNews Rank": 34,
+    "In State Tuition": 33014,
+    "Out of State Tuition": 12418,
+    "Enrollment": 15489
+  },
+  {
+    "Title": "University of California--Santa Barbara",
+    "City": "Santa Barbara",
+    "State": "CA",
+    "USNews Rank": 37,
+    "In State Tuition": 42423,
+    "Out of State Tuition": 14409,
+    "Enrollment": 21574
+  },
+  {
+    "Title": "University of California--Irvine",
+    "City": "Irvine",
+    "State": "CA",
+    "USNews Rank": 42,
+    "In State Tuition": 43530,
+    "Out of State Tuition": 15516,
+    "Enrollment": 27331
+  },
+  {
+    "Title": "University of California--San Diego",
+    "City": "La Jolla",
+    "State": "CA",
+    "USNews Rank": 42,
+    "In State Tuition": 44197,
+    "Out of State Tuition": 16183,
+    "Enrollment": 28127
+  },
+  {
+    "Title": "University of Florida",
+    "City": "Gainesville",
+    "State": "FL",
+    "USNews Rank": 42,
+    "In State Tuition": 28658,
+    "Out of State Tuition": 6381,
+    "Enrollment": 34554
+  },
+  {
+    "Title": "University of California--Davis",
+    "City": "Davis",
+    "State": "CA",
+    "USNews Rank": 46,
+    "In State Tuition": 42396,
+    "Out of State Tuition": 14382,
+    "Enrollment": 29546
+  },
+  {
+    "Title": "University of Wisconsin--Madison",
+    "City": "Madison",
+    "State": "WI",
+    "USNews Rank": 46,
+    "In State Tuition": 34782,
+    "Out of State Tuition": 10533,
+    "Enrollment": 31710
+  },
+  {
+    "Title": "Pennsylvania State University--University Park",
+    "City": "University Park",
+    "State": "PA",
+    "USNews Rank": 52,
+    "In State Tuition": 33664,
+    "Out of State Tuition": 18436,
+    "Enrollment": 41359
+  },
+  {
+    "Title": "University of Illinois--Urbana-Champaign",
+    "City": "Champaign",
+    "State": "IL",
+    "USNews Rank": 52,
+    "In State Tuition": 31988,
+    "Out of State Tuition": 15868,
+    "Enrollment": 33932
+  },
+  {
+    "Title": "Ohio State University--Columbus",
+    "City": "Columbus",
+    "State": "OH",
+    "USNews Rank": 54,
+    "In State Tuition": 29659,
+    "Out of State Tuition": 10591,
+    "Enrollment": 45831
+  },
+  {
+    "Title": "University of Georgia",
+    "City": "Athens",
+    "State": "GA",
+    "USNews Rank": 54,
+    "In State Tuition": 30392,
+    "Out of State Tuition": 11818,
+    "Enrollment": 27951
+  },
+  {
+    "Title": "Purdue University--West Lafayette",
+    "City": "West Lafayette",
+    "State": "IN",
+    "USNews Rank": 56,
+    "In State Tuition": 28804,
+    "Out of State Tuition": 10002,
+    "Enrollment": 30043
+  },
+  {
+    "Title": "University of Connecticut",
+    "City": "Storrs",
+    "State": "CT",
+    "USNews Rank": 56,
+    "In State Tuition": 36948,
+    "Out of State Tuition": 14880,
+    "Enrollment": 19324
+  },
+  {
+    "Title": "University of Texas--Austin",
+    "City": "Austin",
+    "State": "TX",
+    "USNews Rank": 56,
+    "In State Tuition": 35766,
+    "Out of State Tuition": 10136,
+    "Enrollment": 40168
+  },
+  {
+    "Title": "University of Washington",
+    "City": "Seattle",
+    "State": "WA",
+    "USNews Rank": 56,
+    "In State Tuition": 35538,
+    "Out of State Tuition": 10974,
+    "Enrollment": 30933
+  },
+  {
+    "Title": "University of Maryland--College Park",
+    "City": "College Park",
+    "State": "MD",
+    "USNews Rank": 61,
+    "In State Tuition": 33606,
+    "Out of State Tuition": 10399,
+    "Enrollment": 28472
+  },
+  {
+    "Title": "Clemson University",
+    "City": "Clemson",
+    "State": "SC",
+    "USNews Rank": 67,
+    "In State Tuition": 35654,
+    "Out of State Tuition": 14712,
+    "Enrollment": 18599
+  },
+  {
+    "Title": "University of Pittsburgh",
+    "City": "Pittsburgh",
+    "State": "PA",
+    "USNews Rank": 68,
+    "In State Tuition": 30642,
+    "Out of State Tuition": 19080,
+    "Enrollment": 19123
+  },
+  {
+    "Title": "Rutgers University--New Brunswick",
+    "City": "Piscataway",
+    "State": "NJ",
+    "USNews Rank": 69,
+    "In State Tuition": 30023,
+    "Out of State Tuition": 14372,
+    "Enrollment": 36168
+  },
+  {
+    "Title": "Texas A and M University--College Station",
+    "City": "College Station",
+    "State": "TX",
+    "USNews Rank": 69,
+    "In State Tuition": 30208,
+    "Out of State Tuition": 10030,
+    "Enrollment": 50735
+  },
+  {
+    "Title": "University of Minnesota--Twin Cities",
+    "City": "Minneapolis",
+    "State": "MN",
+    "USNews Rank": 69,
+    "In State Tuition": 26603,
+    "Out of State Tuition": 14417,
+    "Enrollment": 34871
+  },
+  {
+    "Title": "Virginia Tech",
+    "City": "Blacksburg",
+    "State": "VA",
+    "USNews Rank": 69,
+    "In State Tuition": 29371,
+    "Out of State Tuition": 12852,
+    "Enrollment": 25791
+  },
+  {
+    "Title": "Colorado School of Mines",
+    "City": "Golden",
+    "State": "CO",
+    "USNews Rank": 75,
+    "In State Tuition": 37436,
+    "Out of State Tuition": 18386,
+    "Enrollment": 4612
+  },
+  {
+    "Title": "University of Massachusetts--Amherst",
+    "City": "Amherst",
+    "State": "MA",
+    "USNews Rank": 75,
+    "In State Tuition": 33662,
+    "Out of State Tuition": 15596,
+    "Enrollment": 23373
+  },
+  {
+    "Title": "Miami University--Oxford",
+    "City": "Oxford",
+    "State": "OH",
+    "USNews Rank": 78,
+    "In State Tuition": 32768,
+    "Out of State Tuition": 14578,
+    "Enrollment": 16981
+  },
+  {
+    "Title": "University of Iowa",
+    "City": "Iowa City",
+    "State": "IA",
+    "USNews Rank": 78,
+    "In State Tuition": 28813,
+    "Out of State Tuition": 8575,
+    "Enrollment": 24476
+  },
+  {
+    "Title": "Florida State University",
+    "City": "Tallahassee",
+    "State": "FL",
+    "USNews Rank": 81,
+    "In State Tuition": 21673,
+    "Out of State Tuition": 6507,
+    "Enrollment": 32929
+  },
+  {
+    "Title": "Michigan State University",
+    "City": "East Lansing",
+    "State": "MI",
+    "USNews Rank": 81,
+    "In State Tuition": 39405,
+    "Out of State Tuition": 14460,
+    "Enrollment": 39090
+  },
+  {
+    "Title": "North Carolina State University--Raleigh",
+    "City": "Raleigh",
+    "State": "NC",
+    "USNews Rank": 81,
+    "In State Tuition": 27406,
+    "Out of State Tuition": 9058,
+    "Enrollment": 23847
+  },
+  {
+    "Title": "University of California--Santa Cruz",
+    "City": "Santa Cruz",
+    "State": "CA",
+    "USNews Rank": 81,
+    "In State Tuition": 42042,
+    "Out of State Tuition": 14028,
+    "Enrollment": 16962
+  },
+  {
+    "Title": "University of Delaware",
+    "City": "Newark",
+    "State": "DE",
+    "USNews Rank": 81,
+    "In State Tuition": 32250,
+    "Out of State Tuition": 12830,
+    "Enrollment": 18374
+  },
+  {
+    "Title": "Binghamton University--SUNY",
+    "City": "Binghamton",
+    "State": "NY",
+    "USNews Rank": 87,
+    "In State Tuition": 24403,
+    "Out of State Tuition": 9523,
+    "Enrollment": 13632
+  },
+  {
+    "Title": "Indiana University--Bloomington",
+    "City": "Bloomington",
+    "State": "IN",
+    "USNews Rank": 90,
+    "In State Tuition": 34845,
+    "Out of State Tuition": 10533,
+    "Enrollment": 39184
+  },
+  {
+    "Title": "University of Colorado--Boulder",
+    "City": "Boulder",
+    "State": "CO",
+    "USNews Rank": 90,
+    "In State Tuition": 35079,
+    "Out of State Tuition": 11531,
+    "Enrollment": 27846
+  },
+  {
+    "Title": "Stony Brook University--SUNY",
+    "City": "Stony Brook",
+    "State": "NY",
+    "USNews Rank": 97,
+    "In State Tuition": 26297,
+    "Out of State Tuition": 9257,
+    "Enrollment": 17026
+  },
+  {
+    "Title": "SUNY College of Environmental Science and Forestry",
+    "City": "Syracuse",
+    "State": "NY",
+    "USNews Rank": 97,
+    "In State Tuition": 18090,
+    "Out of State Tuition": 8240,
+    "Enrollment": 1755
+  },
+  {
+    "Title": "University at Buffalo--SUNY",
+    "City": "Buffalo",
+    "State": "NY",
+    "USNews Rank": 97,
+    "In State Tuition": 26270,
+    "Out of State Tuition": 9770,
+    "Enrollment": 20411
+  },
+  {
+    "Title": "University of Oklahoma",
+    "City": "Norman",
+    "State": "OK",
+    "USNews Rank": 97,
+    "In State Tuition": 24443,
+    "Out of State Tuition": 9062,
+    "Enrollment": 22436
+  },
+  {
+    "Title": "University of Vermont",
+    "City": "Burlington",
+    "State": "VT",
+    "USNews Rank": 97,
+    "In State Tuition": 41356,
+    "Out of State Tuition": 17740,
+    "Enrollment": 11159
+  },
+  {
+    "Title": "Auburn University",
+    "City": "Auburn",
+    "State": "AL",
+    "USNews Rank": 103,
+    "In State Tuition": 29640,
+    "Out of State Tuition": 10968,
+    "Enrollment": 22658
+  },
+  {
+    "Title": "University of New Hampshire",
+    "City": "Durham",
+    "State": "NH",
+    "USNews Rank": 103,
+    "In State Tuition": 32637,
+    "Out of State Tuition": 18067,
+    "Enrollment": 12871
+  },
+  {
+    "Title": "University of Oregon",
+    "City": "Eugene",
+    "State": "OR",
+    "USNews Rank": 103,
+    "In State Tuition": 34611,
+    "Out of State Tuition": 11571,
+    "Enrollment": 20049
+  },
+  {
+    "Title": "University of South Carolina",
+    "City": "Columbia",
+    "State": "SC",
+    "USNews Rank": 103,
+    "In State Tuition": 32362,
+    "Out of State Tuition": 12262,
+    "Enrollment": 25556
+  },
+  {
+    "Title": "University of Tennessee",
+    "City": "Knoxville",
+    "State": "TN",
+    "USNews Rank": 103,
+    "In State Tuition": 31160,
+    "Out of State Tuition": 12970,
+    "Enrollment": 22139
+  },
+  {
+    "Title": "University of Alabama",
+    "City": "Tuscaloosa",
+    "State": "AL",
+    "USNews Rank": 110,
+    "In State Tuition": 28100,
+    "Out of State Tuition": 10780,
+    "Enrollment": 32563
+  },
+  {
+    "Title": "University of Utah",
+    "City": "Salt Lake City",
+    "State": "UT",
+    "USNews Rank": 110,
+    "In State Tuition": 26408,
+    "Out of State Tuition": 9166,
+    "Enrollment": 23789
+  },
+  {
+    "Title": "Arizona State University--Tempe",
+    "City": "Tempe",
+    "State": "AZ",
+    "USNews Rank": 115,
+    "In State Tuition": 27372,
+    "Out of State Tuition": 10792,
+    "Enrollment": 42477
+  },
+  {
+    "Title": "Iowa State University",
+    "City": "Ames",
+    "State": "IA",
+    "USNews Rank": 115,
+    "In State Tuition": 22256,
+    "Out of State Tuition": 8420,
+    "Enrollment": 30671
+  },
+  {
+    "Title": "Temple University",
+    "City": "Philadelphia",
+    "State": "PA",
+    "USNews Rank": 115,
+    "In State Tuition": 27266,
+    "Out of State Tuition": 16274,
+    "Enrollment": 29275
+  },
+  {
+    "Title": "University of Kansas",
+    "City": "Lawrence",
+    "State": "KS",
+    "USNews Rank": 115,
+    "In State Tuition": 26592,
+    "Out of State Tuition": 10824,
+    "Enrollment": 19262
+  },
+  {
+    "Title": "University of Missouri",
+    "City": "Columbia",
+    "State": "MO",
+    "USNews Rank": 120,
+    "In State Tuition": 26506,
+    "Out of State Tuition": 9817,
+    "Enrollment": 25898
+  },
+  {
+    "Title": "Colorado State University",
+    "City": "Fort Collins",
+    "State": "CO",
+    "USNews Rank": 124,
+    "In State Tuition": 29140,
+    "Out of State Tuition": 11632,
+    "Enrollment": 25177
+  },
+  {
+    "Title": "Michigan Technological University",
+    "City": "Houghton",
+    "State": "MI",
+    "USNews Rank": 124,
+    "In State Tuition": 32318,
+    "Out of State Tuition": 15074,
+    "Enrollment": 5829
+  },
+  {
+    "Title": "University of Arizona",
+    "City": "Tucson",
+    "State": "AZ",
+    "USNews Rank": 124,
+    "In State Tuition": 32449,
+    "Out of State Tuition": 11644,
+    "Enrollment": 34072
+  },
+  {
+    "Title": "University of California--Riverside",
+    "City": "Riverside",
+    "State": "CA",
+    "USNews Rank": 124,
+    "In State Tuition": 41931,
+    "Out of State Tuition": 13917,
+    "Enrollment": 19799
+  },
+  {
+    "Title": "University of Nebraska--Lincoln",
+    "City": "Lincoln",
+    "State": "NE",
+    "USNews Rank": 124,
+    "In State Tuition": 23256,
+    "Out of State Tuition": 8690,
+    "Enrollment": 20833
+  },
+  {
+    "Title": "Louisiana State University--Baton Rouge",
+    "City": "Baton Rouge",
+    "State": "LA",
+    "USNews Rank": 133,
+    "In State Tuition": 28051,
+    "Out of State Tuition": 11374,
+    "Enrollment": 26118
+  },
+  {
+    "Title": "Rutgers University--Newark",
+    "City": "Newark",
+    "State": "NJ",
+    "USNews Rank": 133,
+    "In State Tuition": 29480,
+    "Out of State Tuition": 13829,
+    "Enrollment": 8170
+  },
+  {
+    "Title": "University of Arkansas",
+    "City": "Fayetteville",
+    "State": "AR",
+    "USNews Rank": 133,
+    "In State Tuition": 24308,
+    "Out of State Tuition": 9062,
+    "Enrollment": 22548
+  },
+  {
+    "Title": "University of Cincinnati",
+    "City": "Cincinnati",
+    "State": "OH",
+    "USNews Rank": 133,
+    "In State Tuition": 26334,
+    "Out of State Tuition": 11000,
+    "Enrollment": 25860
+  },
+  {
+    "Title": "University of Kentucky",
+    "City": "Lexington",
+    "State": "KY",
+    "USNews Rank": 133,
+    "In State Tuition": 28046,
+    "Out of State Tuition": 11922,
+    "Enrollment": 22621
+  },
+  {
+    "Title": "George Mason University",
+    "City": "Fairfax",
+    "State": "VA",
+    "USNews Rank": 140,
+    "In State Tuition": 34370,
+    "Out of State Tuition": 11924,
+    "Enrollment": 23812
+  },
+  {
+    "Title": "New Jersey Institute of Technology",
+    "City": "Newark",
+    "State": "NJ",
+    "USNews Rank": 140,
+    "In State Tuition": 31034,
+    "Out of State Tuition": 16430,
+    "Enrollment": 8211
+  },
+  {
+    "Title": "San Diego State University",
+    "City": "San Diego",
+    "State": "CA",
+    "USNews Rank": 140,
+    "In State Tuition": 19340,
+    "Out of State Tuition": 7460,
+    "Enrollment": 29853
+  },
+  {
+    "Title": "University of South Florida",
+    "City": "Tampa",
+    "State": "FL",
+    "USNews Rank": 140,
+    "In State Tuition": 17324,
+    "Out of State Tuition": 6410,
+    "Enrollment": 31461
+  },
+  {
+    "Title": "Washington State University",
+    "City": "Pullman",
+    "State": "WA",
+    "USNews Rank": 140,
+    "In State Tuition": 25817,
+    "Out of State Tuition": 11391,
+    "Enrollment": 24904
+  },
+  {
+    "Title": "Kansas State University",
+    "City": "Manhattan",
+    "State": "KS",
+    "USNews Rank": 145,
+    "In State Tuition": 24775,
+    "Out of State Tuition": 9874,
+    "Enrollment": 19472
+  },
+  {
+    "Title": "Oregon State University",
+    "City": "Corvallis",
+    "State": "OR",
+    "USNews Rank": 145,
+    "In State Tuition": 29457,
+    "Out of State Tuition": 10797,
+    "Enrollment": 25327
+  },
+  {
+    "Title": "University of Illinois--Chicago",
+    "City": "Chicago",
+    "State": "IL",
+    "USNews Rank": 145,
+    "In State Tuition": 27672,
+    "Out of State Tuition": 14816,
+    "Enrollment": 17959
+  },
+  {
+    "Title": "University of Mississippi",
+    "City": "University",
+    "State": "MS",
+    "USNews Rank": 145,
+    "In State Tuition": 23554,
+    "Out of State Tuition": 8290,
+    "Enrollment": 19213
+  },
+  {
+    "Title": "University of Texas--Dallas",
+    "City": "Richardson",
+    "State": "TX",
+    "USNews Rank": 145,
+    "In State Tuition": 33654,
+    "Out of State Tuition": 12162,
+    "Enrollment": 17350
+  },
+  {
+    "Title": "Ohio University",
+    "City": "Athens",
+    "State": "OH",
+    "USNews Rank": 151,
+    "In State Tuition": 21360,
+    "Out of State Tuition": 11896,
+    "Enrollment": 23788
+  },
+  {
+    "Title": "University at Albany--SUNY",
+    "City": "Albany",
+    "State": "NY",
+    "USNews Rank": 151,
+    "In State Tuition": 24358,
+    "Out of State Tuition": 9278,
+    "Enrollment": 13139
+  },
+  {
+    "Title": "Oklahoma State University",
+    "City": "Stillwater",
+    "State": "OK",
+    "USNews Rank": 156,
+    "In State Tuition": 23776,
+    "Out of State Tuition": 8738,
+    "Enrollment": 21093
+  },
+  {
+    "Title": "University of Massachusetts--Lowell",
+    "City": "Lowell",
+    "State": "MA",
+    "USNews Rank": 156,
+    "In State Tuition": 31865,
+    "Out of State Tuition": 14800,
+    "Enrollment": 13639
+  },
+  {
+    "Title": "University of Rhode Island",
+    "City": "Kingston",
+    "State": "RI",
+    "USNews Rank": 156,
+    "In State Tuition": 28874,
+    "Out of State Tuition": 12884,
+    "Enrollment": 14801
+  },
+  {
+    "Title": "Illinois State University",
+    "City": "Normal",
+    "State": "IL",
+    "USNews Rank": 159,
+    "In State Tuition": 25168,
+    "Out of State Tuition": 14061,
+    "Enrollment": 18643
+  },
+  {
+    "Title": "University of Alabama--Birmingham",
+    "City": "Birmingham",
+    "State": "AL",
+    "USNews Rank": 159,
+    "In State Tuition": 23790,
+    "Out of State Tuition": 10410,
+    "Enrollment": 12369
+  },
+  {
+    "Title": "University of Hawaii--Manoa",
+    "City": "Honolulu",
+    "State": "HI",
+    "USNews Rank": 159,
+    "In State Tuition": 33764,
+    "Out of State Tuition": 11732,
+    "Enrollment": 13132
+  },
+  {
+    "Title": "University of Maryland--Baltimore County",
+    "City": "Baltimore",
+    "State": "MD",
+    "USNews Rank": 159,
+    "In State Tuition": 25654,
+    "Out of State Tuition": 11518,
+    "Enrollment": 11142
+  },
+  {
+    "Title": "Missouri University of Science and Technology",
+    "City": "Rolla",
+    "State": "MO",
+    "USNews Rank": 165,
+    "In State Tuition": 27701,
+    "Out of State Tuition": 9628,
+    "Enrollment": 6909
+  },
+  {
+    "Title": "University of California--Merced",
+    "City": "Merced",
+    "State": "CA",
+    "USNews Rank": 165,
+    "In State Tuition": 41612,
+    "Out of State Tuition": 13598,
+    "Enrollment": 6815
+  },
+  {
+    "Title": "University of Louisville",
+    "City": "Louisville",
+    "State": "KY",
+    "USNews Rank": 165,
+    "In State Tuition": 26286,
+    "Out of State Tuition": 11264,
+    "Enrollment": 15827
+  },
+  {
+    "Title": "Mississippi State University",
+    "City": "Mississippi State",
+    "State": "MS",
+    "USNews Rank": 171,
+    "In State Tuition": 22358,
+    "Out of State Tuition": 8138,
+    "Enrollment": 18090
+  },
+  {
+    "Title": "Rowan University",
+    "City": "Glassboro",
+    "State": "NJ",
+    "USNews Rank": 171,
+    "In State Tuition": 21378,
+    "Out of State Tuition": 13108,
+    "Enrollment": 14344
+  },
+  {
+    "Title": "University of Central Florida",
+    "City": "Orlando",
+    "State": "FL",
+    "USNews Rank": 171,
+    "In State Tuition": 22467,
+    "Out of State Tuition": 6368,
+    "Enrollment": 55776
+  },
+  {
+    "Title": "University of Idaho",
+    "City": "Moscow",
+    "State": "ID",
+    "USNews Rank": 171,
+    "In State Tuition": 23812,
+    "Out of State Tuition": 7488,
+    "Enrollment": 9586
+  },
+  {
+    "Title": "Virginia Commonwealth University",
+    "City": "Richmond",
+    "State": "VA",
+    "USNews Rank": 171,
+    "In State Tuition": 32942,
+    "Out of State Tuition": 13570,
+    "Enrollment": 24212
+  },
+  {
+    "Title": "Kent State University",
+    "City": "Kent",
+    "State": "OH",
+    "USNews Rank": 176,
+    "In State Tuition": 18376,
+    "Out of State Tuition": 10012,
+    "Enrollment": 23684
+  },
+  {
+    "Title": "Texas Tech University",
+    "City": "Lubbock",
+    "State": "TX",
+    "USNews Rank": 176,
+    "In State Tuition": 23011,
+    "Out of State Tuition": 10771,
+    "Enrollment": 29963
+  },
+  {
+    "Title": "University of Maine",
+    "City": "Orono",
+    "State": "ME",
+    "USNews Rank": 181,
+    "In State Tuition": 30282,
+    "Out of State Tuition": 10902,
+    "Enrollment": 9323
+  },
+  {
+    "Title": "University of Wyoming",
+    "City": "Laramie",
+    "State": "WY",
+    "USNews Rank": 181,
+    "In State Tuition": 16827,
+    "Out of State Tuition": 5217,
+    "Enrollment": 9788
+  },
+  {
+    "Title": "Ball State University",
+    "City": "Muncie",
+    "State": "IN",
+    "USNews Rank": 187,
+    "In State Tuition": 25938,
+    "Out of State Tuition": 9848,
+    "Enrollment": 17011
+  },
+  {
+    "Title": "Montclair State University",
+    "City": "Montclair",
+    "State": "NJ",
+    "USNews Rank": 187,
+    "In State Tuition": 20566,
+    "Out of State Tuition": 12454,
+    "Enrollment": 16810
+  },
+  {
+    "Title": "West Virginia University",
+    "City": "Morgantown",
+    "State": "WV",
+    "USNews Rank": 187,
+    "In State Tuition": 23616,
+    "Out of State Tuition": 8376,
+    "Enrollment": 22350
+  },
+  {
+    "Title": "Indiana University-Purdue University--Indianapolis",
+    "City": "Indianapolis",
+    "State": "IN",
+    "USNews Rank": 192,
+    "In State Tuition": 29806,
+    "Out of State Tuition": 9334,
+    "Enrollment": 21748
+  },
+  {
+    "Title": "University of Houston",
+    "City": "Houston",
+    "State": "TX",
+    "USNews Rank": 192,
+    "In State Tuition": 27337,
+    "Out of State Tuition": 11887,
+    "Enrollment": 35871
+  },
+  {
+    "Title": "University of New Mexico",
+    "City": "Albuquerque",
+    "State": "NM",
+    "USNews Rank": 192,
+    "In State Tuition": 22412,
+    "Out of State Tuition": 7150,
+    "Enrollment": 20215
+  },
+  {
+    "Title": "University of North Dakota",
+    "City": "Grand Forks",
+    "State": "ND",
+    "USNews Rank": 192,
+    "In State Tuition": 21462,
+    "Out of State Tuition": 9862,
+    "Enrollment": 11255
+  },
+  {
+    "Title": "New Mexico State University",
+    "City": "Las Cruces",
+    "State": "NM",
+    "USNews Rank": 198,
+    "In State Tuition": 22701,
+    "Out of State Tuition": 7122,
+    "Enrollment": 12027
+  },
+  {
+    "Title": "North Dakota State University",
+    "City": "Fargo",
+    "State": "ND",
+    "USNews Rank": 198,
+    "In State Tuition": 20571,
+    "Out of State Tuition": 9409,
+    "Enrollment": 12010
+  },
+  {
+    "Title": "University of North Carolina--Charlotte",
+    "City": "Charlotte",
+    "State": "NC",
+    "USNews Rank": 198,
+    "In State Tuition": 20268,
+    "Out of State Tuition": 6834,
+    "Enrollment": 23404
+  },
+  {
+    "Title": "Bowling Green State University",
+    "City": "Bowling Green",
+    "State": "OH",
+    "USNews Rank": 202,
+    "In State Tuition": 18593,
+    "Out of State Tuition": 11057,
+    "Enrollment": 14852
+  },
+  {
+    "Title": "California State University--Fullerton",
+    "City": "Fullerton",
+    "State": "CA",
+    "USNews Rank": 202,
+    "In State Tuition": 17460,
+    "Out of State Tuition": 6850,
+    "Enrollment": 34576
+  },
+  {
+    "Title": "University of Massachusetts--Boston",
+    "City": "Boston",
+    "State": "MA",
+    "USNews Rank": 202,
+    "In State Tuition": 32985,
+    "Out of State Tuition": 13828,
+    "Enrollment": 12847
+  },
+  {
+    "Title": "University of Nevada--Reno",
+    "City": "Reno",
+    "State": "NV",
+    "USNews Rank": 202,
+    "In State Tuition": 21787,
+    "Out of State Tuition": 7599,
+    "Enrollment": 18191
+  },
+  {
+    "Title": "Central Michigan University",
+    "City": "Mount Pleasant",
+    "State": "MI",
+    "USNews Rank": 207,
+    "In State Tuition": 23670,
+    "Out of State Tuition": 12510,
+    "Enrollment": 19923
+  },
+  {
+    "Title": "East Carolina University",
+    "City": "Greenville",
+    "State": "NC",
+    "USNews Rank": 207,
+    "In State Tuition": 23420,
+    "Out of State Tuition": 7143,
+    "Enrollment": 22969
+  },
+  {
+    "Title": "Florida A and M University",
+    "City": "Tallahassee",
+    "State": "FL",
+    "USNews Rank": 207,
+    "In State Tuition": 17725,
+    "Out of State Tuition": 5785,
+    "Enrollment": 7769
+  },
+  {
+    "Title": "Montana State University",
+    "City": "Bozeman",
+    "State": "MT",
+    "USNews Rank": 207,
+    "In State Tuition": 23042,
+    "Out of State Tuition": 7031,
+    "Enrollment": 14400
+  },
+  {
+    "Title": "University of Alaska--Fairbanks",
+    "City": "Fairbanks",
+    "State": "AK",
+    "USNews Rank": 207,
+    "In State Tuition": 23534,
+    "Out of State Tuition": 8144,
+    "Enrollment": 7239
+  },
+  {
+    "Title": "University of Colorado--Denver",
+    "City": "Denver",
+    "State": "CO",
+    "USNews Rank": 207,
+    "In State Tuition": 31209,
+    "Out of State Tuition": 11019,
+    "Enrollment": 14622
+  },
+  {
+    "Title": "University of Massachusetts--Dartmouth",
+    "City": "North Dartmouth",
+    "State": "MA",
+    "USNews Rank": 207,
+    "In State Tuition": 28285,
+    "Out of State Tuition": 13571,
+    "Enrollment": 6999
+  },
+  {
+    "Title": "University of Montana",
+    "City": "Missoula",
+    "State": "MT",
+    "USNews Rank": 207,
+    "In State Tuition": 24943,
+    "Out of State Tuition": 7063,
+    "Enrollment": 10077
+  },
+  {
+    "Title": "Western Michigan University",
+    "City": "Kalamazoo",
+    "State": "MI",
+    "USNews Rank": 207,
+    "In State Tuition": 14699,
+    "Out of State Tuition": 11943,
+    "Enrollment": 18313
+  },
+  {
+    "Title": "Florida International University",
+    "City": "Miami",
+    "State": "FL",
+    "USNews Rank": 216,
+    "In State Tuition": 18956,
+    "Out of State Tuition": 6558,
+    "Enrollment": 45813
+  },
+  {
+    "Title": "Louisiana Tech University",
+    "City": "Ruston",
+    "State": "LA",
+    "USNews Rank": 216,
+    "In State Tuition": 18438,
+    "Out of State Tuition": 9525,
+    "Enrollment": 11281
+  },
+  {
+    "Title": "South Dakota State University",
+    "City": "Brookings",
+    "State": "SD",
+    "USNews Rank": 216,
+    "In State Tuition": 11403,
+    "Out of State Tuition": 8172,
+    "Enrollment": 10959
+  },
+  {
+    "Title": "Southern Illinois University--Carbondale",
+    "City": "Carbondale",
+    "State": "IL",
+    "USNews Rank": 216,
+    "In State Tuition": 13936,
+    "Out of State Tuition": 13936,
+    "Enrollment": 12182
+  },
+  {
+    "Title": "University of Alabama--Huntsville",
+    "City": "Huntsville",
+    "State": "AL",
+    "USNews Rank": 216,
+    "In State Tuition": 21480,
+    "Out of State Tuition": 10280,
+    "Enrollment": 6507
+  },
+  {
+    "Title": "University of Missouri--Kansas City",
+    "City": "Kansas City",
+    "State": "MO",
+    "USNews Rank": 216,
+    "In State Tuition": 25999,
+    "Out of State Tuition": 9734,
+    "Enrollment": 11708
+  },
+  {
+    "Title": "Utah State University",
+    "City": "Logan",
+    "State": "UT",
+    "USNews Rank": 216,
+    "In State Tuition": 20726,
+    "Out of State Tuition": 7174,
+    "Enrollment": 24838
+  },
+  {
+    "Title": "California State University--Fresno",
+    "City": "Fresno",
+    "State": "CA",
+    "USNews Rank": 223,
+    "In State Tuition": 17929,
+    "Out of State Tuition": 6583,
+    "Enrollment": 21528
+  },
+  {
+    "Title": "Georgia State University",
+    "City": "Atlanta",
+    "State": "GA",
+    "USNews Rank": 223,
+    "In State Tuition": 29432,
+    "Out of State Tuition": 10858,
+    "Enrollment": 25455
+  },
+  {
+    "Title": "University of South Dakota",
+    "City": "Vermillion",
+    "State": "SD",
+    "USNews Rank": 223,
+    "In State Tuition": 11688,
+    "Out of State Tuition": 8457,
+    "Enrollment": 7500
+  },
+  {
+    "Title": "Wayne State University",
+    "City": "Detroit",
+    "State": "MI",
+    "USNews Rank": 223,
+    "In State Tuition": 28590,
+    "Out of State Tuition": 13278,
+    "Enrollment": 17280
+  }
+ ]

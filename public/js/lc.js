@@ -1,114 +1,24 @@
-<style>
-  #build-method {
-    grid-area: header;
-    display: flex;
-    width: 100%;
-    margin: 18px 0 0 0;
-    justify-content: space-around;
-    background-color: #f3f3f3ff
-    /* background-color: #d9d9d9ff; */
-  }
-    .legend-label {
-    grid-area: legend;
-    margin: 16px;
-    padding: 50px 10px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-    #build-method .active {
-    width: 200%;
-  }
-</style>
-
- <div id="build-container">
-    <div class="build-pool-header">
-      <div style="float: left; width: 60%;">
-        <!-- Dataset name header -->
-        <h1 style="position:relative; right:5px" class="title">
-          <b>
-            Build: {{ dataset_name |replace("_", " ") }}
-          </b>
-          <br>
-        </h1>
-      </div>
-      <div class = "graphArea" style="float: left; width: 40%;">
-        <!-- <p style="float: right; color: white; font-size: 20px; margin-right: 50px;"><b>Impact of Attributes on Dataset Ranking</b></p> -->
-        <p id="p1" style="float: right; color: white; font-size: 20px; margin-right: 50px;"><b></b></p>
-        <div id="chart" style="display: block; float: right; height: 25%; width: 75%"></div>
-      </div>
-
-    </div>
-
-    <!-- this is the left side of the build view -->
-    <div id="build-left">
-
-      <div id="border">
-        <div class="navbar-form navbar-center" role="search">
-          <input type="search" id="search-criteria" class="form-control" placeholder="Search by names..." onkeyup="searchDataset(event)">
-          <button type="button" class="semi-transparent-button btn " id="sort" onclick="sortDataset()">Sort</button>
-          <button type="button" class="semi-transparent-button btn " id="shuffle" onclick="shuffleDataset()">Shuffle</button>
-        </div>
-
-
-        <!-- this is the pool -->
-        <div class="scrollingDragInner viewBackround">
-          <div id="top" class="pool">
-            <!-- objects from dataset inserted here -->
-            <div tabindex="0" id="{{x}}" class="object noSelect pop" data-toggle="popover">{{x}}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ****************************************************************************** -->
-    <!-- this is the right side of the build view -->
-    <div id="build-right">
-      <br><br>
-      <div id="lc-wrapper-grid">
-
-        <!-- this is the header -->
-        <ul id="build-method">
-          <li><a id="lc" class="active">List</a></li>
-          <li><a style="color: #777;" id="cc">Categorical</a></li>
-          <li><a style="color: #777;" id="pwc">Pairwise</a></li>
-        </ul>
-
-        <div class="legend-label">
-          <div>HIGH <i class="fas fa-arrow-up"></i></div>
-          <div>LOW  <i class="fas fa-arrow-down"></i></div>
-        </div>
-        <!-- this is the lists -->
-        <div id="lc-list">
-          <div class="scrollingDragInner box">
-            <div id="lc-center" class="list lcb" style="height: 60vh"></div>
-          </div>
-          <div class="progress">
-            <div id="bar" class="progress-bar progress-bar-striped active" role="progressbar"
-            aria-valuenow="1" aria-valuemin="1" aria-valuemax="101" style="width:1%; margin-bottom:30px;">
-            <span>0% Confidence</span>
-          </div>
-        </div>
-        <button type="button" id="lc-submit" class="btn submit" disabled="disabled">RANK!</button>
-        <br><br><br>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<script type="text/javascript" src="js/barChart.js"></script>
-<script type="text/javascript" src="js/load.js"></script>
-
-<!-- this are the global variables -->
-<!--<script>
 var confidence = 0
 var weights = 0
 var counter = 0
 var tooltipCounter = 0
 
+    function parseData(raw) {
+      return JSON.parse(raw.substring(1, raw.length - 1))
+    }
+    
+    function findObject (objectTitle) {
+      var raw = '{{data|tojson}}'
+      var data = parseData(raw)
+      for (var i=0; i<data.length; i++) {
+        obj = data[i]
+        if (obj.Title === objectTitle) {
+          return obj
+        }
+      }
+    }
+
+const dataset = getDataset()
 const source = document.querySelector('#top')
 const target = document.querySelector('#lc-center')
 
@@ -163,19 +73,9 @@ function handleMore() {
   const pwl = document.querySelector('#pwl')
   const html = `<div class="pw"><div class="high list"></div><div class="low list"></div></div>`
   pwl.innerHTML += html
-  // const highs = document.querySelectorAll('.high')
-  // const high = highs[highs.length-1]
-  add_to_sortable('.high')
   add_to_sortable('.low')
 }
 
-</script>
-
-
--->
-
-<!-- List Comparison Related Scripts -->
-<!-- <script>
 
 var min_num_of_objects = 2
 
@@ -220,10 +120,12 @@ function lc_urlUpdate() {
 function nameToId(name) {
   if (name !== undefined) {
     var i = 0
+    {% for x in dataset %}
     if ('{{ x }}' == name) {
       return i
     }
     i++
+    {% endfor %}
   }
   return -1
 }
@@ -273,11 +175,12 @@ function lc_getParametersFromURL() {
 }
 function idToName(id) {
   var i = 0
-
+  {% for x in dataset %}
   if (id == i) {
     return '{{ x }}'
   }
   i++
+  {% endfor %}
   return id
 }
 
@@ -312,12 +215,12 @@ function getRankedObjects() {
 
 function handleLCSubmit() {
   const pwl = lc_generatePairwise()
-/*  var pairwiseURL = "{{url_for('explore.explore', dataset_name = dataset_name) }}"
+  var pairwiseURL = "{{url_for('explore.explore', dataset_name = dataset_name) }}"
   for (let i = 0; i < pwl.length; i++) {
     pairwiseURL = pairwiseURL + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
   }
 
-  window.location = pairwiseURL*/
+  window.location = pairwiseURL
 
 }
 
@@ -355,11 +258,3 @@ function lc_generatePairwise() {
 }
 
 document.querySelector('#lc-submit').addEventListener('click', handleLCSubmit)
-</script>
-
-<script>
-
-</script>
-<script type="text/javascript" src="js/barChart.js"></script>
-<script type="text/javascript" src="js/load.js"></script>
--->
