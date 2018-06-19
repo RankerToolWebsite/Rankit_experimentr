@@ -9,11 +9,7 @@
     "express": "3.x",
     "json2csv": "2.x",
     "redis": "0.8.x",
-    "underscore": "~1.5.1",
-    "bootstrap": "4.0.0",
-    "jquery": "^3.0.0",
-    "tether": "*",
-    "bootstrap-tooltip-popover": "*"
+    "underscore": "~1.5.1"
   },
   "scripts": {
     "start": "node app.js"
