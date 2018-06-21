@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<style>
+#build-method {
+	display: flex;
+	width: 100%;
+	margin: 18px 0 0 0;
+	justify-content: space-around;
+	background-color: #f3f3f3ff
+}
+
+#build-method a:link, #build-method a:visited {
+	text-decoration: none;
+	display: block;
+	padding: 0.8em;
+}
+
+#build-method .active {
+	width: 140%;
+}
+
+.legend-label {
+	display: flex;
+	justify-content: space-around;
+	margin: 16px 96px 16px 16px;
+}
+
+#more {
+	width: 12em;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	-o-appearance: none;
+	border: none;
+	border-radius: 4px;
+	color: #fefffb;
+	font-weight: normal;
+	font-size: 100%;
+	/* position: absolute; */
+	/* left: 0; */
+	vertical-align: baseline;
+	/* float: left; */
+	margin: 0px 16px;
+}
+
+#wrapperpwc {
+	border: 2px solid #777;
+	border-radius: 8px;
+}
+
+.progresspwc {
+	margin-left: 20px;
+}
+</style>
+</head>
+<script>
+
+    function parseData(raw) {
+      return JSON.parse(raw.substring(1, raw.length - 1))
+    }
+    
+    function findObject (objectTitle) {
+      const raw = '{{data|tojson}}'
+      const data = parseData(raw)
+      for (var i=0; i<data.length; i++) {
+        obj = data[i]
+        if (obj.Title === objectTitle) {
+          return obj
+        }
+      }
+    }
+
+</script>
+<body>
+	<div id="build-container">
+		<!-- this is the header -->
+		<div class="build-pool-header">
+			<div style="float: left; width: 60%;">
+
+				<h1 style="position: relative; right: 5px" class="title">
+					<b> Build: Movies </b> <br>
+				</h1>
+			</div>
+			<div class="graphArea" style="float: left; width: 40%;">
+				<p id="p1"
+					style="float: right; color: white; font-size: 20px; margin-right: 50px;">
+					<b></b>
+				</p>
+				<div id="chart"
+					style="display: block; float: right; height: 25%; width: 75%"></div>
+			</div>
+
+
+			<ul class="cd-tour-wrapper">
+				<li class="cd-single-step"><span>Step 1</span>
+                </li>
+				<!-- .cd-single-step -->
+
+				<li class="cd-single-step"><span>Step 2</span>
+
+					<div class="cd-more-info top">
+						<h2>Step Number 2</h2>
+						<p>Select and drag each item to the desired ranking panel.</p>
+						<img
+							src="{{ url_for('static',filename='images/Step2Build.png') }}">
+					</div></li>
+				<!-- .cd-single-step -->
+
+				<li class="cd-single-step"><span>Step 3</span>
+
+					<div class="cd-more-info bottom">
+						<h2>Step Number 3</h2>
+						<p>You can randomize the dataset items by clicking the shuffle
+							button.</p>
+						<img
+							src="{{ url_for('static',filename='images/Step3Build.png') }}">
+					</div></li>
+
+				<li class="cd-single-step"><span>Step 4</span>
+
+					<div class="cd-more-info bottom">
+						<h2>Step Number 4</h2>
+						<p>After you use shuffle, you can sort the data set objects in
+							Alphabetical Order by clicking the Sort button to help your
+							ranking picks.</p>
+						<img
+							src="{{ url_for('static',filename='images/Step4Build.png') }}">
+					</div></li>
+
+				<li class="cd-single-step"><span>Step 5</span>
+
+					<div class="cd-more-info left">
+						<h2>Step Number 5</h2>
+						<p>One your finished with the ranking, click the Rank button
+							to see your results!</p>
+						<img
+							src="{{ url_for('static',filename='images/Step5Build.png') }}">
+					</div></li>
+
+			</ul>
+			<div class="cd-cover-layer"></div>
+
+		</div>
+
+		<!-- this is the left side of the build view -->
+		<div id="build-left">
+
+			<div id="border">
+				<div class="navbar-form navbar-center" role="search">
+					<input type="search" id="search-criteria" class="form-control"
+						placeholder="Search by names..." onkeyup="searchDataset(event)">
+					<button type="button" class="semi-transparent-button btn "
+						id="sort" onclick="sortDataset()">Sort</button>
+					<button type="button" class="semi-transparent-button btn "
+						id="shuffle" onclick="shuffleDataset()">Shuffle</button>
+				</div>
+
+				<!-- this is the pool -->
+				<div class="scrollingDragInner viewBackround">
+
+
+					<div id="top" class="pool">
+						<!-- objects from dataset inserted here -->
+						{% for x in dataset %}
+						<div tabindex="0" id="{{x}}" class="object noSelect pop" data-toggle="popover">{{x}}</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ****************************************************************************** -->
+		<!-- this is the right side of the build view -->
+		<div id="build-right">
+			<br>
+			<br>
+			<div id="wrapperpwc">
+
+				<!-- this is the header -->
+				<ul id="build-method">
+					<li><a style="color: #777;" id="lc">List</a></li>
+					<li><a style="color: #777;" id="cc">Categorical</a></li>
+					<li><a id="pwc" class="active">Pairwise</a></li>
+				</ul>
+				<!-- this is the lists -->
+				<ul class="legend-label">
+					<li>HIGH</li>
+					<li>LOW</li>
+				</ul>
+				<div id="pwl">
+					<div class="pwx">
+						<div class="pw">
+							<div class="high list"></div>
+							<div class="low list"></div>
+						</div>
+						<div class="x" onclick="clearPW(event)">
+							<i class="fas fa-times"></i>
+						</div>
+
+					</div>
+				</div>
+				<button type="button" id="more" class="btn" onclick="handleMore()">Add
+					New Pair</button>
+				<br> <br>
+				<div class="progress progresspwc" style="width: 87%">
+					<div id="bar" class="progress-bar progress-bar-striped active"
+						role="progressbar" aria-valuenow="1" aria-valuemin="1"
+						aria-valuemax="101" style="width: 1%; margin-bottom: 30px;">
+						<span>0% Confidence</span>
+					</div>
+				</div>
+				<button type="button" id="submit" class="btn submit"
+					disabled="disabled">RANK!</button>
+				<br>
+				<br>
+				<br>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- this are the global variables -->
+	<script>
+    var confidence = 0
+    var weights = 0
+    var counter = 0
+    var tooltipCounter = 0
+    var colorScheme = ["#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5"];
+  </script>
+
+	<!-- this is script for the pool -->
+	<script>
+
+    function getDataset() {
+      return Array.from(document.querySelector('#top').children).map(x => x.innerText)
+    }
+
+    const dataset = getDataset()
+
+
+  </script>
+
+
+	<style>
+svg {
+	font: 10px sans-serif;
+}
+
+.bar {
+	/* fill: steelblue; */
+	clip-path: url(#clip);
+}
+
+.subBar {
+	fill: #2980B9;
+}
+
+.axis path, .axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.brush .extent {
+	stroke: #fff;
+	fill: steelblue;
+	fill-opacity: .25;
+	shape-rendering: crispEdges;
+}
+
+rect.mover {
+	stroke: red;
+	stroke-opacity: .1;
+	fill: #E74C3C;
+	fill-opacity: .5;
+}
+</style>
+
+
+
+
+
+
+	<script>
+    const source = document.querySelector('#top')
+    // const target = document.querySelector('#lc-center')
+
+    const source_sortable = Sortable.create(source, {
+      group: {
+        name: 'list',
+        pull: 'clone',
+        revertClone: 'true',
+      },
+      onAdd: function(evt){
+        evt.item.parentNode.removeChild(evt.item)
+      },
+      animation: 300,
+      sort: false,
+      ghostClass: 'ghost',
+    })
+
+    function add_to_sortable(className) {
+      const all = document.querySelectorAll(className)
+
+      all.forEach(t => Sortable.create(t, {
+        group: {
+          name: 'list',
+          put: (to) => to.el.children.length < 1,
+        },
+        animation: 100,
+
+      }))
+
+    }
+    add_to_sortable('.high')
+    add_to_sortable('.low')
+
+    function handleMore() {
+      const pwl = document.querySelector('#pwl')
+      // const html = `<div class="pw"><div class="high list"></div><div class="low list"></div></div>`
+      const html = `<div class="pwx"><div class="pw"><div class="high list"></div><div class="low list"></div></div><div class="x" onclick="clearPW(event)"><i class="fas fa-times"></i></div></div>`
+      pwl.innerHTML += html
+      // const highs = document.querySelectorAll('.high')
+      // const high = highs[highs.length-1]
+      add_to_sortable('.high')
+      add_to_sortable('.low')
+    }
+
+    function clearPW(e) {
+      const pwl = e.target.closest('#pwl')
+      console.log();
+      if (pwl.children.length > 1) {
+        const pwx = e.target.closest('.pwx');
+        // console.log(pwx)
+        pwx.remove()
+      } else {
+        const pw = e.target.closest('.pwx').children[0];
+        pw.children[0].innerHTML = "";
+        pw.children[1].innerHTML = "";
+      }
+    }
+
+  </script>
+
+	<!-- Pairwise Comparison Related Scripts -->
+	<script>
+    var min_num_of_objects = 2
+
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        pwc_urlUpdate()
+
+        const high_length = document.querySelectorAll('.high > div').length
+        const low_length = document.querySelectorAll('.low > div').length
+
+        const list_num = (high_length > 0 ? 1 : 0) + (low_length > 0 ? 1 : 0)
+
+        if ((high_length != low_length) || (list_num < min_num_of_objects)) {
+          $('#submit').attr('disabled', 'disabled');
+        }
+        else {
+          $('#submit').removeAttr('disabled');
+          handleBuildSubmit()
+        }
+      });
+    });
+
+    function barUpdate(list_length) {
+      list_length = Math.floor(list_length)
+      document.getElementById("bar").setAttribute("aria-valuenow", list_length.toString())
+      document.getElementById("bar").setAttribute("style", "width:"+list_length+"%")
+      document.getElementById("bar").textContent = list_length+"%"+" Confidence"
+    }
+
+    function pwc_urlUpdate() {
+      const high = Array.from(document.querySelectorAll('.high > div')).map(x => nameToId(x.id))
+      const low = Array.from(document.querySelectorAll('.low > div')).map(x => nameToId(x.id))
+      var url = window.location.pathname + "?method=" + "pwc" + "&" + "left=" + high.toString() + "&" + "right=" + low.toString()
+      history.pushState({}, 'Pairwise Comparison', url)
+    }
+
+    function nameToId(name) {
+      if (name !== undefined) {
+        var i = 0
+        {% for x in dataset %}
+        if ('{{ x }}' == name) {
+          return i
+        }
+        i++
+        {% endfor %}
+      }
+      return -1
+    }
+
+    // Node, config
+    var observerConfig = {
+      childList: true,
+      subtree: true,
+    };
+
+    var node = document.getElementById('pwl');
+    observer.observe(node, observerConfig);
+
+    var QueryString = function () {
+      var query_string = {};
+      var query = window.location.search.substring(1);
+      var vars = query.split("&");
+      for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        // If first entry with this name
+        if (typeof query_string[pair[0]] === "undefined") {
+          query_string[pair[0]] = decodeURIComponent(pair[1]);
+          // If second entry with this name
+        } else if (typeof query_string[pair[0]] === "string") {
+          var arr = [query_string[pair[0]], decodeURIComponent(pair[1])];
+          query_string[pair[0]] = arr;
+          // If third or later entry with this name
+        } else {
+          query_string[pair[0]].push(decodeURIComponent(pair[1]));
+        }
+      }
+      return query_string;
+    }();
+    function getHighFromURL() {
+      var selectedHigh = QueryString.left;
+
+      if (selectedHigh !== undefined && selectedHigh != "") {
+        var highIds = selectedHigh.split(',');
+      }
+      // Convert ids back to names
+      if (highIds !== undefined) {
+        var highNames = Array.from(highIds.map(x => idToName(x)))
+        return highNames;
+      }
+      return highIds;
+    }
+    function getLowFromURL() {
+      var selectedLow = QueryString.right;
+
+      if (selectedLow !== undefined && selectedLow != "") {
+        var lowIds = selectedLow.split(',');
+      }
+      // Convert ids back to names
+      if (lowIds !== undefined) {
+        var lowNames = Array.from(lowIds.map(x => idToName(x)))
+        return lowNames;
+      }
+      return lowIds;
+    }
+    function idToName(id) {
+      var i = 0
+      {% for x in dataset %}
+      console.log(id)
+      console.log(i)
+      if (id == i) {
+        return '{{ x }}'
+      }
+      i++
+      {% endfor %}
+      return id
+    }
+    var highFromURL = {}
+    var lowFromURL = {}
+    highFromURL = getHighFromURL()
+    lowFromURL = getLowFromURL()
+
+    if (highFromURL !== undefined) {
+      var numOfElemInHighBox = 0;
+      var index_high = 0;
+      populateBox(".high", highFromURL, index_high, numOfElemInHighBox)
+    }
+    if (lowFromURL !== undefined) {
+      var numOfElemInLowBox = 0;
+      var index_low = 0;
+      populateBox(".low", lowFromURL, index_low, numOfElemInLowBox)
+    }
+
+    function populateBox(box, objectsFromURL, index, numOfElem) {
+      for (let i = 0; i < objectsFromURL.length; i++) {
+        if (numOfElem > 0) {
+          if (document.querySelectorAll(box)[index + 1] === undefined) {
+            handleMore()
+          }
+          index = index + 1
+          numOfElem = 0
+        }
+        var node = document.createElement("DIV");
+        var textnode = document.createTextNode(objectsFromURL[i]);
+        node.appendChild(textnode);
+        node.setAttribute("id", objectsFromURL[i]);
+        node.setAttribute("class", "object noSelect pop");
+        node.setAttribute("tabindex", "0");
+        node.setAttribute("data-toggle", "popover");
+        document.querySelectorAll(box)[index].appendChild(node);
+        numOfElem = numOfElem + 1
+      }
+    }
+
+    function getRankedObjects() {
+      return []
+    }
+    function handleSubmit() {
+
+      const pwl = generatePairwise()
+      var pairwiseURL = "{{url_for('explore.explore', dataset_name = dataset_name) }}"
+      for (let i = 0; i < pwl.length; i++) {
+        pairwiseURL = pairwiseURL + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
+      }
+      window.location = pairwiseURL
+    }
+
+    function handleBuildSubmit() {
+      const pwl = generatePairwise()
+      var pairs = ""
+      for (let i = 0; i < pwl.length; i++) {
+        pairs = pairs + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
+      }
+      if (pairs !== ""){
+        const url = "confidence/"+pairs
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET', url, true)
+        xhr.setRequestHeader('Content-type', 'application/json')
+
+        xhr.send()
+        xhr.onload = function () {
+          weights = JSON.parse(JSON.parse(this.response).weights)
+          confidence = JSON.parse(this.response).confidence
+        /* Both the Confidence bar and BarChart are rendered here, ensuring that it renders at all times */    
+        barUpdate(confidence)
+        console.log(counter);
+        if (counter == 1) {
+          d3.select("body").selectAll("svg").remove();
+          console.log(weights);
+          renderBarChart(weights,"#chart", colorScheme);
+        } else if(weights != 0){
+          document.getElementById("p1").innerHTML = "Impact of Attributes on Dataset Ranking";
+          renderBarChart(weights,"#chart", colorScheme);
+        }
+        }
+      }
+    }
+
+    function generatePairwise() {
+      const highs = Array.from(document.querySelectorAll('.high .object')).map(x => x.id)
+      const lows = Array.from(document.querySelectorAll('.low .object')).map(x => x.id)
+
+      let pwl = []
+      for (let i = 0; i < highs.length; i++) {
+        pwl.push({ 'high': highs[i], 'low': lows[i] })
+      }
+      console.log(pwl)
+      return pwl
+    }
+    document.querySelector('#submit').addEventListener('click', handleSubmit)
+
+
+    // function getMethodFromURL() {
+    //   var selectedMethod = cc_QueryString.method;
+    //   console.log(selectedMethod)
+    //   return selectedMethod;
+    // }
+    // var methodFromURL = getMethodFromURL()
+
+    // if (methodFromURL !== undefined) {
+    //   activateMethodTab(methodFromURL)
+    // }
+
+    // function activateMethodTab(methodFromURL) {
+    //   document.getElementById("lc_tab").classList.remove("active");
+    //   document.getElementById("cc_tab").classList.remove("active");
+    //   document.getElementById("pwc_tab").classList.remove("active");
+
+    //   document.getElementById(methodFromURL + "_tab").setAttribute("class", "active");
+    // }
+  </script>
+
+	<!-- <script>
+      $(".pop").popover({ trigger: "manual" , html: true, animation:false})
+        .on("mouseenter", function () {
+            var _this = this;
+            $(this).popover("show");
+            $(".popover").on("mouseleave", function () {
+                $(_this).popover('hide');
+            });
+        }).on("mouseleave", function () {
+            var _this = this;
+            setTimeout(function () {
+                if (!$(".popover:hover").length) {
+                    $(_this).popover("hide");
+                }
+            }, 300);
+    });
+  </script> -->
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/barChart.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/load.js') }}"></script>
+</body>
+</html>

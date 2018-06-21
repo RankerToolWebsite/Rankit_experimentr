@@ -20,12 +20,30 @@
 
 <body></body>
 
+
 <script>
-experimentr.sequence([
-/*  'modules/consent/',*/
-  'modules/instructions/',
-  'modules/experiment/',
-  'modules/debrief/'
-]).start();
+// experimentr.sequence uses an array, creates array with desired order of pages
+var Pages = new Array();
+Pages[0] = 'modules/consent';
+Pages[1] = 'modules/instructions/';
+Pages[2] = 'modules/debrief/';
+    
+//on page load choose a random module and place it in correct place in the array    
+window.onload = function randomPage() {
+    var x = Math.floor((Math.random() * 3) + 1);
+    var page = 0;
+    if (x == 1) { 
+    	page = "modules/list/";
+ 	} else if (x == 2) { 
+        	page = "modules/categorical/";
+    } else {
+    page = "modules/pairwise/";
+    }
+    Pages.splice( 2, 0, page);
+    console.log(page);
+}
+
+    
+experimentr.sequence(Pages).start();
 
 </script>
