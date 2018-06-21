@@ -1,100 +1,106 @@
+<link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/build.css" />
+<link rel="stylesheet" type="text/css" href="css/reset.css" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/main.css" />
+
 <style>
   #build-method {
-    grid-area: header;
-    display: flex;
-    width: 100%;
-    margin: 18px 0 0 0;
-    justify-content: space-around;
-    background-color: #f3f3f3ff
-    /* background-color: #d9d9d9ff; */
+  grid-area: header;
+  display: flex;
+  width: 100%;
+  margin: 18px 0 0 0;
+  justify-content: space-around;
+  background-color: #f3f3f3ff
+  /* background-color: #d9d9d9ff; */
   }
-    .legend-label {
-    grid-area: legend;
-    margin: 16px;
-    padding: 50px 10px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  .legend-label {
+  grid-area: legend;
+  margin: 16px;
+  padding: 50px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   }
   
-    #build-method .active {
-    width: 200%;
+  #build-method .active {
+  width: 200%;
   }
 </style>
 
- <div id="build-container">
-    <div class="build-pool-header">
-      <div style="float: left; width: 60%;">
-        <!-- Dataset name header -->
-        <h1 style="position:relative; right:5px" class="title">
-          <b>
-            Build: Movies
-          </b>
-          <br>
-        </h1>
-      </div>
-      <div class = "graphArea" style="float: left; width: 40%;">
-        <!-- <p style="float: right; color: white; font-size: 20px; margin-right: 50px;"><b>Impact of Attributes on Dataset Ranking</b></p> -->
-        <p id="p1" style="float: right; color: white; font-size: 20px; margin-right: 50px;"><b></b></p>
-        <div id="chart" style="display: block; float: right; height: 25%; width: 75%"></div>
-      </div>
-
+<div id="build-container">
+  <div class="build-pool-header">
+    <div style="float: left; width: 60%;">
+      <!-- Dataset name header -->
+      <h1 style="position:relative; right:5px" class="title">
+        <b>
+          Build: Movies
+        </b>
+        <br>
+      </h1>
     </div>
-
-    <!-- this is the left side of the build view -->
-    <div id="build-left">
-
-      <div id="border">
-        <div class="navbar-form navbar-center" role="search">
-          <input type="search" id="search-criteria" class="form-control" placeholder="Search by names..." onkeyup="searchDataset(event)">
-          <button type="button" class="semi-transparent-button btn " id="sort" onclick="sortDataset()">Sort</button>
-          <button type="button" class="semi-transparent-button btn " id="shuffle" onclick="shuffleDataset()">Shuffle</button>
-        </div>
-
-
-        <!-- this is the pool -->
-        <div class="scrollingDragInner viewBackround">
-          <div id="top" class="pool">
-            <!-- objects from dataset inserted here -->
-            <div tabindex="0" id="{{x}}" class="object noSelect pop" data-toggle="popover">{{x}}</div>
-          </div>
+    <div class = "graphArea" style="float: left; width: 40%;">
+      <!-- <p style="float: right; color: white; font-size: 20px; margin-right: 50px;"><b>Impact of Attributes on Dataset Ranking</b></p> -->
+      <p id="p1" style="float: right; color: white; font-size: 20px; margin-right: 50px;"><b></b></p>
+      <div id="chart" style="display: block; float: right; height: 25%; width: 75%"></div>
+    </div>
+    
+  </div>
+  
+  <!-- this is the left side of the build view -->
+  <div id="build-left">
+    
+    <div id="border">
+      <div class="navbar-form navbar-center" role="search">
+        <input type="search" id="search-criteria" class="form-control" placeholder="Search by names..." onkeyup="searchDataset(event)">
+        <button type="button" class="semi-transparent-button btn " id="sort" onclick="sortDataset()">Sort</button>
+        <button type="button" class="semi-transparent-button btn " id="shuffle" onclick="shuffleDataset()">Shuffle</button>
+      </div>
+      
+      
+      <!-- this is the pool -->
+      <div class="scrollingDragInner viewBackround">
+        <div id="top" class="pool">
+          <!-- objects from dataset inserted here -->
+          <div tabindex="0" id="{{x}}" class="object noSelect pop" data-toggle="popover">{{x}}</div>
         </div>
       </div>
     </div>
-
-    <!-- ****************************************************************************** -->
-    <!-- this is the right side of the build view -->
-    <div id="build-right">
-      <br><br>
-      <div id="lc-wrapper-grid">
-
-        <!-- this is the header -->
-        <ul id="build-method">
-          <li><a id="lc" class="active">List</a></li>
-          <li><a style="color: #777;" id="cc">Categorical</a></li>
-          <li><a style="color: #777;" id="pwc">Pairwise</a></li>
-        </ul>
-
-        <div class="legend-label">
-          <div>HIGH <i class="fas fa-arrow-up"></i></div>
-          <div>LOW  <i class="fas fa-arrow-down"></i></div>
+  </div>
+  
+  <!-- ****************************************************************************** -->
+  <!-- this is the right side of the build view -->
+  <div id="build-right">
+    <br><br>
+    <div id="lc-wrapper-grid">
+      
+      <!-- this is the header -->
+      <ul id="build-method">
+        <li><a id="lc" class="active">List</a></li>
+        <li><a style="color: #777;" id="cc">Categorical</a></li>
+        <li><a style="color: #777;" id="pwc">Pairwise</a></li>
+      </ul>
+      
+      <div class="legend-label">
+        <div>HIGH <i class="fas fa-arrow-up"></i></div>
+        <div>LOW  <i class="fas fa-arrow-down"></i></div>
+      </div>
+      <!-- this is the lists -->
+      <div id="lc-list">
+        <div class="scrollingDragInner box">
+          <div id="lc-center" class="list lcb" style="height: 60vh"></div>
         </div>
-        <!-- this is the lists -->
-        <div id="lc-list">
-          <div class="scrollingDragInner box">
-            <div id="lc-center" class="list lcb" style="height: 60vh"></div>
-          </div>
-          <div class="progress">
-            <div id="bar" class="progress-bar progress-bar-striped active" role="progressbar"
-            aria-valuenow="1" aria-valuemin="1" aria-valuemax="101" style="width:1%; margin-bottom:30px;">
+        <div class="progress">
+          <div id="bar" class="progress-bar progress-bar-striped active" role="progressbar"
+               aria-valuenow="1" aria-valuemin="1" aria-valuemax="101" style="width:1%; margin-bottom:30px;">
             <span>0% Confidence</span>
           </div>
         </div>
         <button type="button" id="lc-submit" class="btn submit" disabled="disabled">RANK!</button>
         <br><br><br>
       </div>
-
+      
     </div>
   </div>
 </div>
@@ -359,7 +365,7 @@ document.querySelector('#lc-submit').addEventListener('click', handleLCSubmit)
 
 <script>
 
-</script>
+</script>-->
 <script type="text/javascript" src="js/barChart.js"></script>
 <script type="text/javascript" src="js/load.js"></script>
--->
+

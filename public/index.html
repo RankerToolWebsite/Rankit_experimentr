@@ -24,6 +24,8 @@
 <script>
 // experimentr.sequence uses an array, creates array with desired order of pages
 var Pages = new Array();
+
+/*  USE FOR PRODUCTION 
 Pages[0] = 'modules/consent';
 Pages[1] = 'modules/instructions/';
 Pages[2] = 'modules/debrief/';
@@ -43,7 +45,12 @@ window.onload = function randomPage() {
     console.log(page);
 }
 
-    
+*/
+//for testing
+//Pages[0] = 'modules/list';
+//Pages[0] = 'modules/categorical';
+Pages[0] = 'modules/pairwise';
+  
 experimentr.sequence(Pages).start();
 
 </script>

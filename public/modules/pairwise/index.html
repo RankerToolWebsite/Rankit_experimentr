@@ -51,7 +51,6 @@
 	margin-left: 20px;
 }
 </style>
-</head>
 <script>
 
     function parseData(raw) {
@@ -70,7 +69,6 @@
     }
 
 </script>
-<body>
 	<div id="build-container">
 		<!-- this is the header -->
 		<div class="build-pool-header">
@@ -89,55 +87,6 @@
 					style="display: block; float: right; height: 25%; width: 75%"></div>
 			</div>
 
-
-			<ul class="cd-tour-wrapper">
-				<li class="cd-single-step"><span>Step 1</span>
-                </li>
-				<!-- .cd-single-step -->
-
-				<li class="cd-single-step"><span>Step 2</span>
-
-					<div class="cd-more-info top">
-						<h2>Step Number 2</h2>
-						<p>Select and drag each item to the desired ranking panel.</p>
-						<img
-							src="{{ url_for('static',filename='images/Step2Build.png') }}">
-					</div></li>
-				<!-- .cd-single-step -->
-
-				<li class="cd-single-step"><span>Step 3</span>
-
-					<div class="cd-more-info bottom">
-						<h2>Step Number 3</h2>
-						<p>You can randomize the dataset items by clicking the shuffle
-							button.</p>
-						<img
-							src="{{ url_for('static',filename='images/Step3Build.png') }}">
-					</div></li>
-
-				<li class="cd-single-step"><span>Step 4</span>
-
-					<div class="cd-more-info bottom">
-						<h2>Step Number 4</h2>
-						<p>After you use shuffle, you can sort the data set objects in
-							Alphabetical Order by clicking the Sort button to help your
-							ranking picks.</p>
-						<img
-							src="{{ url_for('static',filename='images/Step4Build.png') }}">
-					</div></li>
-
-				<li class="cd-single-step"><span>Step 5</span>
-
-					<div class="cd-more-info left">
-						<h2>Step Number 5</h2>
-						<p>One your finished with the ranking, click the Rank button
-							to see your results!</p>
-						<img
-							src="{{ url_for('static',filename='images/Step5Build.png') }}">
-					</div></li>
-
-			</ul>
-			<div class="cd-cover-layer"></div>
 
 		</div>
 
@@ -160,9 +109,7 @@
 
 					<div id="top" class="pool">
 						<!-- objects from dataset inserted here -->
-						{% for x in dataset %}
 						<div tabindex="0" id="{{x}}" class="object noSelect pop" data-toggle="popover">{{x}}</div>
-						{% endfor %}
 					</div>
 				</div>
 			</div>
@@ -175,12 +122,6 @@
 			<br>
 			<div id="wrapperpwc">
 
-				<!-- this is the header -->
-				<ul id="build-method">
-					<li><a style="color: #777;" id="lc">List</a></li>
-					<li><a style="color: #777;" id="cc">Categorical</a></li>
-					<li><a id="pwc" class="active">Pairwise</a></li>
-				</ul>
 				<!-- this is the lists -->
 				<ul class="legend-label">
 					<li>HIGH</li>
@@ -590,7 +531,5 @@ rect.mover {
             }, 300);
     });
   </script> -->
-  <script type="text/javascript" src="{{ url_for('static', filename = 'js/barChart.js') }}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename = 'js/load.js') }}"></script>
-</body>
-</html>
+<script type="text/javascript" src="js/barChart.js"></script>
+<script type="text/javascript" src="js/load.js"></script>
