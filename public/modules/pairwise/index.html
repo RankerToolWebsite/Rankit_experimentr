@@ -139,6 +139,7 @@
 
 					</div>
 				</div>
+                <br>
 				<button type="button" id="more" class="btn" onclick="handleMore()">Add
 					New Pair</button>
 				<br> <br>
@@ -262,9 +263,9 @@ rect.mover {
       pwl.innerHTML += html
       // const highs = document.querySelectorAll('.high')
       // const high = highs[highs.length-1]
-      add_to_sortable('.high')
-      add_to_sortable('.low')
     }
+        add_to_sortable('.high')
+        add_to_sortable('.low')
 
     function clearPW(e) {
       const pwl = e.target.closest('#pwl')

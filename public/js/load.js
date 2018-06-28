@@ -13,6 +13,22 @@ function findObject (objectTitle) {
     }
 }
 
+ //use d3 to load data
+    d3.json("data/states.json", function(data) {
+    	
+	//initialize data pool
+	var pool = document.getElementById("top");
+	var tile = pool.removeChild(pool.childNodes[3]); 
+	data.forEach(function(d) {
+    	    var name = d.Title;
+	    var newTile = tile.cloneNode(true);
+	    newTile.setAttribute("id", name);
+	    newTile.innerHTML = name;
+	    pool.appendChild(newTile);
+	    
+  	});
+    });	
+
 function add_to_sortable(className) {
     const all = document.querySelectorAll(className)
     
@@ -29,6 +45,7 @@ function handleMore() {
     const pwl = document.querySelector('#pwl')
     const html = `<div class="pw"><div class="high list"></div><div class="low list"></div></div>`
     pwl.innerHTML += html
+    add_to_sortable('.high')
     add_to_sortable('.low')
 }
 
@@ -156,22 +173,6 @@ $(document).ready(function () {
    //});
     
      
-    
-    //use d3 to load data
-    d3.json("data/states.json", function(data) {
-    	
-	//initialize data pool
-	var pool = document.getElementById("top");
-	var tile = pool.removeChild(pool.childNodes[3]); 
-	data.forEach(function(d) {
-    	    var name = d.Title;
-	    var newTile = tile.cloneNode(true);
-	    newTile.setAttribute("id", name);
-	    newTile.innerHTML = name;
-	    pool.appendChild(newTile);
-	    
-  	});
-    });	
 
     var confidence = 0;
     var weights = 0;
