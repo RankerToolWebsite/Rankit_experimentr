@@ -148,12 +148,14 @@ function lc_generatePairwise() {
 $(document).ready(function () {
 
     //load sortable library  
-    $.getScript("js/lib/Sortable.js", function(data, textStatus, jqxhr) {
-	console.log( data ); // Data returned
-	console.log( textStatus ); // Success
-	console.log( jqxhr.status ); // 200
-	console.log('Load was performed.');
-   });
+    //$.getScript("js/lib/Sortable.js", function(data, textStatus, jqxhr) {
+	//console.log( data ); // Data returned
+	//console.log( textStatus ); // Success
+	//console.log( jqxhr.status ); // 200
+	//console.log('Load was performed.');
+   //});
+    
+     
     
     //use d3 to load data
     d3.json("data/states.json", function(data) {
@@ -175,7 +177,7 @@ $(document).ready(function () {
     var weights = 0;
     var counter = 0;
     var tooltipCounter = 0;
-    const dataset = data;
+    const dataset = {};
     
     const source = document.querySelector('#top');
     const target = document.querySelector('#lc-center');

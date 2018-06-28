@@ -11,6 +11,10 @@
 <!--  <script src="js/lib/tether.min.js"></script> -->
   <script src="js/lib/bootstrap.min.js"></script>
 <!--  <script src="js/lib/bootstrap-tooltip.js"></script> -->
+<script type="text/javascript" src="js/lib/Sortable.js"></script>
+
+
+
 
   <link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="css/build.css" />
@@ -25,12 +29,13 @@
 // experimentr.sequence uses an array, creates array with desired order of pages
 var Pages = new Array();
 
-/*  USE FOR PRODUCTION 
+//  USE FOR PRODUCTION 
 Pages[0] = 'modules/consent';
 Pages[1] = 'modules/instructions/';
 Pages[2] = 'modules/debrief/';
     
 //on page load choose a random module and place it in correct place in the array    
+   /** 
 window.onload = function randomPage() {
     var x = Math.floor((Math.random() * 3) + 1);
     var page = 0;
@@ -44,12 +49,13 @@ window.onload = function randomPage() {
     Pages.splice( 2, 0, page);
     console.log(page);
 }
-
 */
+
 //for testing
 //Pages[0] = 'modules/list';
 //Pages[0] = 'modules/categorical';
 Pages[0] = 'modules/pairwise';
+//Pages[1] = 'modules/debrief/';
   
 experimentr.sequence(Pages).start();
 
