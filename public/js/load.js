@@ -87,7 +87,7 @@ $(document).ready(function () {
 	    barUpdate(confidence);
 	}
 	
-	//shuffleDataset();
+	shuffleDataset();
 	refresh_popovers();
 	
 	$('.popover-dismiss').popover({
@@ -197,10 +197,12 @@ function generateTileHTML(x){
     data-toggle="popover" data-html="true" data-content="${text}">${x.Title}</div>`
 }
 
+//Takes what is in the data pool and returns their original ids as an integer array
 function getCurrentPool() {
   return Array.from(document.querySelector('#top').children).map(x => parseInt(x.id))
 }
 
+//Ids is a list of integers, functions returns the subset data associated with it
 function filterDataset(ids){
     var currentData = [];
     ids.forEach(function(d) {
@@ -234,7 +236,6 @@ function searchDataset(e) {
     const re = new RegExp(value, 'i')
     const newDataset = difference.filter(x => re.test(x))
     render(newDataset)
-    displayAttributesAfterRender()
     refresh_popovers()
   }
 
