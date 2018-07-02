@@ -16,6 +16,7 @@ $(document).ready(function () {
     d3.json("data/states.json", function(data) {
 	//save full dataset
 	dataset = data;
+	dataset.sort((a, b) => a.Title.localeCompare(b.Title));
 	//save list of data attributes
 	attributes = Object.keys(data[0]);
 	var index = attributes.indexOf("Title");
@@ -191,46 +192,43 @@ function generateTileHTML(x){
         text = text + "<tr><td>" + attrName + "</td><td>" + attrVal + "</td></tr>";
     }
     text = text + "</table>"
-    //format tile display
-
+    //format tile display, use index in dataset as id
     return `<div tabindex="0" id="${id}" class="object noSelect pop"
     data-toggle="popover" data-html="true" data-content="${text}">${x.Title}</div>`
 }
 
-//sub is a list of ids of data itmes
-function getSubsetData(sub){
-    //load data
-    var subData = {} 
-    d3.json("data/states.json", function(data) {
-	subData = data.filter(x => !sub.includes(x));
-    });
+function getCurrentPool() {
+  return Array.from(document.querySelector('#top').children).map(x => parseInt(x.id))
 }
 
-function getCurrentPool() {
-  return Array.from(document.querySelector('#top').children).map(x => x.innerText)
+function filterDataset(ids){
+    var currentData = [];
+    ids.forEach(function(d) {
+	currentData.push(dataset[d]);
+    });
+    return currentData
 }
 
 function sortDataset() {
-	  const dataset = getCurrentPool()
-	  dataset.sort()
-	  render(dataset)
-	  displayAttributesAfterRender()
-	  refresh_popovers()
-	}
+    var currentIds = getCurrentPool()
+    currentIds.sort(function(a, b){return a-b})
+    render(filterDataset(currentIds))
+    refresh_popovers()
+}
 
 function shuffleDataset() {
-	  const dataset = getCurrentPool()
-	  for (let i = dataset.length - 1; i > 0; i--) {
-	    const j = Math.floor(Math.random() * (i + 1));
-	    [dataset[i], dataset[j]] = [dataset[j], dataset[i]];
-	  }
-	  render(dataset)
-	  displayAttributesAfterRender()
-	  refresh_popovers()
-	}
+    var currentIds = getCurrentPool();
+    var currentData = filterDataset(currentIds);
+    for (let i = currentData.length - 1; i > 0; i--) {
+	const j = Math.floor(Math.random() * (i + 1));
+	[currentData[i], currentData[j]] = [currentData[j], currentData[i]];
+    }
+    render(currentData)
+    refresh_popovers()
+}
 
 function searchDataset(e) {
-    const dataset = getCurrentPool()
+    var currentData = dataset[getCurrentPool()];
     let difference = dataset.filter(x => getRankedObjects().indexOf(x) == -1)
     const value = e.target.value
     const re = new RegExp(value, 'i')
@@ -253,7 +251,7 @@ function refresh_popovers(){
 
 /****** Loading from URL ******************/
 function lc_urlUpdate() {
-    var list = Array.from(document.querySelectorAll('#lc-center .object')).map(x => dataset.indexOf(x.id))
+    var list = Array.from(document.querySelectorAll('#lc-center .object')).map(x => x.id)
     var url = window.location.pathname + "?method=" + "lc" + "&" + "objects="
     history.pushState({}, 'List Comparison', url + list.toString())
 }
@@ -277,17 +275,10 @@ function lc_getParametersFromURL() {
     	}
     }
     var selectedObjects = query_string.objects;
-    if(selectedObjects == undefined){
-	return selectedObjects;
+    if (selectedObjects !== undefined) {
+	return selectedObjects.split(',');
     }
-    else {
-	if (selectedObjects != "") {
-	    var objects = selectedObjects.split(',');
-	}
-	// Convert ids back to names
-	var objectsNames = Array.from(objects.map(x => idToName(x)))
-	return objectsNames;
-    }
+    return selectedObjects;
 }
 
 function lc_populateBox() {
@@ -295,14 +286,14 @@ function lc_populateBox() {
     for (let i = 0; i < lc_objectsFromURL.length; i++) {
 	document.querySelector('#top').removeChild(document.getElementById(lc_objectsFromURL[i]))
 	var node = document.createElement("DIV");
-	var textnode = document.createTextNode(lc_objectsFromURL[i]);
+	var textnode = document.createTextNode(dataset[lc_objectsFromURL[i]].Title);
 	node.appendChild(textnode);
 	node.setAttribute("id", lc_objectsFromURL[i]);
 	node.setAttribute("class", "object noSelect pop");
 	node.setAttribute("tabindex", "0");
 	node.setAttribute("data-toggle", "popover");
 	document.querySelector('#lc-center').appendChild(node);
-	handleBuildSubmit()
+	handleBuildSubmit();
     }
 }
 
