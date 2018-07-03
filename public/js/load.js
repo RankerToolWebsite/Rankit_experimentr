@@ -128,9 +128,6 @@ function barUpdate(list_length) {
 }
 
 
-function getRankedObjects() {
-    return Array.from(document.querySelector('#lc-center').children).map(x => x.innerText)
-}
 
 function handleLCSubmit() {
     const pwl = lc_generatePairwise()
@@ -202,6 +199,12 @@ function getCurrentPool() {
   return Array.from(document.querySelector('#top').children).map(x => parseInt(x.id))
 }
 
+//Takes what is in the ranked pool and returns their original ids as an integer array
+function getRankedID() {
+  return Array.from(document.querySelector('#lc-center').children).map(x => parseInt(x.id))
+}
+
+
 //Ids is a list of integers, functions returns the subset data associated with it
 function filterDataset(ids){
     var currentData = [];
@@ -230,11 +233,15 @@ function shuffleDataset() {
 }
 
 function searchDataset(e) {
-    var currentData = dataset[getCurrentPool()];
-    let difference = dataset.filter(x => getRankedObjects().indexOf(x) == -1)
+    var currentData = dataset
+    //filters what is already ranked out of the dataset
+    var rankedID = getRankedID();
+    var rankedDataset = filterDataset(rankedID);
+    let difference = dataset.filter(tile => rankedDataset.indexOf(tile) == -1)
+    //checks what is in the search bar and filters out anything that doesnt contain it
     const value = e.target.value
     const re = new RegExp(value, 'i')
-    const newDataset = difference.filter(x => re.test(x))
+    const newDataset = difference.filter(tile => re.test(tile.Title))
     render(newDataset)
     refresh_popovers()
   }
