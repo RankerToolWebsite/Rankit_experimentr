@@ -3,11 +3,14 @@ var weights = 0;
 var counter = 0;
 var tooltipCounter = 0;
 const pool = document.querySelector('#top');
-const target = document.querySelector('#lc-center');
+const med = document.querySelector('#center')
+const high = document.querySelector('#left')
+const low = document.querySelector('#right')
 var dataset = {}
 var attributes = {}
 var min_num_of_objects = 2;
-var lc_observer;
+var cc_observer;
+   var min_num_of_non_empty_lists = 2
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
@@ -28,36 +31,50 @@ $(document).ready(function () {
 	
 	//create sortable container for pool
 	const source_sortable = Sortable.create(pool, {
-	    group: 'list',
+	    group: 'category',
 	    animation: 300,
 	    sort: false,
 	    ghostClass: 'ghost',
 	});
+        
 	//create sortable container for preference collection
-	const target_sortable = Sortable.create(target, {
-	    group: 'list',
-	    animation: 300,
-	    ghostClass: 'ghost',
-	});
+    const high_sortable = Sortable.create(high, {
+      group: 'category',
+      animation: 300,
+      ghostClass: 'ghost',
+    })
+    const med_sortable = Sortable.create(med, {
+      group: 'category',
+      animation: 300,
+      ghostClass: 'ghost',
+    })
+    const low_sortable = Sortable.create(low, {
+      group: 'category',
+      animation: 300,
+      ghostClass: 'ghost',
+    })
 	
 	//listener for rank button
-	document.querySelector('#lc-submit').addEventListener('click', handleLCSubmit);
+	document.querySelector('#cc-submit').addEventListener('click', handleCCSubmit);
 	
-	lc_observer = new MutationObserver(function (mutations) {
-	    mutations.forEach(function (mutation) {
-		lc_urlUpdate();
-		
-		const list_length = document.querySelector('#lc-center').children.length;
-		if (list_length < min_num_of_objects) {
-		    $('#lc-submit').attr('disabled', 'disabled');
-		}
-		else {
-		    $('#lc-submit').removeAttr('disabled');
-		    handleBuildSubmit();
-		}
-		barUpdate(confidence);
-		
-		var colorScheme = ["#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5"];
+    var cc_observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        cc_urlUpdate()
+
+        var num_of_non_empty_list = document.querySelector('#center').children.length > 0 ? 1 : 0
+        num_of_non_empty_list += document.querySelector('#left').children.length > 0 ? 1 : 0
+        num_of_non_empty_list += document.querySelector('#right').children.length > 0 ? 1 : 0
+
+        if (num_of_non_empty_list < min_num_of_non_empty_lists) {
+          $('#cc-submit').attr('disabled', 'disabled');
+        }
+        else {
+          $('#cc-submit').removeAttr('disabled');
+          handleBuildSubmit()
+        }
+          barUpdate(confidence);
+
+      var colorScheme = ["#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5"];
 		console.log(counter);
 		if (counter == 1) {
 		    d3.select("body").selectAll("svg").remove();
@@ -71,16 +88,21 @@ $(document).ready(function () {
 	});
 	
 	// Node, config
-	var lc_observerConfig = {
-	    childList: true
-	};
-	
-	var lc_center_node = document.getElementById('lc-center');
-	lc_observer.observe(lc_center_node, lc_observerConfig);
-	
+    var cc_observerConfig = {
+      childList: true,
+    };
+        
+    var cc_center_node = document.getElementById('center');
+    var cc_left_node = document.getElementById('left');
+    var cc_right_node = document.getElementById('right');
+
+    cc_observer.observe(cc_center_node, cc_observerConfig);
+    cc_observer.observe(cc_left_node, cc_observerConfig);
+    cc_observer.observe(cc_right_node, cc_observerConfig);
+        
 	//check if we need to populate page from URL
-	if ( lc_getParametersFromURL() !== undefined) {
-	    lc_populateBox();
+	if ( cc_getParametersFromURL() !== undefined) {
+	    cc_populateBox();
 	    barUpdate(confidence);
 	}
 	
@@ -109,7 +131,7 @@ function add_to_sortable(className) {
     
     all.forEach(t => Sortable.create(t, {
 	group: {
-	    name: 'list',
+	    name: 'category',
 	    put: (to) => to.el.children.length < 1,
 	},
 	animation: 100,
@@ -126,46 +148,58 @@ function barUpdate(list_length) {
 
 
 
-function handleLCSubmit() {
-    const pwl = lc_generatePairwise()
-    var pairwiseURL = "{{url_for('explore.explore', dataset_name = dataset_name) }}"
-    for (let i = 0; i < pwl.length; i++) {
-	pairwiseURL = pairwiseURL + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
-    }    
-    window.location = pairwiseURL
-}
+function handleCCSubmit() {
+      const pwl = cc_generatePairwise()
+      // sendPostRequest(pwl)
+      var pairwiseURL = "{{url_for('explore.explore', dataset_name = dataset_name) }}"
+      for (let i = 0; i < pwl.length; i++) {
+        pairwiseURL = pairwiseURL + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
+      }
+
+      window.location = pairwiseURL
+    }
+
 
 function handleBuildSubmit() {
-    const pwl = lc_generatePairwise()
+    const pwl = cc_generatePairwise()
     var pairs = ""
     for (let i = 0; i < pwl.length; i++) {
-	pairs = pairs + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
+    pairs = pairs + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
     }
     if (pairs !== ""){
-	const url = "build/"+pairs
-	const xhr = new XMLHttpRequest()
-	xhr.open('GET', url, true)
-	xhr.setRequestHeader('Content-type', 'application/json')
-	
-	xhr.send()
-	xhr.onload = function () {
-	    weights = JSON.parse(JSON.parse(this.response).weights)
-	    confidence = JSON.parse(this.response).confidence
+    const url = "confidence/"+pairs
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', url, true)
+    xhr.setRequestHeader('Content-type', 'application/json')
+
+    xhr.send()
+    xhr.onload = function () {
+        weights = JSON.parse(JSON.parse(this.response).weights)
+        confidence = JSON.parse(this.response).confidence
 	}
     }
 }
 
-function lc_generatePairwise() {
-    const list = Array.from(document.querySelectorAll('#lc-center .object'))
-    const ids = list.map(x => x.id)
-    // pairwise list to send back to server
-    let pwl = []
-    for (let i = 0; i < ids.length - 1; i++) {
-	for (let j = i + 1; j < ids.length; j++) {
-	    pwl.push({ 'high': ids[i], 'low': ids[j] })
-	}
-    }
-    return pwl
+function cc_generatePairwise() {
+    const high = Array.from(document.querySelectorAll('#left .object')).map(x => x.id)
+      const med = Array.from(document.querySelectorAll('#center .object')).map(x => x.id)
+      const low = Array.from(document.querySelectorAll('#right .object')).map(x => x.id)
+      // pairwise list to send back to server
+      let pwl = []
+      for (let i = 0; i < high.length; i++) {
+        for (let j = 0; j < med.length; j++) {
+          pwl.push({ 'high': high[i], 'low': med[j] })
+        }
+        for (let j = 0; j < low.length; j++) {
+          pwl.push({ 'high': high[i], 'low': low[j] })
+        }
+      }
+      for (let i = 0; i < med.length; i++) {
+        for (let j = 0; j < low.length; j++) {
+          pwl.push({ 'high': med[i], 'low': low[j] })
+        }
+      }
+      return pwl
 }
 
 //dataset should be accessed from json, contains all attributes
@@ -196,9 +230,20 @@ function getCurrentPool() {
   return Array.from(document.querySelector('#top').children).map(x => parseInt(x.id))
 }
 
+//Takes what is in the ranked Item box and returns their Titles in a string array
+function getRankedObjects() {
+    var left = Array.from(document.querySelector('#left').children).map(x => x.innerText)
+    var center = Array.from(document.querySelector('#center').children).map(x => x.innerText)
+    var right = Array.from(document.querySelector('#right').children).map(x => x.innerText)
+    return left.concat(center).concat(right)
+    }
+
 //Takes what is in the ranked pool and returns their original ids as an integer array
 function getRankedID() {
-  return Array.from(document.querySelector('#lc-center').children).map(x => parseInt(x.id))
+    var left = Array.from(document.querySelector('#left').children).map(x => parseInt(x.id))
+    var center = Array.from(document.querySelector('#center').children).map(x => parseInt(x.id))
+    var right = Array.from(document.querySelector('#right').children).map(x => parseInt(x.id))
+    return left.concat(center).concat(right)
 }
 
 
@@ -229,6 +274,13 @@ function shuffleDataset() {
     refresh_popovers()
 }
 
+var filtered = [1, 2, 3, 4].filter(
+  function(e) {
+    return this.indexOf(e) < 0;
+  },
+  [2, 4]
+);
+
 function searchDataset(e) {
     var currentData = dataset
     //filters what is already ranked out of the dataset
@@ -255,13 +307,16 @@ function refresh_popovers(){
 
 
 /****** Loading from URL ******************/
-function lc_urlUpdate() {
-    var list = Array.from(document.querySelectorAll('#lc-center .object')).map(x => x.id)
-    var url = window.location.pathname + "?method=" + "lc" + "&" + "objects="
-    history.pushState({}, 'List Comparison', url + list.toString())
-}
+function cc_urlUpdate() {
+    const high = Array.from(document.querySelectorAll('#left .object')).map(x => x.id)
+    const med = Array.from(document.querySelectorAll('#center .object')).map(x => x.id)
+    const low = Array.from(document.querySelectorAll('#right .object')).map(x => x.id)
+    var url = window.location.pathname + "?method=" + "cc" + "&" + "high=" + high.toString() + "&" + "medium=" + med.toString() + "&" + "low=" + low.toString()
+    history.pushState({}, 'Categorical Comparison', url)
+    }
 
-function lc_getParametersFromURL() {
+
+function cc_getParametersFromURL() {
     var query_string = {};
     var query = window.location.search.substring(1);
     var vars = query.split("&");
@@ -279,25 +334,40 @@ function lc_getParametersFromURL() {
       	    query_string[pair[0]].push(decodeURIComponent(pair[1]));
     	}
     }
-    var selectedObjects = query_string.objects;
-    if (selectedObjects !== undefined) {
-	return selectedObjects.split(',');
+    return query_string;
+}
+cc_highFromURL = cc_getHighFromURL()
+
+
+function cc_getHighFromURL() {
+var highObjects = cc_getParametersFromURL.high;
+    if (highObjects !== undefined) {
+	return highObjects.split(',');
     }
-    return selectedObjects;
+    return highObjects;
 }
 
-function lc_populateBox() {
-    var lc_objectsFromURL = lc_getParametersFromURL();
-    for (let i = 0; i < lc_objectsFromURL.length; i++) {
-	document.querySelector('#top').removeChild(document.getElementById(lc_objectsFromURL[i]))
+
+    var cc_highFromURL = {}
+    cc_highFromURL = cc_getHighFromURL()
+
+console.log(cc_highFromURL)
+if (cc_highFromURL !== undefined) {
+      cc_populateBox("#left", cc_highFromURL)
+    }
+
+function cc_populateBox(box, objectsFromURL) {
+    //var lc_objectsFromURL = lc_getParametersFromURL();
+    for (let i = 0; i < objectsFromURL.length; i++) {
+	document.querySelector('#top').removeChild(document.getElementById(cc_objectsFromURL[i]))
 	var node = document.createElement("DIV");
-	var textnode = document.createTextNode(dataset[lc_objectsFromURL[i]].Title);
+	var textnode = document.createTextNode(dataset[cc_objectsFromURL[i]].Title);
 	node.appendChild(textnode);
-	node.setAttribute("id", lc_objectsFromURL[i]);
+	node.setAttribute("id", cc_objectsFromURL[i]);
 	node.setAttribute("class", "object noSelect pop");
 	node.setAttribute("tabindex", "0");
 	node.setAttribute("data-toggle", "popover");
-	document.querySelector('#lc-center').appendChild(node);
+	document.querySelector(box).appendChild(node);
 	handleBuildSubmit();
     }
 }

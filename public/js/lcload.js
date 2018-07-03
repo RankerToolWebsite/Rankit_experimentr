@@ -40,6 +40,9 @@ $(document).ready(function () {
 	    ghostClass: 'ghost',
 	});
 	
+	add_to_sortable('.high');
+	add_to_sortable('.low');
+	
 	//listener for rank button
 	document.querySelector('#lc-submit').addEventListener('click', handleLCSubmit);
 	
@@ -228,6 +231,13 @@ function shuffleDataset() {
     render(currentData)
     refresh_popovers()
 }
+
+var filtered = [1, 2, 3, 4].filter(
+  function(e) {
+    return this.indexOf(e) < 0;
+  },
+  [2, 4]
+);
 
 function searchDataset(e) {
     var currentData = dataset

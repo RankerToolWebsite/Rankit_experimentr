@@ -9,22 +9,6 @@
       justify-content: space-around;
       background-color: #f3f3f3ff
     }
-/* in lc not here 
-  
-    path {
-    stroke: steelblue;
-    stroke-width: 2;
-    fill: none;
-   } 
-      .axis path,
-  .axis line {
-    fill: none;
-    stroke: grey;
-    stroke-width: 1;
-    shape-rendering: crispEdges;
-  }
-
-*/
 
   #build-method .active {
     width: 100%;
@@ -47,25 +31,6 @@
 
 
   </style>
-<script>
-
-    function parseData(raw) {
-      return JSON.parse(raw.substring(1, raw.length - 1))
-    }
-    
-    function findObject (objectTitle) {
-      const raw = '{{data|tojson}}'
-      const data = parseData(raw)
-      for (var i=0; i<data.length; i++) {
-        obj = data[i]
-        if (obj.Title === objectTitle) {
-          return obj
-        }
-      }
-    }
-
-</script>
-
   <!-- this is the header -->
   <div id="build-container">
     <div class="build-pool-header">
@@ -138,132 +103,9 @@
   </div>
 </div>
 
-  <!-- this are the global variables -->
+  <!-- Categorical Comparison Related Scripts 
   <script>
-    var confidence = 0
-    var weights = 0
-    var counter = 0
-    var tooltipCounter = 0
-    var colorScheme = ["#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5"];
-  </script>
-
-  <!-- this is script for the pool -->
-  <script>
-
-    function getDataset() {
-      return Array.from(document.querySelector('#top').children).map(x => x.innerText)
-    }
-
-    const dataset = getDataset()
-
-
-  </script>
-
-  <script>
-    const source = document.querySelector('#top')
-
-    const source_sortable = Sortable.create(source, {
-      group: 'list',
-      animation: 300,
-      sort: false,
-      ghostClass: 'ghost',
-    })
-
-    const med = document.querySelector('#center')
-    const high = document.querySelector('#left')
-    const low = document.querySelector('#right')
-
-    const high_sortable = Sortable.create(high, {
-      group: 'list',
-      animation: 300,
-      ghostClass: 'ghost',
-    })
-    const med_sortable = Sortable.create(med, {
-      group: 'list',
-      animation: 300,
-      ghostClass: 'ghost',
-    })
-    const low_sortable = Sortable.create(low, {
-      group: 'list',
-      animation: 300,
-      ghostClass: 'ghost',
-    })
-  </script>
-
-  <!-- Categorical Comparison Related Scripts -->
-  <script>
-
-    function getRankedObjects() {
-      var left = Array.from(document.querySelector('#left').children).map(x => x.innerText)
-      var center = Array.from(document.querySelector('#center').children).map(x => x.innerText)
-      var right = Array.from(document.querySelector('#right').children).map(x => x.innerText)
-      return left.concat(center).concat(right)
-    }
-
-    var min_num_of_non_empty_lists = 2
-
-    var cc_observer = new MutationObserver(function (mutations) {
-      mutations.forEach(function (mutation) {
-        cc_urlUpdate()
-
-        var num_of_non_empty_list = document.querySelector('#center').children.length > 0 ? 1 : 0
-        num_of_non_empty_list += document.querySelector('#left').children.length > 0 ? 1 : 0
-        num_of_non_empty_list += document.querySelector('#right').children.length > 0 ? 1 : 0
-
-        if (num_of_non_empty_list < min_num_of_non_empty_lists) {
-          $('#cc-submit').attr('disabled', 'disabled');
-        }
-        else {
-          $('#cc-submit').removeAttr('disabled');
-          handleBuildSubmit()
-        }
-
-
-      });
-    });
-
-    function barUpdate(list_length) {
-      list_length = Math.floor(list_length)
-      document.getElementById("bar").setAttribute("aria-valuenow", list_length.toString())
-      document.getElementById("bar").setAttribute("style", "width:"+list_length+"%")
-      document.getElementById("bar").textContent = list_length+"%"+" Confidence"
-    }
-
-    function cc_urlUpdate() {
-      const high = Array.from(document.querySelectorAll('#left .object')).map(x => nameToId(x.id))
-      const med = Array.from(document.querySelectorAll('#center .object')).map(x => nameToId(x.id))
-      const low = Array.from(document.querySelectorAll('#right .object')).map(x => nameToId(x.id))
-      var url = window.location.pathname + "?method=" + "cc" + "&" + "high=" + high.toString() + "&" + "medium=" + med.toString() + "&" + "low=" + low.toString()
-      history.pushState({}, 'Categorical Comparison', url)
-    }
-
-    function nameToId(name) {
-      if (name !== undefined) {
-        var i = 0
-        {% for x in dataset %}
-        if ('{{ x }}' == name) {
-          return i
-        }
-        i++
-        {% endfor %}
-      }
-      return -1
-    }
-
-
     // Node, config
-    var cc_observerConfig = {
-      childList: true,
-    };
-
-    var center_node = document.getElementById('center');
-    var left_node = document.getElementById('left');
-    var right_node = document.getElementById('right');
-
-    cc_observer.observe(center_node, cc_observerConfig);
-    cc_observer.observe(left_node, cc_observerConfig);
-    cc_observer.observe(right_node, cc_observerConfig);
-
     var cc_QueryString = function () {
       var query_string = {};
       var query = window.location.search.substring(1);
@@ -326,18 +168,7 @@
       }
       return lowIds;
     }
-    function idToName(id) {
-      var i = 0
-      {% for x in dataset %}
-      console.log(id)
-      console.log(i)
-      if (id == i) {
-        return '{{ x }}'
-      }
-      i++
-      {% endfor %}
-      return id
-    }
+
 
     var cc_highFromURL = {}
     var cc_mediumFromURL = {}
@@ -373,91 +204,9 @@
       }
     }
 
-    function handleCCSubmit() {
-      const pwl = cc_generatePairwise()
-      // sendPostRequest(pwl)
-      var pairwiseURL = "{{url_for('explore.explore', dataset_name = dataset_name) }}"
-      for (let i = 0; i < pwl.length; i++) {
-        pairwiseURL = pairwiseURL + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
-      }
-
-      window.location = pairwiseURL
-    }
-
-    function handleBuildSubmit() {
-      const pwl = cc_generatePairwise()
-      var pairs = ""
-      for (let i = 0; i < pwl.length; i++) {
-        pairs = pairs + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
-      }
-      if (pairs !== ""){
-        const url = "confidence/"+pairs
-        const xhr = new XMLHttpRequest()
-        xhr.open('GET', url, true)
-        xhr.setRequestHeader('Content-type', 'application/json')
-
-        xhr.send()
-        xhr.onload = function () {
-          weights = JSON.parse(JSON.parse(this.response).weights)
-          confidence = JSON.parse(this.response).confidence
-/* Both the Confidence bar and BarChart are rendered here, ensuring that it renders at all times */
-        barUpdate(confidence);
-        console.log(counter);
-        if (counter == 1) {
-            d3.select("body").selectAll("svg").remove();
-            console.log(weights);
-            renderBarChart(weights,"#chart", colorScheme);
-        }   else if(weights != 0){
-            document.getElementById("p1").innerHTML = "Impact of Attributes on Dataset Ranking";
-            renderBarChart(weights,"#chart", colorScheme);
-            }
-
-        }
-      }
-    }
-
-    function cc_generatePairwise() {
-      const high = Array.from(document.querySelectorAll('#left .object')).map(x => x.id)
-      const med = Array.from(document.querySelectorAll('#center .object')).map(x => x.id)
-      const low = Array.from(document.querySelectorAll('#right .object')).map(x => x.id)
-      // pairwise list to send back to server
-      let pwl = []
-      for (let i = 0; i < high.length; i++) {
-        for (let j = 0; j < med.length; j++) {
-          pwl.push({ 'high': high[i], 'low': med[j] })
-        }
-        for (let j = 0; j < low.length; j++) {
-          pwl.push({ 'high': high[i], 'low': low[j] })
-        }
-      }
-      for (let i = 0; i < med.length; i++) {
-        for (let j = 0; j < low.length; j++) {
-          pwl.push({ 'high': med[i], 'low': low[j] })
-        }
-      }
-      return pwl
-    }
-
-    document.querySelector('#cc-submit').addEventListener('click', handleCCSubmit)
   </script>
+-->
 
- <!-- <script>
-    $(".pop").popover({ trigger: "manual" , html: true, animation:false})
-      .on("mouseenter", function () {
-          var _this = this;
-          $(this).popover("show");
-          $(".popover").on("mouseleave", function () {
-              $(_this).popover('hide');
-          });
-      }).on("mouseleave", function () {
-          var _this = this;
-          setTimeout(function () {
-              if (!$(".popover:hover").length) {
-                  $(_this).popover("hide");
-              }
-          }, 300);
-  });
-  </script> -->
 <script type="text/javascript" src="js/barChart.js"></script>
-<script type="text/javascript" src="js/load.js"></script>
+<script type="text/javascript" src="js/ccload.js"></script>
 
