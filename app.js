@@ -48,8 +48,8 @@ app.post('/finish', function(req, res) {
 
 //Enable python for ranking script
 var PythonShell = require('python-shell');
-
-/*var options = {
+/*
+var options = {
     mode: 'text',
     pythonPath: '/home/caitlin/anaconda3/bin/python3', 
     pythonOptions: ['-u'],
@@ -68,14 +68,17 @@ PythonShell.run('build.py', options, function (err, results) {
 app.get('/build', run_build);
 function run_build(req, res) {
   var options = {
-    args:
-    [
-      req.query.pairs, // pairs of itmes extracted from build view
-    ]
+    args:[req.query.pairs], // pairs of itmes extracted from build view
+    mode: 'text',
+    pythonPath: '/home/caitlin/anaconda3/bin/python3', 
+    pythonOptions: ['-u'],
+    // make sure you use an absolute path for scriptPath
+    scriptPath: 'public/python'
   }
   PythonShell.run('build.py', options, function (err, data) {
-    if (err) res.send(err);
-    res.send(data.toString())
+      if (err) res.send(err);
+//      console.log(data);
+//      res.send(data.toString());
   });
 }
 

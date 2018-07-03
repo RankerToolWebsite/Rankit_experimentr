@@ -76,66 +76,96 @@ def get_confidence(data, clf):
         conf_scores[int(arr[i][2])] += arr[i][0]
     return conf_scores
 
-#read dataset from json
-dataset = pd.read_json('public/data/movies.json')
-print(dataset)
-pairs = sys.argv[1]
-print(pairs)  
-primary_key = 'Title'
-rank = 'Rank'
-score = 'Score'
-confd = 'Confidence'
+def primaryKeyToIndex(dataset_list, primaryKeyPairs):
+    for obj in primaryKeyPairs:
+        for key in obj:
+            # obj[high], obj[low]
+            primKey = obj[key]
+            index = findIndex(primKey, dataset_list)
+            obj[key] = index
+
+
+def findIndex(primKey, dataset_list):
+    index = 0
+    for list_entry in dataset_list:
+        if list_entry[primary_key] == primKey:
+            return index
+        else:
+            index = index + 1
+
+def build(dataset, pairs, primary_key = 'Title', rank = 'Rank', score = 'Score', confd = 'Confidence') :
 
 #     make normalized copy of dataset
-dataset_copy = dataset.copy(deep = True)
-dataset_copy = clean_dataset(dataset_copy, primary_key)
-dataset_copy.drop(primary_key, axis=1, inplace=True)
+    dataset_copy = dataset.copy(deep = True)
+    dataset_copy = clean_dataset(dataset_copy, primary_key)
+    dataset_copy.drop(primary_key, axis=1, inplace=True)
 
 #     get training pairs
-X,y = get_training(dataset_copy,pairs)
-data = np.array(dataset_copy)
+    X,y = get_training(dataset_copy,pairs)
+    data = np.array(dataset_copy)
 
 #     train linear SVM classifier
-clf = SGDClassifier(penalty='L2',loss='hinge',fit_intercept=True,
-                    max_iter=5000,random_state=9)
-clf.fit(X,y)
+    clf = SGDClassifier(penalty='L2',loss='hinge',fit_intercept=True,
+                        max_iter=5000,random_state=9)
+    clf.fit(X,y)
 
 #     in future maybe train in online fashion
 #     for more accuratae feedback- right now outcome depends on radom state,
 #     not just previous input
 #     clf.partial_fit(X,y,np.unique(y))
-conf_scores = get_confidence(data, clf)
-conf_scores = scale(conf_scores)
-conf_scores = [round(x, 2) for x in conf_scores]
+    conf_scores = get_confidence(data, clf)
+    conf_scores = scale(conf_scores)
+    conf_scores = [round(x, 2) for x in conf_scores]
 
-weights = clf.coef_[0]
-y_pred=[]
-y_pred=np.dot(weights,data.T)
+    weights = clf.coef_[0]
+    y_pred=[]
+    y_pred=np.dot(weights,data.T)
 
 #     scale outputs for display
-y_pred=scale(y_pred)
-weights = scale(abs(weights))
+    y_pred=scale(y_pred)
+    weights = scale(abs(weights)).round(2)
 #     overall confidence score for model
-tau = get_tau(X, y, clf, len(data))
+    tau = get_tau(X, y, clf, len(data))
 
 #     format output
-weights_list = []
+    weights_table = pd.DataFrame(weights)
+    weights_table.index = dataset_copy.columns
+    weights_table.loc["tau"] = tau
 
-for i,w in enumerate(weights) :
-    #if w != 0.:
-    d={}
-    d['attribute']=dataset_copy.columns.values[i]
-    d['weight']=round(w, 2)
-    weights_list.append(d)
-    
-weights_json = json.dumps(weights_list)
 #     predicted score for each item
-dataset[score] = y_pred
+    dataset[score] = y_pred
 #     ordinal ranking for each item
-dataset[rank] = dataset[score].rank(ascending=False)
+    dataset[rank] = dataset[score].rank(ascending=False)
 #     confidence in prediction for each item
-dataset[confd] = conf_scores
+    dataset[confd] = conf_scores
 
-#return dataset, weights_json, tau
-    
-#print("SOMETHING IS PRINTING HERE");
+    return dataset, weights_table
+
+
+
+#/****************************************************/
+#read dataset from json
+with open('public/data/states.json', 'r') as data_file:
+    dataset_list = json.load(data_file)
+#get pairs passed from front end
+#pairs = sys.argv[1]
+pairs =json.loads(sys.argv[1])
+
+primary_key = 'Title'
+rank = 'Rank'
+score = 'Score'
+confd = 'Confidence'
+
+# convert each primary key into index in pairs sent from client
+#primaryKeyToIndex(dataset_list, pairs)
+#print(pairs)
+pairs_json = json.dumps(pairs)
+pairs = pd.read_json(pairs_json)
+
+dataset = pd.read_json(json.dumps(dataset_list))
+
+rank, weights = build(dataset=dataset, pairs=pairs)
+#write results back to file
+
+rank.to_json('public/data/ranking.json', orient='records')
+weights.to_json('public/data/weights.json')
