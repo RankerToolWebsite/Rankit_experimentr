@@ -102,7 +102,9 @@ $(document).ready(function () {
         
 	//check if we need to populate page from URL
 	if ( cc_getParametersFromURL() !== undefined) {
-	    cc_populateBox();
+	    cc_populateHighBox();
+        cc_populateMediumBox();
+        cc_populateLowBox();
 	    barUpdate(confidence);
 	}
 	
@@ -274,13 +276,6 @@ function shuffleDataset() {
     refresh_popovers()
 }
 
-var filtered = [1, 2, 3, 4].filter(
-  function(e) {
-    return this.indexOf(e) < 0;
-  },
-  [2, 4]
-);
-
 function searchDataset(e) {
     var currentData = dataset
     //filters what is already ranked out of the dataset
@@ -304,6 +299,7 @@ function refresh_popovers(){
 	}
     });
 }
+
 
 
 /****** Loading from URL ******************/
@@ -336,30 +332,37 @@ function cc_getParametersFromURL() {
     }
     return query_string;
 }
-cc_highFromURL = cc_getHighFromURL()
 
+    function cc_getHighFromURL() {
+    var selectedObjects = cc_getParametersFromURL().high;
 
-function cc_getHighFromURL() {
-var highObjects = cc_getParametersFromURL.high;
-    if (highObjects !== undefined) {
-	return highObjects.split(',');
+     if (selectedObjects !== undefined) {
+	return selectedObjects.split(',');
     }
-    return highObjects;
-}
-
-
-    var cc_highFromURL = {}
-    cc_highFromURL = cc_getHighFromURL()
-
-console.log(cc_highFromURL)
-if (cc_highFromURL !== undefined) {
-      cc_populateBox("#left", cc_highFromURL)
+    return selectedObjects;
     }
 
-function cc_populateBox(box, objectsFromURL) {
-    //var lc_objectsFromURL = lc_getParametersFromURL();
-    for (let i = 0; i < objectsFromURL.length; i++) {
-	document.querySelector('#top').removeChild(document.getElementById(cc_objectsFromURL[i]))
+function cc_getMedFromURL() {
+    var selectedObjects = cc_getParametersFromURL().medium;
+
+     if (selectedObjects !== undefined) {
+	return selectedObjects.split(',');
+    }
+    return selectedObjects;
+    }
+
+function cc_getLowFromURL() {
+    var selectedObjects = cc_getParametersFromURL().low;
+
+     if (selectedObjects !== undefined) {
+	return selectedObjects.split(',');
+    }
+    return selectedObjects;
+    }
+
+function cc_populateHighBox() {
+    var cc_objectsFromURL = cc_getHighFromURL();
+    for (let i = 0; i < cc_objectsFromURL.length; i++) {document.querySelector('#top').removeChild(document.getElementById(cc_objectsFromURL[i]))
 	var node = document.createElement("DIV");
 	var textnode = document.createTextNode(dataset[cc_objectsFromURL[i]].Title);
 	node.appendChild(textnode);
@@ -367,7 +370,37 @@ function cc_populateBox(box, objectsFromURL) {
 	node.setAttribute("class", "object noSelect pop");
 	node.setAttribute("tabindex", "0");
 	node.setAttribute("data-toggle", "popover");
-	document.querySelector(box).appendChild(node);
+	document.querySelector('#left').appendChild(node);
+	handleBuildSubmit();
+    }
+}
+
+function cc_populateMediumBox() {
+    var cc_objectsFromURL = cc_getMedFromURL();
+    for (let i = 0; i < cc_objectsFromURL.length; i++) {document.querySelector('#top').removeChild(document.getElementById(cc_objectsFromURL[i]))
+	var node = document.createElement("DIV");
+	var textnode = document.createTextNode(dataset[cc_objectsFromURL[i]].Title);
+	node.appendChild(textnode);
+	node.setAttribute("id", cc_objectsFromURL[i]);
+	node.setAttribute("class", "object noSelect pop");
+	node.setAttribute("tabindex", "0");
+	node.setAttribute("data-toggle", "popover");
+	document.querySelector('#center').appendChild(node);
+	handleBuildSubmit();
+    }
+}
+
+function cc_populateLowBox() {
+    var cc_objectsFromURL = cc_getLowFromURL();
+    for (let i = 0; i < cc_objectsFromURL.length; i++) {document.querySelector('#top').removeChild(document.getElementById(cc_objectsFromURL[i]))
+	var node = document.createElement("DIV");
+	var textnode = document.createTextNode(dataset[cc_objectsFromURL[i]].Title);
+	node.appendChild(textnode);
+	node.setAttribute("id", cc_objectsFromURL[i]);
+	node.setAttribute("class", "object noSelect pop");
+	node.setAttribute("tabindex", "0");
+	node.setAttribute("data-toggle", "popover");
+	document.querySelector('#right').appendChild(node);
 	handleBuildSubmit();
     }
 }
