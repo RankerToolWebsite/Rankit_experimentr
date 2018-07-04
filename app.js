@@ -46,6 +46,44 @@ app.post('/finish', function(req, res) {
   res.send(200)
 })
 
+//Enable python for ranking script
+var PythonShell = require('python-shell');
+/*
+var options = {
+    mode: 'text',
+    pythonPath: '/home/caitlin/anaconda3/bin/python3', 
+    pythonOptions: ['-u'],
+    // make sure you use an absolute path for scriptPath
+    scriptPath: 'public/python',
+    args: ['value1', 'value2', 'value3']
+};
+
+PythonShell.run('build.py', options, function (err, results) {
+    if (err) throw err;
+    // results is an array consisting of messages collected during execution
+    console.log('results: %j', results);
+    });
+*/
+
+app.get('/build', run_build);
+function run_build(req, res) {
+  var options = {
+    args:[req.query.pairs], // pairs of itmes extracted from build view
+    mode: 'text',
+    pythonPath: '/home/caitlin/anaconda3/bin/python3', 
+    pythonOptions: ['-u'],
+    // make sure you use an absolute path for scriptPath
+    scriptPath: 'public/python'
+  }
+  PythonShell.run('build.py', options, function (err, data) {
+      if (err) res.send(err);
+//      console.log(data);
+//      res.send(data.toString());
+  });
+}
+
+//var pyshell = new PythonShell('my_script.py');
+
 // Handle POSTs from frontend
 app.post('/', function handlePost(req, res) {
   // Get experiment data from request body
