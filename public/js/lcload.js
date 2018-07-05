@@ -1,12 +1,12 @@
-const colorScheme = ["#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5"];
 var confidence = 0;
 var weights = 0;
+var counter = 0;
 var tooltipCounter = 0;
 const pool = document.querySelector('#top');
 const target = document.querySelector('#lc-center');
 var dataset = {}
 var attributes = {}
-const min_num_of_objects = 2;
+var min_num_of_objects = 2;
 var lc_observer;
 
 /*********** Initialize Page *****************/
@@ -40,6 +40,9 @@ $(document).ready(function () {
 	    ghostClass: 'ghost',
 	});
 	
+	add_to_sortable('.high');
+	add_to_sortable('.low');
+	
 	//listener for rank button
 	document.querySelector('#lc-submit').addEventListener('click', handleLCSubmit);
 	
@@ -50,16 +53,22 @@ $(document).ready(function () {
 		const list_length = document.querySelector('#lc-center').children.length;
 		if (list_length < min_num_of_objects) {
 		    $('#lc-submit').attr('disabled', 'disabled');
-		    d3.select("body").selectAll("svg").remove();
-		    document.getElementById("p1").innerHTML = "";
 		}
 		else {
 		    $('#lc-submit').removeAttr('disabled');
 		    handleBuildSubmit();
-		    barUpdate(confidence);
+		}
+		barUpdate(confidence);
+		
+		var colorScheme = ["#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5"];
+		console.log(counter);
+		if (counter == 1) {
+		    d3.select("body").selectAll("svg").remove();
 		    console.log(weights);
 		    renderBarChart(weights,"#chart", colorScheme);
+		} else if(weights != 0){
 		    document.getElementById("p1").innerHTML = "Impact of Attributes on Dataset Ranking";
+		    renderBarChart(weights,"#chart", colorScheme);
 		}
 	    });
 	});
@@ -130,25 +139,21 @@ function handleLCSubmit() {
 }
 
 function handleBuildSubmit() {
-    const pwl = lc_generatePairwise();
-    var pairs = JSON.stringify(pwl);
-/*
+    const pwl = lc_generatePairwise()
+    var pairs = ""
     for (let i = 0; i < pwl.length; i++) {
 	pairs = pairs + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
-    }*/
+    }
     if (pairs !== ""){
-	const url = "build?pairs="+pairs
+	const url = "build/"+pairs
 	const xhr = new XMLHttpRequest()
 	xhr.open('GET', url, true)
 	xhr.setRequestHeader('Content-type', 'application/json')
 	
 	xhr.send()
 	xhr.onload = function () {
-	    d3.json("data/weights.json", function(data) {
-		confidence = data[0]["tau"]
-		weights = data[0]
-		delete weights["tau"]
-	    });
+	    weights = JSON.parse(JSON.parse(this.response).weights)
+	    confidence = JSON.parse(this.response).confidence
 	}
     }
 }
@@ -226,6 +231,13 @@ function shuffleDataset() {
     render(currentData)
     refresh_popovers()
 }
+
+var filtered = [1, 2, 3, 4].filter(
+  function(e) {
+    return this.indexOf(e) < 0;
+  },
+  [2, 4]
+);
 
 function searchDataset(e) {
     var currentData = dataset

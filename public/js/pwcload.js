@@ -1,13 +1,13 @@
-const colorScheme = ["#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5"];
 var confidence = 0;
 var weights = 0;
+var counter = 0;
 var tooltipCounter = 0;
 const pool = document.querySelector('#top');
-const target = document.querySelector('#lc-center');
+//const target = document.querySelector('#lc-center');
 var dataset = {}
 var attributes = {}
-const min_num_of_objects = 2;
-var lc_observer;
+var min_num_of_objects = 2;
+var pwc_observer;
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
@@ -28,53 +28,71 @@ $(document).ready(function () {
 	
 	//create sortable container for pool
 	const source_sortable = Sortable.create(pool, {
-	    group: 'list',
-	    animation: 300,
-	    sort: false,
-	    ghostClass: 'ghost',
+	     group: {
+        name: 'list',
+        pull: 'clone',
+        revertClone: 'true',
+      },
+      onAdd: function(evt){
+        evt.item.parentNode.removeChild(evt.item)
+      },
+      animation: 300,
+      sort: false,
+      ghostClass: 'ghost',
 	});
-	//create sortable container for preference collection
-	const target_sortable = Sortable.create(target, {
-	    group: 'list',
-	    animation: 300,
-	    ghostClass: 'ghost',
-	});
+	
+    add_to_sortable('.high')
+    add_to_sortable('.low')
+
 	
 	//listener for rank button
-	document.querySelector('#lc-submit').addEventListener('click', handleLCSubmit);
+	document.querySelector('#submit').addEventListener('click', handleBuildSubmit);
 	
-	lc_observer = new MutationObserver(function (mutations) {
+	var pwc_observer = new MutationObserver(function (mutations) {
 	    mutations.forEach(function (mutation) {
-		lc_urlUpdate();
+        pwc_urlUpdate()
+
+        const high_length = document.querySelectorAll('.high > div').length
+        const low_length = document.querySelectorAll('.low > div').length
+
+        const list_num = (high_length > 0 ? 1 : 0) + (low_length > 0 ? 1 : 0)
+
+        if ((high_length != low_length) || (list_num < min_num_of_objects)) {
+          $('#submit').attr('disabled', 'disabled');
+        }
+        else {
+          $('#submit').removeAttr('disabled');
+          handleBuildSubmit()
+        }
+		barUpdate(confidence);
 		
-		const list_length = document.querySelector('#lc-center').children.length;
-		if (list_length < min_num_of_objects) {
-		    $('#lc-submit').attr('disabled', 'disabled');
+		var colorScheme = ["#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5"];
+		console.log(counter);
+		if (counter == 1) {
 		    d3.select("body").selectAll("svg").remove();
-		    document.getElementById("p1").innerHTML = "";
-		}
-		else {
-		    $('#lc-submit').removeAttr('disabled');
-		    handleBuildSubmit();
-		    barUpdate(confidence);
 		    console.log(weights);
 		    renderBarChart(weights,"#chart", colorScheme);
+		} else if(weights != 0){
 		    document.getElementById("p1").innerHTML = "Impact of Attributes on Dataset Ranking";
+		    renderBarChart(weights,"#chart", colorScheme);
 		}
 	    });
 	});
 	
 	// Node, config
-	var lc_observerConfig = {
-	    childList: true
+	var pwc_observerConfig = {
+	    childList: true,
+        subtree: true,
 	};
 	
-	var lc_center_node = document.getElementById('lc-center');
-	lc_observer.observe(lc_center_node, lc_observerConfig);
-	
+	var pwc_center_node = document.getElementById('pwl');
+	pwc_observer.observe(pwc_center_node, pwc_observerConfig);
+	    
+    
 	//check if we need to populate page from URL
-	if ( lc_getParametersFromURL() !== undefined) {
-	    lc_populateBox();
+	if ( pwc_getParametersFromURL() !== undefined) {
+	    pwc_populateHighBox();
+        pwc_populateLowBox();
 	    barUpdate(confidence);
 	}
 	
@@ -120,8 +138,8 @@ function barUpdate(list_length) {
 
 
 
-function handleLCSubmit() {
-    const pwl = lc_generatePairwise()
+function handlePWCSubmit() {
+    const pwl = pwc_generatePairwise()
     var pairwiseURL = "{{url_for('explore.explore', dataset_name = dataset_name) }}"
     for (let i = 0; i < pwl.length; i++) {
 	pairwiseURL = pairwiseURL + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
@@ -130,31 +148,27 @@ function handleLCSubmit() {
 }
 
 function handleBuildSubmit() {
-    const pwl = lc_generatePairwise();
-    var pairs = JSON.stringify(pwl);
-/*
+    const pwl = pwc_generatePairwise()
+    var pairs = ""
     for (let i = 0; i < pwl.length; i++) {
 	pairs = pairs + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
-    }*/
+    }
     if (pairs !== ""){
-	const url = "build?pairs="+pairs
+	const url = "build/"+pairs
 	const xhr = new XMLHttpRequest()
 	xhr.open('GET', url, true)
 	xhr.setRequestHeader('Content-type', 'application/json')
 	
 	xhr.send()
 	xhr.onload = function () {
-	    d3.json("data/weights.json", function(data) {
-		confidence = data[0]["tau"]
-		weights = data[0]
-		delete weights["tau"]
-	    });
+	    weights = JSON.parse(JSON.parse(this.response).weights)
+	    confidence = JSON.parse(this.response).confidence
 	}
     }
 }
 
-function lc_generatePairwise() {
-    const list = Array.from(document.querySelectorAll('#lc-center .object'))
+function pwc_generatePairwise() {
+    const list = Array.from(document.querySelectorAll('#pwl .object'))
     const ids = list.map(x => x.id)
     // pairwise list to send back to server
     let pwl = []
@@ -196,7 +210,9 @@ function getCurrentPool() {
 
 //Takes what is in the ranked pool and returns their original ids as an integer array
 function getRankedID() {
-  return Array.from(document.querySelector('#lc-center').children).map(x => parseInt(x.id))
+  var high = Array.from(document.querySelector('.high').children).map(x => parseInt(x.id))
+  var low = Array.from(document.querySelector('.low').children).map(x => parseInt(x.id))
+  return high.concat(low)
 }
 
 
@@ -251,15 +267,41 @@ function refresh_popovers(){
     });
 }
 
+   function handleMore() {
+      const pwl = document.querySelector('#pwl')
+      // const html = `<div class="pw"><div class="high list"></div><div class="low list"></div></div>`
+      const html = `<div class="pwx"><div class="pw"><div class="high list"></div><div class="low list"></div></div><div class="x" onclick="clearPW(event)"><i class="fas fa-times"></i></div></div>`
+      pwl.innerHTML += html
+        add_to_sortable('.high')
+        add_to_sortable('.low')
+    }
+        
+
+    function clearPW(e) {
+      const pwl = e.target.closest('#pwl')
+      console.log();
+      if (pwl.children.length > 1) {
+        const pwx = e.target.closest('.pwx');
+        // console.log(pwx)
+        pwx.remove()
+      } else {
+        const pw = e.target.closest('.pwx').children[0];
+        pw.children[0].innerHTML = "";
+        pw.children[1].innerHTML = "";
+      }
+    }
+
 
 /****** Loading from URL ******************/
-function lc_urlUpdate() {
-    var list = Array.from(document.querySelectorAll('#lc-center .object')).map(x => x.id)
-    var url = window.location.pathname + "?method=" + "lc" + "&" + "objects="
-    history.pushState({}, 'List Comparison', url + list.toString())
-}
+ function pwc_urlUpdate() {
+      const high = Array.from(document.querySelectorAll('.high > div')).map(x => x.id)
+      const low = Array.from(document.querySelectorAll('.low > div')).map(x => x.id)
+      var url = window.location.pathname + "?method=" + "pwc" + "&" + "left=" + high.toString() + "&" + "right=" + low.toString()
+      history.pushState({}, 'Pairwise Comparison', url)
+ }
+    
 
-function lc_getParametersFromURL() {
+function pwc_getParametersFromURL() {
     var query_string = {};
     var query = window.location.search.substring(1);
     var vars = query.split("&");
@@ -277,26 +319,73 @@ function lc_getParametersFromURL() {
       	    query_string[pair[0]].push(decodeURIComponent(pair[1]));
     	}
     }
-    var selectedObjects = query_string.objects;
-    if (selectedObjects !== undefined) {
+    return query_string;
+}
+     function pwc_getHighFromURL() {
+    var selectedObjects = pwc_getParametersFromURL().left;
+
+     if (selectedObjects !== undefined) {
 	return selectedObjects.split(',');
     }
     return selectedObjects;
-}
+    }
+     
+    function pwc_getLowFromURL() {
+    var selectedObjects = pwc_getParametersFromURL().right;
 
-function lc_populateBox() {
-    var lc_objectsFromURL = lc_getParametersFromURL();
-    for (let i = 0; i < lc_objectsFromURL.length; i++) {
-	document.querySelector('#top').removeChild(document.getElementById(lc_objectsFromURL[i]))
+     if (selectedObjects !== undefined) {
+	return selectedObjects.split(',');
+    }
+    return selectedObjects;
+    }
+
+
+function pwc_populateHighBox() {
+    var index = 0
+    var numOfElem = 0
+    var pwc_objectsFromURL = pwc_getHighFromURL();
+    for (let i = 0; i < pwc_objectsFromURL.length; i++) {
+	if (numOfElem > 0) {
+          if (document.querySelectorAll('.low')[index + 1] === undefined) {
+            handleMore()
+          }
+          index = index + 1
+          numOfElem = 0
+        }document.querySelector('#top').removeChild(document.getElementById(pwc_objectsFromURL[i]))
 	var node = document.createElement("DIV");
-	var textnode = document.createTextNode(dataset[lc_objectsFromURL[i]].Title);
+	var textnode = document.createTextNode(dataset[pwc_objectsFromURL[i]].Title);
 	node.appendChild(textnode);
-	node.setAttribute("id", lc_objectsFromURL[i]);
+	node.setAttribute("id", pwc_objectsFromURL[i]);
 	node.setAttribute("class", "object noSelect pop");
 	node.setAttribute("tabindex", "0");
 	node.setAttribute("data-toggle", "popover");
-	document.querySelector('#lc-center').appendChild(node);
+	document.querySelectorAll('.high')[index].appendChild(node);
+    numOfElem = numOfElem + 1
 	handleBuildSubmit();
     }
 }
-
+     
+    function pwc_populateLowBox() {
+    var index = 0
+    var numOfElem = 0
+    var pwc_objectsFromURL = pwc_getLowFromURL();
+    for (let i = 0; i < pwc_objectsFromURL.length; i++) {
+	if (numOfElem > 0) {
+          if (document.querySelectorAll('.low')[index + 1] === undefined) {
+            handleMore()
+          }
+          index = index + 1
+          numOfElem = 0
+        }//document.querySelector('#top').removeChild(document.getElementById(pwc_objectsFromURL[i]))
+	var node = document.createElement("DIV");
+	var textnode = document.createTextNode(dataset[pwc_objectsFromURL[i]].Title);
+	node.appendChild(textnode);
+	node.setAttribute("id", pwc_objectsFromURL[i]);
+	node.setAttribute("class", "object noSelect pop");
+	node.setAttribute("tabindex", "0");
+	node.setAttribute("data-toggle", "popover");
+	document.querySelectorAll('.low')[index].appendChild(node);
+    numOfElem = numOfElem + 1
+	handleBuildSubmit();
+    }
+}
