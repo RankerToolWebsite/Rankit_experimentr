@@ -35,7 +35,7 @@ Pages[1] = 'modules/instructions/';
 Pages[2] = 'modules/debrief/';
     
 //on page load choose a random module and place it in correct place in the array    
-   /** 
+
 window.onload = function randomPage() {
     var x = Math.floor((Math.random() * 3) + 1);
     var page = 0;
@@ -49,13 +49,13 @@ window.onload = function randomPage() {
     Pages.splice( 2, 0, page);
     console.log(page);
 }
-*/
+Pages[4] = 'modules/explore/';
 
 //for testing
 //Pages[0] = 'modules/list';
-Pages[0] = 'modules/categorical';
+//Pages[0] = 'modules/categorical';
 //Pages[0] = 'modules/pairwise';
-Pages[1] = 'modules/debrief/';
+//Pages[1] = 'modules/explore/';
   
 experimentr.sequence(Pages).start();
 

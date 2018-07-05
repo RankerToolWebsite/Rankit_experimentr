@@ -50,16 +50,16 @@ $(document).ready(function () {
 		const list_length = document.querySelector('#lc-center').children.length;
 		if (list_length < min_num_of_objects) {
 		    $('#lc-submit').attr('disabled', 'disabled');
-		    d3.select("body").selectAll("svg").remove();
-		    document.getElementById("p1").innerHTML = "";
+		    //d3.select("body").selectAll("svg").remove();
+		    //document.getElementById("p1").innerHTML = "";
 		}
 		else {
 		    $('#lc-submit').removeAttr('disabled');
 		    handleBuildSubmit();
-		    barUpdate(confidence);
-		    console.log(weights);
-		    renderBarChart(weights,"#chart", colorScheme);
-		    document.getElementById("p1").innerHTML = "Impact of Attributes on Dataset Ranking";
+		    //barUpdate(confidence);
+		    //console.log(weights);
+		    //renderBarChart(weights,"#chart", colorScheme);
+		    //document.getElementById("p1").innerHTML = "Impact of Attributes on Dataset Ranking";
 		}
 	    });
 	});
