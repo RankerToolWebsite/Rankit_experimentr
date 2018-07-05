@@ -72,7 +72,7 @@ $(document).ready(function () {
           $('#cc-submit').removeAttr('disabled');
           handleBuildSubmit()
         }
-          barUpdate(confidence);
+          //barUpdate(confidence);
 
       var colorScheme = ["#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5"];
 		console.log(counter);
@@ -80,10 +80,12 @@ $(document).ready(function () {
 		    d3.select("body").selectAll("svg").remove();
 		    console.log(weights);
 		    renderBarChart(weights,"#chart", colorScheme);
-		} else if(weights != 0){
+		} 
+          //shows barchart in top right corner
+          /* else if(weights != 0){
 		    document.getElementById("p1").innerHTML = "Impact of Attributes on Dataset Ranking";
 		    renderBarChart(weights,"#chart", colorScheme);
-		}
+		} */
 	    });
 	});
 	
@@ -123,6 +125,7 @@ $(document).ready(function () {
 	    }
 	});
     }); 
+    experimentr.release();
 });
 	
 /*********************** Functions ****************************************/
@@ -176,8 +179,11 @@ function handleBuildSubmit() {
 
     xhr.send()
     xhr.onload = function () {
-        weights = JSON.parse(JSON.parse(this.response).weights)
-        confidence = JSON.parse(this.response).confidence
+        d3.json("data/weights.json", function(data) {
+		confidence = data[0]["tau"]
+		weights = data[0]
+		delete weights["tau"]
+	    });
 	}
     }
 }

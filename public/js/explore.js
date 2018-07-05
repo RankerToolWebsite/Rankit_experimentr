@@ -29,6 +29,7 @@ $(document).ready(function () {
 	})
 	renderData(data, keys)
     });
+    experimentr.release();
 });
 
 /**************** Render bar chart *************************/

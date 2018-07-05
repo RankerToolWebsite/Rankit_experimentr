@@ -40,9 +40,6 @@ $(document).ready(function () {
 	    ghostClass: 'ghost',
 	});
 	
-	add_to_sortable('.high');
-	add_to_sortable('.low');
-	
 	//listener for rank button
 	document.querySelector('#lc-submit').addEventListener('click', handleLCSubmit);
 	
@@ -101,7 +98,8 @@ $(document).ready(function () {
 		$('[data-toggle="popover"]').popover('hide');
 	    }
 	});
-    }); 
+    });
+    experimentr.release();
 });
 	
 /*********************** Functions ****************************************/
@@ -152,8 +150,11 @@ function handleBuildSubmit() {
 	
 	xhr.send()
 	xhr.onload = function () {
-	    weights = JSON.parse(JSON.parse(this.response).weights)
-	    confidence = JSON.parse(this.response).confidence
+	    d3.json("data/weights.json", function(data) {
+		confidence = data[0]["tau"]
+		weights = data[0]
+		delete weights["tau"]
+	    });
 	}
     }
 }
