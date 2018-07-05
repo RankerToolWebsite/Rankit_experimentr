@@ -1,0 +1,338 @@
+body {
+    background-color: #f9f9f9;
+  }
+
+  .page-header h1 {
+    padding: 0px 20px 0px;
+    color: white;
+    font-size: 40px;
+    margin: 0;
+    display: inline-block;
+  }
+
+  .page-header {
+    margin-bottom: 20px;
+  }
+
+  p {
+    padding: 7px 20px 0px;
+    color: white;
+    font-size: 16px;
+    margin: 0;
+    display: inline-block;
+  }
+
+  {#    .dataTables_wrapper {#}
+  {#      margin-left: 20px;#}
+  {#      margin-right: 20px;#}
+  {#      right: 0;#}
+  {#    }#}
+
+
+  #head {
+    color: white;
+  }
+
+  {#    .middleNav {#}
+  {#      margin: 2px 0px;#}
+  {#      padding-right: 405px;#}
+  {#      position: absolute;#}
+  {#      margin-left: auto;#}
+  {#      margin-right: auto;#}
+  {#      right: 0;#}
+  {#    }#}
+  {##}
+  {#    .dataTables_filter {#}
+  {#      width: 50%;#}
+  {#      float: right;#}
+  {#      text-align: right;#}
+  {#      padding-bottom: 20px;#}
+  {#    }#}
+
+
+  /*IMPORTANT: Leave for scrolling left to right when lots of attributes */
+  .dataTables_scroll {
+    overflow: auto;
+
+  }
+
+  .dataTables_scrollHead {
+    overflow: hidden !important;
+
+  }
+
+  .dataTables_scrollBody {
+    overflow: auto !important;
+
+  }
+  #TableData{
+    max-width: 95%;
+    margin: auto;
+  }
+  h1.title {
+    text-transform: capitalize;
+  }
+
+  h1.title {
+    display: block;
+  }
+
+  h1.title:first-letter {
+    text-transform: uppercase;
+  }
+
+  .dataTables_wrapper {
+    margin: 1em auto;
+  }
+
+  #table_filter {
+    display: none;
+    visibility: hidden;
+  }
+
+  #table_length {
+    position:relative;
+    top: -6px;
+    float: right;
+    right: 1%;
+  }
+
+  h1.title {
+    text-transform: capitalize;
+    display: block;
+    color: white;
+    font-size: 60px;
+    display: inline-block;
+    padding: 25px 20px 0px;
+    /* vertical-align: bottom; */
+    vertical-align: middle;
+  }
+
+  h1.title:first-letter {
+    text-transform: uppercase;
+  }
+
+  .page-header h1 {
+    padding: 0px 20px 0px;
+    color: white;
+    font-size: 40px;
+    margin: 0;
+    display: inline-block;
+  }
+
+  path {
+    stroke-width: 2;
+    fill: none;
+  }
+
+  .axis path, .axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+  }
+
+  .area {
+    fill: #F0F8FF;
+    stroke-width: 0;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+    position: center;
+  }
+  .toolTip {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    position: absolute;
+    display: none;
+    width: auto;
+    height: auto;
+    background: none repeat scroll 0 0 white;
+    border: 0 none;
+    border-radius: 8px 8px 8px 8px;
+    box-shadow: -3px 3px 15px #888888;
+    color: black;
+    font: 12px sans-serif;
+    padding: 5px;
+    text-align: center;
+  }
+  .legend {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 60%;
+  }
+  .axis text {
+    font: 14px sans-serif;
+    color: white;
+  }
+  .axis path{
+    fill: none;
+    stroke: #000;
+  }
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+  .axis .tick line {
+    stroke-width: 1;
+    stroke: rgba(0, 0, 0, 0.2);
+  }
+  .x.axis path {
+    display: none;
+  }
+
+  #graphDiv{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    width: 1200px;
+    height: 500px;
+    position: relative;
+
+  }
+
+  .attributeTitle{
+    display: block;
+    font-size: 35px;
+    padding: 20px 20px 20px;
+    text-align: center;
+  }
+
+  .semi-transparent-button{
+    background-color:  rgba(200, 200, 200, 0.6);
+    border-radius: 2px;
+    border-color: rgba(200, 200, 200, 0.6);
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease-out;
+    border: 1px solid rgba(200, 200, 200, 0.6);
+    text-decoration-color: white;
+    padding-bottom: 10px;
+    padding-top: 2px;
+  }
+
+  .semi-transparent-button:hover {
+    color: #fff;
+    border: 1px solid;
+    border-color: white;
+  }
+
+  .right{
+    float: right;
+  }
+
+  h2 {
+    text-align: center;
+    color: #333;
+    font-size: 30px;
+  }
+
+  p {
+    text-align: center;
+  }
+
+  .pointer {
+    cursor: pointer;
+  }
+
+  .navbar-form {
+    width: 45%;
+    padding: 0px 20px 0px;
+    vertical-align: bottom;
+  }
+  .toolbar {
+    float: left;
+    font-size: 20px;
+  }
+  .graphArea {
+    width: 50%;
+    float: right;
+    grid-area: build-top;
+    min-height: 115px;
+  }
+
+  .graphArea svg {
+    display:block;
+    margin:0 auto;
+  }
+
+path {
+  stroke: steelblue;
+  stroke-width: 2;
+  fill: none;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: white;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.tooltip {
+  background: #eee;
+  box-shadow: 0 0 5px #999999;
+  color: #333;
+  font-size: 12px;
+  left: 130px;
+  padding: 10px;
+  position: absolute;
+  text-align: center;
+  top: 95px;
+  z-index: 10;
+  display: block;
+  opacity: 0;
+}
+
+.title{
+  font-size:16px;
+}
+
+
+svg {
+  font: 10px sans-serif;
+}
+
+
+.bar {
+  /* fill: steelblue; */
+  clip-path: url(#clip);
+}
+
+.subBar {
+  fill: #2980B9;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.brush .extent {
+  stroke: #fff;
+  fill: steelblue;
+  fill-opacity: .25;
+  shape-rendering: crispEdges;
+}
+
+  rect.mover {
+            stroke: red;
+            stroke-opacity: .1;
+            fill: #E74C3C;
+            fill-opacity: .5;
+        }
+
+.inTableBar {
+  float: left;
+  height: 100%;
+}
+.bar-chart-bar {
+  background-color: #e8e8e8;
+  display: block;
+  position:relative;
+  height: 20px;
+}
+
