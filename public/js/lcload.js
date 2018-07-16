@@ -13,7 +13,7 @@ var lc_observer;
 $(document).ready(function () {
 
     //load data
-    d3.json("data/states.json", function(data) {
+    d3.json("data/colleges.json", function(data) {
 	//save full dataset
 	dataset = data;
 	dataset.sort((a, b) => a.Title.localeCompare(b.Title));
@@ -312,4 +312,6 @@ function lc_populateBox() {
 	handleBuildSubmit();
     }
 }
+
+experimentr.onNext(experimentr.endTimer('exploration'));
 

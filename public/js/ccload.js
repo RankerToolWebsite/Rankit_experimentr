@@ -16,7 +16,7 @@ var cc_observer;
 $(document).ready(function () {
 
     //load data
-    d3.json("data/states.json", function(data) {
+    d3.json("data/colleges.json", function(data) {
 	//save full dataset
 	dataset = data;
 	dataset.sort((a, b) => a.Title.localeCompare(b.Title));
@@ -126,10 +126,12 @@ $(document).ready(function () {
 	});
     }); 
     experimentr.release();
+    experimentr.startTimer('exploration');
 });
 	
 /*********************** Functions ****************************************/
-
+//when next is clicked end timer
+//experimentr.onNext(experimentr.endTimer('exploration'));
 
 function add_to_sortable(className) {
     const all = document.querySelectorAll(className)
@@ -310,12 +312,51 @@ function refresh_popovers(){
 
 /****** Loading from URL ******************/
 function cc_urlUpdate() {
-    const high = Array.from(document.querySelectorAll('#left .object')).map(x => x.id)
-    const med = Array.from(document.querySelectorAll('#center .object')).map(x => x.id)
-    const low = Array.from(document.querySelectorAll('#right .object')).map(x => x.id)
+    var high = Array.from(document.querySelectorAll('#left .object')).map(x => x.id)
+    var med = Array.from(document.querySelectorAll('#center .object')).map(x => x.id)
+    var low = Array.from(document.querySelectorAll('#right .object')).map(x => x.id)
     var url = window.location.pathname + "?method=" + "cc" + "&" + "high=" + high.toString() + "&" + "medium=" + med.toString() + "&" + "low=" + low.toString()
     history.pushState({}, 'Categorical Comparison', url)
+    trackHigh(high)
+    trackMed(med)
+    trackLow(low)
+    //experimentr.addData(url);
     }
+
+var highUrlChanges = new Array()
+var medUrlChanges = new Array()
+var lowUrlChanges = new Array()
+
+function trackHigh(url){
+    //console.log(url)
+    highUrlChanges.push(url)
+    console.log(highUrlChanges)
+    
+}
+function trackMed(url){
+    //console.log(url)
+    medUrlChanges.push(url)
+    console.log(medUrlChanges)
+}
+function trackLow(url){
+    //console.log(url)
+    lowUrlChanges.push(url)
+    console.log(lowUrlChanges)
+}
+
+function validate() {
+    if( highUrlChanges ) {
+      experimentr.addData(highUrlChanges);
+    }
+    if( medUrlChanges ) {
+      experimentr.addData(medUrlChanges);
+    }
+    if( lowUrlChanges ) {
+      experimentr.addData(lowUrlChanges);
+    }
+  }
+
+experimentr.onNext(validate)
 
 
 function cc_getParametersFromURL() {
