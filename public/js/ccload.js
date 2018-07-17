@@ -57,57 +57,47 @@ $(document).ready(function () {
 	//listener for rank button
 	document.querySelector('#cc-submit').addEventListener('click', handleCCSubmit);
 	
-    var cc_observer = new MutationObserver(function (mutations) {
-      mutations.forEach(function (mutation) {
-        cc_urlUpdate()
-
-        var num_of_non_empty_list = document.querySelector('#center').children.length > 0 ? 1 : 0
-        num_of_non_empty_list += document.querySelector('#left').children.length > 0 ? 1 : 0
-        num_of_non_empty_list += document.querySelector('#right').children.length > 0 ? 1 : 0
-
-        if (num_of_non_empty_list < min_num_of_non_empty_lists) {
-          $('#cc-submit').attr('disabled', 'disabled');
-        }
-        else {
-          $('#cc-submit').removeAttr('disabled');
-          handleBuildSubmit()
-        }
-          //barUpdate(confidence);
-
-      var colorScheme = ["#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5"];
-		console.log(counter);
-		if (counter == 1) {
-		    d3.select("body").selectAll("svg").remove();
-		    console.log(weights);
-		    renderBarChart(weights,"#chart", colorScheme);
-		} 
-          //shows barchart in top right corner
-          /* else if(weights != 0){
-		    document.getElementById("p1").innerHTML = "Impact of Attributes on Dataset Ranking";
-		    renderBarChart(weights,"#chart", colorScheme);
-		} */
+	var cc_observer = new MutationObserver(function (mutations) {
+	    mutations.forEach(function (mutation) {
+		cc_urlUpdate()
+		
+		var num_of_non_empty_list = document.querySelector('#center').children.length > 0 ? 1 : 0
+		num_of_non_empty_list += document.querySelector('#left').children.length > 0 ? 1 : 0
+		num_of_non_empty_list += document.querySelector('#right').children.length > 0 ? 1 : 0
+		
+		if (num_of_non_empty_list < min_num_of_non_empty_lists) {
+		    $('#cc-submit').attr('disabled', 'disabled');
+		}
+		else {
+		    $('#cc-submit').removeAttr('disabled');
+		    handleBuildSubmit()
+		}
+		//barUpdate(confidence);
+		//console.log(weights);
+		//renderBarChart(weights,"#chart", colorScheme);
+		//document.getElementById("p1").innerHTML = "Impact of Attributes on Dataset Ranking";
 	    });
 	});
 	
 	// Node, config
-    var cc_observerConfig = {
-      childList: true,
-    };
+	var cc_observerConfig = {
+	    childList: true,
+	};
         
-    var cc_center_node = document.getElementById('center');
-    var cc_left_node = document.getElementById('left');
-    var cc_right_node = document.getElementById('right');
-
-    cc_observer.observe(cc_center_node, cc_observerConfig);
-    cc_observer.observe(cc_left_node, cc_observerConfig);
-    cc_observer.observe(cc_right_node, cc_observerConfig);
+	var cc_center_node = document.getElementById('center');
+	var cc_left_node = document.getElementById('left');
+	var cc_right_node = document.getElementById('right');
+	
+	cc_observer.observe(cc_center_node, cc_observerConfig);
+	cc_observer.observe(cc_left_node, cc_observerConfig);
+	cc_observer.observe(cc_right_node, cc_observerConfig);
         
 	//check if we need to populate page from URL
 	if ( cc_getParametersFromURL() !== undefined) {
 	    cc_populateHighBox();
-        cc_populateMediumBox();
-        cc_populateLowBox();
-	    barUpdate(confidence);
+            cc_populateMediumBox();
+            cc_populateLowBox();
+	    //barUpdate(confidence);
 	}
 	
 	shuffleDataset();
@@ -128,7 +118,7 @@ $(document).ready(function () {
     experimentr.release();
     experimentr.startTimer('exploration');
 });
-	
+
 /*********************** Functions ****************************************/
 //when next is clicked end timer
 //experimentr.onNext(experimentr.endTimer('exploration'));
@@ -162,19 +152,16 @@ function handleCCSubmit() {
 
 function handleBuildSubmit() {
     const pwl = cc_generatePairwise()
-    var pairs = ""
-    for (let i = 0; i < pwl.length; i++) {
-    pairs = pairs + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
-    }
+    var pairs = JSON.stringify(pwl);
     if (pairs !== ""){
-    const url = "build/"+pairs
-    const xhr = new XMLHttpRequest()
-    xhr.open('GET', url, true)
-    xhr.setRequestHeader('Content-type', 'application/json')
-
-    xhr.send()
-    xhr.onload = function () {
-        d3.json("data/weights.json", function(data) {
+	const url =  "build?pairs="+pairs
+	const xhr = new XMLHttpRequest()
+	xhr.open('GET', url, true)
+	xhr.setRequestHeader('Content-type', 'application/json')
+	
+	xhr.send()
+	xhr.onload = function () {
+            d3.json("data/weights.json", function(data) {
 		confidence = data[0]["tau"]
 		weights = data[0]
 		delete weights["tau"]

@@ -55,18 +55,10 @@ $(document).ready(function () {
 		    $('#lc-submit').removeAttr('disabled');
 		    handleBuildSubmit();
 		}
-		barUpdate(confidence);
-		
-		var colorScheme = ["#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5"];
-		console.log(counter);
-		if (counter == 1) {
-		    d3.select("body").selectAll("svg").remove();
-		    console.log(weights);
-		    renderBarChart(weights,"#chart", colorScheme);
-		} else if(weights != 0){
-		    document.getElementById("p1").innerHTML = "Impact of Attributes on Dataset Ranking";
-		    renderBarChart(weights,"#chart", colorScheme);
-		}
+		//barUpdate(confidence);
+		//console.log(weights);
+		//renderBarChart(weights,"#chart", colorScheme);
+		//document.getElementById("p1").innerHTML = "Impact of Attributes on Dataset Ranking";
 	    });
 	});
 	
@@ -81,7 +73,7 @@ $(document).ready(function () {
 	//check if we need to populate page from URL
 	if ( lc_getParametersFromURL() !== undefined) {
 	    lc_populateBox();
-	    barUpdate(confidence);
+	    //barUpdate(confidence);
 	}
 	
 	shuffleDataset();
@@ -126,19 +118,16 @@ function barUpdate(list_length) {
 }
 
 
-
 function handleLCSubmit() {
     experimentr.next();
 }
 
+
 function handleBuildSubmit() {
     const pwl = lc_generatePairwise()
-    var pairs = ""
-    for (let i = 0; i < pwl.length; i++) {
-	pairs = pairs + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
-    }
+    var pairs = JSON.stringify(pwl);    
     if (pairs !== ""){
-	const url = "build/"+pairs
+	const url = "build?pairs="+pairs
 	const xhr = new XMLHttpRequest()
 	xhr.open('GET', url, true)
 	xhr.setRequestHeader('Content-type', 'application/json')

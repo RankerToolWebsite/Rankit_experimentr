@@ -42,8 +42,8 @@ Pages[0] = 'modules/consent';
 //on page load choose a random module and place it in correct place in the array  
     
 window.onload = function randomPage() {
-    //var x = Math.floor((Math.random() * 3) + 1);
-    var x = 2;
+    var x = Math.floor((Math.random() * 3) + 1);
+    //var x = 2;
     //var modules = new Array();
     if (x == 1) { 
         Pages.push("modules/instructions/");
@@ -62,10 +62,10 @@ window.onload = function randomPage() {
 
 //for testing
 //Pages[0] = 'modules/instructions';
-//Pages[1] = 'modules/list';
-//Pages[1] = 'modules/categorical';
+//Pages[0] = 'modules/list';
+//Pages[0] = 'modules/categorical';
 //Pages[0] = 'modules/pairwise';
-//Pages[2] = 'modules/explore/';
+//Pages[1] = 'modules/explore/';
   
 
 experimentr.sequence(Pages).start();

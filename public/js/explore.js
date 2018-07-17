@@ -5,7 +5,7 @@ var weights = {}
 $(document).ready(function () {
 
     //load data                                                                                                                                                                   
-    d3.json("data/colleges.json", function(data) {
+    d3.json("data/ranking.json", function(data) {
         //save full dataset                                                                                                                                                       
         dataset = data;
 	var tempData = dataset[0];

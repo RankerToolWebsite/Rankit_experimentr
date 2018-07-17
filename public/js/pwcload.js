@@ -50,34 +50,24 @@ $(document).ready(function () {
 	
 	var pwc_observer = new MutationObserver(function (mutations) {
 	    mutations.forEach(function (mutation) {
-        pwc_urlUpdate()
-
-        const high_length = document.querySelectorAll('.high > div').length
-        const low_length = document.querySelectorAll('.low > div').length
-
-        const list_num = (high_length > 0 ? 1 : 0) + (low_length > 0 ? 1 : 0)
-
-        if ((high_length != low_length) || (list_num < min_num_of_objects)) {
-          $('#submit').attr('disabled', 'disabled');
-        }
-        else {
-          $('#submit').removeAttr('disabled');
-          handleBuildSubmit()
-        }
-		//barUpdate(confidence);
+		pwc_urlUpdate()
 		
-		var colorScheme = ["#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5"];
-		console.log(counter);
-		if (counter == 1) {
-		    d3.select("body").selectAll("svg").remove();
-		    console.log(weights);
-		    renderBarChart(weights,"#chart", colorScheme);
-		} 
-            //shows barchart in top right corner
-           /* else if(weights != 0){
-		    document.getElementById("p1").innerHTML = "Impact of Attributes on Dataset Ranking";
-		    renderBarChart(weights,"#chart", colorScheme);
-		} */
+		const high_length = document.querySelectorAll('.high > div').length
+		const low_length = document.querySelectorAll('.low > div').length
+		
+		const list_num = (high_length > 0 ? 1 : 0) + (low_length > 0 ? 1 : 0)
+		
+		if ((high_length != low_length) || (list_num < min_num_of_objects)) {
+		    $('#submit').attr('disabled', 'disabled');
+		}
+		else {
+		    $('#submit').removeAttr('disabled');
+		    handleBuildSubmit()
+		}
+		//barUpdate(confidence);
+		//console.log(weights);
+		//renderBarChart(weights,"#chart", colorScheme);
+		//document.getElementById("p1").innerHTML = "Impact of Attributes on Dataset Ranking";
 	    });
 	});
 	
@@ -94,8 +84,8 @@ $(document).ready(function () {
 	//check if we need to populate page from URL
 	if ( pwc_getParametersFromURL() !== undefined) {
 	    pwc_populateHighBox();
-        pwc_populateLowBox();
-	    barUpdate(confidence);
+            pwc_populateLowBox();
+	    //barUpdate(confidence);
 	}
 	
 	shuffleDataset();
@@ -148,12 +138,9 @@ function handlePWCSubmit() {
 
 function handleBuildSubmit() {
     const pwl = pwc_generatePairwise()
-    var pairs = ""
-    for (let i = 0; i < pwl.length; i++) {
-	pairs = pairs + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
-    }
+    var pairs = JSON.stringify(pwl);    
     if (pairs !== ""){
-	const url = "build/"+pairs
+	const url =  "build?pairs="+pairs
 	const xhr = new XMLHttpRequest()
 	xhr.open('GET', url, true)
 	xhr.setRequestHeader('Content-type', 'application/json')

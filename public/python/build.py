@@ -145,7 +145,7 @@ def build(dataset, pairs, primary_key = 'Title', rank = 'Rank', score = 'Score',
 
 #/****************************************************/
 #read dataset from json
-with open('public/data/states.json', 'r') as data_file:
+with open('public/data/colleges.json', 'r') as data_file:
     dataset_list = json.load(data_file)
 #get pairs passed from front end
 #pairs = sys.argv[1]
