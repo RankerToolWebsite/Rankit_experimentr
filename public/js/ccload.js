@@ -93,11 +93,14 @@ $(document).ready(function () {
 	cc_observer.observe(cc_right_node, cc_observerConfig);
         
 	//check if we need to populate page from URL
-	if ( cc_getParametersFromURL() !== undefined) {
-	    cc_populateHighBox();
-            cc_populateMediumBox();
-            cc_populateLowBox();
-	    //barUpdate(confidence);
+	if ( cc_getHighFromURL() !== undefined) {
+        cc_populateHighBox();
+	}
+        if ( cc_getMedFromURL() !== undefined) {
+        cc_populateMediumBox();
+	}
+        if ( cc_getLowFromURL() !== undefined) {
+        cc_populateLowBox();
 	}
 	
 	shuffleDataset();

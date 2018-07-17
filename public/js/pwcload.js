@@ -82,9 +82,12 @@ $(document).ready(function () {
 	    
     
 	//check if we need to populate page from URL
-	if ( pwc_getParametersFromURL() !== undefined) {
+	if ( pwc_getHighFromURL() !== undefined) {
 	    pwc_populateHighBox();
-            pwc_populateLowBox();
+	    //barUpdate(confidence);
+	}
+        if ( pwc_getLowFromURL() !== undefined) {
+	    pwc_populateLowBox();
 	    //barUpdate(confidence);
 	}
 	
