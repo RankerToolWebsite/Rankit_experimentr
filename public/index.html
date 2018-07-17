@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <meta charset="utf-8">
 <title>Survey</title>
 
@@ -12,6 +11,14 @@
   <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
 <!--  <script src="js/lib/bootstrap-tooltip.js"></script> -->
 <script type="text/javascript" src="js/lib/Sortable.js"></script>
+
+
+<style>
+
+
+
+</style>
+
 
 
 
@@ -31,32 +38,34 @@ var Pages = new Array();
 
 //  USE FOR PRODUCTION 
 Pages[0] = 'modules/consent';
-Pages[1] = 'modules/instructions/';
-Pages[2] = 'modules/explore/';
-Pages[3] = 'modules/debrief/';
-
     
-//on page load choose a random module and place it in correct place in the array    
+//on page load choose a random module and place it in correct place in the array  
+    
 window.onload = function randomPage() {
-    var x = Math.floor((Math.random() * 3) + 1);
-    var page = 0;
+    //var x = Math.floor((Math.random() * 3) + 1);
+    var x = 2;
+    //var modules = new Array();
     if (x == 1) { 
-    	page = "modules/list/";
+        Pages.push("modules/instructions/");
+    	Pages.push("modules/list/");
  	} else if (x == 2) { 
-        	page = "modules/categorical/";
+        Pages.push("modules/instructionscc/");
+    	Pages.push("modules/categorical/");
     } else {
-    page = "modules/pairwise/";
+        Pages.push("modules/instructionspwc/");
+        Pages.push("modules/pairwise/");
     }
-    Pages.splice( 2, 0, page);
-    console.log(page);
+    Pages.push('modules/explore/');
+    Pages.push('modules/debrief/');
     console.log(Pages);
-}
+} 
 
 //for testing
-//Pages[0] = 'modules/list';
-//Pages[0] = 'modules/categorical';
+//Pages[0] = 'modules/instructions';
+//Pages[1] = 'modules/list';
+//Pages[1] = 'modules/categorical';
 //Pages[0] = 'modules/pairwise';
-//Pages[1] = 'modules/explore/';
+//Pages[2] = 'modules/explore/';
   
 
 experimentr.sequence(Pages).start();
