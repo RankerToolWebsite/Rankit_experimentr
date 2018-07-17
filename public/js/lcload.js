@@ -2,8 +2,8 @@ var confidence = 0;
 var weights = 0;
 var counter = 0;
 var tooltipCounter = 0;
-const pool = document.querySelector('#top');
-const target = document.querySelector('#lc-center');
+var pool = document.querySelector('#top');
+var target = document.querySelector('#lc-center');
 var dataset = {}
 var attributes = {}
 var min_num_of_objects = 2;
@@ -313,5 +313,5 @@ function lc_populateBox() {
     }
 }
 
-experimentr.onNext(experimentr.endTimer('exploration'));
+//experimentr.onNext(experimentr.endTimer('exploration'));
 

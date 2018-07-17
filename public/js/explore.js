@@ -5,7 +5,7 @@ var weights = {}
 $(document).ready(function () {
 
     //load data                                                                                                                                                                   
-    d3.json("data/ranking.json", function(data) {
+    d3.json("data/colleges.json", function(data) {
         //save full dataset                                                                                                                                                       
         dataset = data;
 	var tempData = dataset[0];
@@ -29,6 +29,8 @@ $(document).ready(function () {
 	})
 	renderData(data, keys)
     });
+    //listener for rank button
+	document.querySelector('#previous').addEventListener('click', experimentr.previous);
     experimentr.release();
 });
 
