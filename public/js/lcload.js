@@ -128,12 +128,7 @@ function barUpdate(list_length) {
 
 
 function handleLCSubmit() {
-    const pwl = lc_generatePairwise()
-    var pairwiseURL = "{{url_for('explore.explore', dataset_name = dataset_name) }}"
-    for (let i = 0; i < pwl.length; i++) {
-	pairwiseURL = pairwiseURL + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
-    }    
-    window.location = pairwiseURL
+    experimentr.next();
 }
 
 function handleBuildSubmit() {

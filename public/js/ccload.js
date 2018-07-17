@@ -156,14 +156,7 @@ function barUpdate(list_length) {
 
 
 function handleCCSubmit() {
-      const pwl = cc_generatePairwise()
-      // sendPostRequest(pwl)
-      var pairwiseURL = "{{url_for('explore.explore', dataset_name = dataset_name) }}"
-      for (let i = 0; i < pwl.length; i++) {
-        pairwiseURL = pairwiseURL + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
-      }
-
-      window.location = pairwiseURL
+      experimentr.next();
     }
 
 
@@ -174,7 +167,7 @@ function handleBuildSubmit() {
     pairs = pairs + i + "=" + pwl[i].high + ">" + pwl[i].low + "&"
     }
     if (pairs !== ""){
-    const url = "confidence/"+pairs
+    const url = "build/"+pairs
     const xhr = new XMLHttpRequest()
     xhr.open('GET', url, true)
     xhr.setRequestHeader('Content-type', 'application/json')
