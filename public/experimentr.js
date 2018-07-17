@@ -65,6 +65,11 @@ var experimentr = (function() {
     activate(current);
   }
 
+  //Load the previous module
+    experimentr.previous = function() {
+    current = current - 1;
+    activate(current);
+  }
   // This just ends the experiment timer right now, but it might be a good place to send final experiment data (if we are using CSV on the backend).
   experimentr.end = function() {
     experimentr.endTimer('experiment');
