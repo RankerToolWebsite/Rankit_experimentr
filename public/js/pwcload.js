@@ -160,18 +160,16 @@ function handleBuildSubmit() {
 }
 
 function pwc_generatePairwise() {
-    const list = Array.from(document.querySelectorAll('#pwl .object'))
-    const ids = list.map(x => x.id)
-    // pairwise list to send back to server
-    let pwl = []
-    for (let i = 0; i < ids.length - 1; i++) {
-	for (let j = i + 1; j < ids.length; j++) {
-	    pwl.push({ 'high': ids[i], 'low': ids[j] })
-	}
-    }
-    return pwl
-}
+      const highs = Array.from(document.querySelectorAll('.high .object')).map(x => x.id)
+      const lows = Array.from(document.querySelectorAll('.low .object')).map(x => x.id)
 
+      let pwl = []
+      for (let i = 0; i < highs.length; i++) {
+        pwl.push({ 'high': highs[i], 'low': lows[i] })
+      }
+      console.log(pwl)
+      return pwl
+}
 //dataset should be accessed from json, contains all attributes
 //can call getSubsetData first
 function render(dataset) {
