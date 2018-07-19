@@ -46,7 +46,7 @@ $(document).ready(function () {
 
 	
 	//listener for rank button
-	document.querySelector('#submit').addEventListener('click', handleBuildSubmit);
+	document.querySelector('#submit').addEventListener('click', handlePWCSubmit);
 	
 	var pwc_observer = new MutationObserver(function (mutations) {
 	    mutations.forEach(function (mutation) {
