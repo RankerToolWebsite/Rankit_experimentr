@@ -304,9 +304,7 @@ function cc_urlUpdate() {
     trackHigh(high)
     trackMed(med)
     trackLow(low)
-    urlchanges = new Array()
-    urlchanges.push(url);
-    experimentr.addData(urlchanges)
+    experimentr.addData(expData)
     }
 
 

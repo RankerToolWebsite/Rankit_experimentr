@@ -6,7 +6,9 @@ var experimentr = (function() {
     , data = {};
 
   // Add a random postId for each new participant
-  data.postId = (+new Date()).toString(36);
+  //data.postId = (+new Date()).toString(36);
+  // Instead of one post id for each session we log multiple 
+  //posts per user and log time as postID for each call to addData 
 
   // Accessor for postId
   experimentr.postId = function() {
@@ -78,6 +80,7 @@ var experimentr = (function() {
   // Adds the data in `d` to the experiment data, and saves to server.
   experimentr.addData = function(d) {
     merge(data, d);
+    data.postId = Date.now().toString()
     experimentr.save();
   }
 
