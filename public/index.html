@@ -12,13 +12,11 @@
 <!--  <script src="js/lib/bootstrap-tooltip.js"></script> -->
 <script type="text/javascript" src="js/lib/Sortable.js"></script>
 
-
 <style>
 
 
 
 </style>
-
 
 
 
@@ -41,17 +39,22 @@ Pages[0] = 'modules/consent';
     
 //on page load choose a random module and place it in correct place in the array  
     
+var userData = {};    
+    
 window.onload = function randomPage() {
     var x = Math.floor((Math.random() * 3) + 1);
-    //var x = 2;
+   // var x = 2;
     //var modules = new Array();
     if (x == 1) { 
+        userData.condition = "list";
         Pages.push("modules/instructions/");
     	Pages.push("modules/list/");
- 	} else if (x == 2) { 
+ 	} else if (x == 2) {
+        userData.condition = "categorical";
         Pages.push("modules/instructionscc/");
     	Pages.push("modules/categorical/");
     } else {
+        userData.condition = "pairwise";
         Pages.push("modules/instructionspwc/");
         Pages.push("modules/pairwise/");
     }

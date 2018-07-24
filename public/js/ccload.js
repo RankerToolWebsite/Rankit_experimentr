@@ -10,7 +10,9 @@ var dataset = {}
 var attributes = {}
 var min_num_of_objects = 2;
 var cc_observer;
-   var min_num_of_non_empty_lists = 2
+var min_num_of_non_empty_lists = 2
+var expData = {};
+var timesRanked = 0;
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
@@ -119,12 +121,11 @@ $(document).ready(function () {
 	});
     }); 
     experimentr.release();
-    experimentr.startTimer('exploration');
+    experimentr.startTimer('buildCategory');
 });
 
 /*********************** Functions ****************************************/
-//when next is clicked end timer
-//experimentr.onNext(experimentr.endTimer('exploration'));
+
 
 function add_to_sortable(className) {
     const all = document.querySelectorAll(className)
@@ -149,7 +150,7 @@ function barUpdate(list_length) {
 
 
 function handleCCSubmit() {
-      experimentr.next();
+    validate();
     }
 
 
@@ -303,43 +304,55 @@ function cc_urlUpdate() {
     trackHigh(high)
     trackMed(med)
     trackLow(low)
-    //experimentr.addData(url);
+    urlchanges = new Array()
+    urlchanges.push(url);
+    experimentr.addData(urlchanges)
     }
 
-var highUrlChanges = new Array()
-var medUrlChanges = new Array()
-var lowUrlChanges = new Array()
+
+
+expData.highUrlChanges = new Array()
+expData.medUrlChanges = new Array()
+expData.lowUrlChanges = new Array()
 
 function trackHigh(url){
     //console.log(url)
-    highUrlChanges.push(url)
-    console.log(highUrlChanges)
+    expData.highUrlChanges.push(url)
+    //console.log(expData.highUrlChanges)
     
 }
 function trackMed(url){
     //console.log(url)
-    medUrlChanges.push(url)
-    console.log(medUrlChanges)
+    expData.medUrlChanges.push(url)
+    //console.log(expData.medUrlChanges)
 }
 function trackLow(url){
     //console.log(url)
-    lowUrlChanges.push(url)
-    console.log(lowUrlChanges)
+    expData.lowUrlChanges.push(url)
+    //console.log(expData.lowUrlChanges)
 }
 
-function validate() {
-    if( highUrlChanges ) {
-      experimentr.addData(highUrlChanges);
-    }
-    if( medUrlChanges ) {
-      experimentr.addData(medUrlChanges);
-    }
-    if( lowUrlChanges ) {
-      experimentr.addData(lowUrlChanges);
-    }
-  }
+var timesRanked = 0;
 
-experimentr.onNext(validate)
+function validate() {
+    //experimentr.addData(expData);
+     
+    if( expData.highUrlChanges ) {
+      //experimentr.addData(expData.highUrlChanges);
+    }
+    if( expData.medUrlChanges ) {
+      //experimentr.addData(expData.medUrlChanges);
+    }
+    if( expData.lowUrlChanges ) {
+      //experimentr.addData(expData.lowUrlChanges);
+    }
+    timesRanked++
+    //experimentr.addData(timesRanked)
+    //console.log("YO: " + timesRanked)
+    experimentr.endTimer('buildCategory')
+    experimentr.save();
+    experimentr.next();
+  }
 
 
 function cc_getParametersFromURL() {
