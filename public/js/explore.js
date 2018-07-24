@@ -24,14 +24,16 @@ $(document).ready(function () {
 	    },
 	});
 	$('#table').on('draw.dt', function(e) {
-	    highlightRows();
-	    shadeRowsByconf(data);
+	    //highlightRows();
+	    //shadeRowsByconf(data);
 	})
 	renderData(data, keys)
     });
     //listener for rank button
-	document.querySelector('#previous').addEventListener('click', experimentr.previous);
-    experimentr.release();
+	document.querySelector('#previous').addEventListener('click', experimentr.previous); document.querySelector('#finish').addEventListener('click', experimentr.next);
+    
+    experimentr.showNext;
+    experimentr.release;
 });
 
 /**************** Render bar chart *************************/
