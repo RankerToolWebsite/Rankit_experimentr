@@ -262,7 +262,7 @@ function prevValidate(){
 
 function finValidate() {
     expData.interaction = "FINISH"
-    experimentr.addDara(expData)
+    experimentr.addData(expData)
     experimentr.save();
     expData.interaction = ""
     experimentr.next(); 
