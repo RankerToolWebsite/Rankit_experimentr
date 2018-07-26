@@ -8,6 +8,12 @@ var dataset = {}
 var attributes = {}
 var min_num_of_objects = 2;
 var pwc_observer;
+var expData = {};
+var oldHighURL = new Array()
+var oldLowURL = new Array()
+expData.highUrlChanges = new Array()
+expData.lowUrlChanges = new Array()
+expData.interaction = ""
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
@@ -47,6 +53,9 @@ $(document).ready(function () {
 	
 	//listener for rank button
 	document.querySelector('#submit').addEventListener('click', handlePWCSubmit);
+        
+	document.querySelector('#more').addEventListener('click', trackNewPair);
+            
 	
 	var pwc_observer = new MutationObserver(function (mutations) {
 	    mutations.forEach(function (mutation) {
@@ -108,6 +117,7 @@ $(document).ready(function () {
     });
     
     experimentr.release();
+    experimentr.startTimer('buildPair');
 });
 	
 /*********************** Functions ****************************************/
@@ -133,11 +143,24 @@ function barUpdate(list_length) {
     document.getElementById("bar").textContent = list_length+"%"+" Confidence"
 }
 
-
+function trackNewPair(){
+    expData.interaction = "NEW PAIR"
+    experimentr.addData(expData)
+    expData.interaction = ""  
+}
 
 function handlePWCSubmit() {
-    experimentr.next();
+    validate();
 }
+
+function validate() {
+    expData.interaction = "RANK"
+    experimentr.addData(expData)
+    experimentr.endTimer('buildPair')
+    experimentr.save();
+    expData.interaction = ""
+    experimentr.next();
+  }
 
 function handleBuildSubmit() {
     const pwl = pwc_generatePairwise()
@@ -288,8 +311,30 @@ function refresh_popovers(){
       const low = Array.from(document.querySelectorAll('.low > div')).map(x => x.id)
       var url = window.location.pathname + "?method=" + "pwc" + "&" + "left=" + high.toString() + "&" + "right=" + low.toString()
       history.pushState({}, 'Pairwise Comparison', url)
+      trackHigh(high)
+      trackLow(low)
+      experimentr.addData(expData)
  }
-    
+//The following two functions checks length of the current box against old one to determine whether the interaction adds or subtracts
+function trackHigh(url){
+    expData.highUrlChanges = url
+    if (url.length > oldHighURL.length) {
+        expData.interaction = "LEFT ADD" 
+    } else if (url.length < oldHighURL.length) {
+        expData.interaction = "LEFT REMOVE"
+    }
+    oldHighURL = url 
+}
+
+function trackLow(url){
+    expData.lowUrlChanges = url
+    if (url.length > oldLowURL.length) {
+        expData.interaction = "RIGHT ADD" 
+    } else if (url.length < oldLowURL.length) {
+        expData.interaction = "RIGHT REMOVE"
+    }
+    oldLowURL = url 
+}
 
 function pwc_getParametersFromURL() {
     var query_string = {};
