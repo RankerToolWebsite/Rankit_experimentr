@@ -19,7 +19,6 @@ expData.highUrlChanges = new Array()
 expData.medUrlChanges = new Array()
 expData.lowUrlChanges = new Array()
 expData.interaction = ""
-expData.mode = "Category"
 var tracking = 1;
 
 /*********** Initialize Page *****************/

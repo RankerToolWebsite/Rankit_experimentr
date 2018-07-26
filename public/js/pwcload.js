@@ -14,7 +14,6 @@ var oldLowURL = new Array()
 expData.highUrlChanges = new Array()
 expData.lowUrlChanges = new Array()
 expData.interaction = ""
-expData.mode = "Pairwise"
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
