@@ -8,6 +8,10 @@ var dataset = {}
 var attributes = {}
 var min_num_of_objects = 2;
 var lc_observer;
+var expData = {};
+var oldURL = new Array()
+expData.UrlChanges = new Array()
+expData.interaction = ""
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
@@ -92,6 +96,7 @@ $(document).ready(function () {
 	});
     });
     experimentr.release();
+    experimentr.startTimer('buildList');
 });
 	
 /*********************** Functions ****************************************/
@@ -119,7 +124,16 @@ function barUpdate(list_length) {
 
 
 function handleLCSubmit() {
-    experimentr.next();
+    validate();
+}
+
+function validate() {
+    expData.interaction = "RANK"
+    experimentr.addData(expData)
+    experimentr.endTimer('buildList')
+    experimentr.save();
+    expData.interaction = ""
+    experimentr.next();   
 }
 
 
@@ -254,7 +268,21 @@ function lc_urlUpdate() {
     var list = Array.from(document.querySelectorAll('#lc-center .object')).map(x => x.id)
     var url = window.location.pathname + "?method=" + "lc" + "&" + "objects="
     history.pushState({}, 'List Comparison', url + list.toString())
+    trackChanges(list)
+    experimentr.addData(expData)
 }
+
+function trackChanges(url){
+    expData.UrlChanges = url
+    if (url.length > oldURL.length){
+        expData.interaction = "ADD" 
+    } else if (url.length < oldURL.length) {
+        expData.interaction = "REMOVE"
+    }
+    oldURL = url 
+}
+
+
 
 function lc_getParametersFromURL() {
     var query_string = {};
