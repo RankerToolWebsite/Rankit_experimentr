@@ -12,6 +12,9 @@ var min_num_of_objects = 2;
 var cc_observer;
 var min_num_of_non_empty_lists = 2
 var expData = {};
+var oldHighURL = new Array()
+var oldMedURL = new Array()
+var oldLowURL = new Array()
 expData.highUrlChanges = new Array()
 expData.medUrlChanges = new Array()
 expData.lowUrlChanges = new Array()
@@ -310,21 +313,40 @@ function cc_urlUpdate() {
     experimentr.addData(expData)
     }
 
+
+//The following three functions checks length of the current box against old one to determine whether the interaction adds or subtracts
 function trackHigh(url){
-    //console.log(url)
-    expData.highUrlChanges.push(url)
-    //console.log(expData.highUrlChanges)
-    
+    console.log("HIGH: " + url)
+    console.log("OLD HIGH: " + oldHighURL)
+    expData.highUrlChanges = url
+    if (url.length > oldHighURL.length) {
+        expData.interaction = "HIGH ADD" 
+    } else if (url.length < oldHighURL.length) {
+        expData.interaction = "HIGH REMOVE"
+    }
+    oldHighURL = url 
 }
 function trackMed(url){
-    //console.log(url)
-    expData.medUrlChanges.push(url)
-    //console.log(expData.medUrlChanges)
+    console.log("MED: " + url)
+    console.log("OLD MED: " + oldMedURL)
+    expData.medUrlChanges = url
+    if (url.length > oldMedURL.length) {
+        expData.interaction = "MED ADD" 
+    } else if (url.length < oldMedURL.length) {
+        expData.interaction = "MED REMOVE"
+    }
+    oldMedURL = url 
 }
 function trackLow(url){
-    //console.log(url)
-    expData.lowUrlChanges.push(url)
-    //console.log(expData.lowUrlChanges)
+    console.log("LOW: " + url)
+    console.log("OLD LOW: " + oldLowURL)
+    expData.lowUrlChanges = url
+    if (url.length > oldLowURL.length) {
+        expData.interaction = "LOW ADD" 
+    } else if (url.length < oldLowURL.length) {
+        expData.interaction = "LOW REMOVE"
+    }
+    oldLowURL = url 
 }
 
 function validate() {
