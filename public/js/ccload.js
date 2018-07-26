@@ -316,8 +316,6 @@ function cc_urlUpdate() {
 
 //The following three functions checks length of the current box against old one to determine whether the interaction adds or subtracts
 function trackHigh(url){
-    console.log("HIGH: " + url)
-    console.log("OLD HIGH: " + oldHighURL)
     expData.highUrlChanges = url
     if (url.length > oldHighURL.length) {
         expData.interaction = "HIGH ADD" 
@@ -326,9 +324,8 @@ function trackHigh(url){
     }
     oldHighURL = url 
 }
+
 function trackMed(url){
-    console.log("MED: " + url)
-    console.log("OLD MED: " + oldMedURL)
     expData.medUrlChanges = url
     if (url.length > oldMedURL.length) {
         expData.interaction = "MED ADD" 
@@ -337,9 +334,8 @@ function trackMed(url){
     }
     oldMedURL = url 
 }
+
 function trackLow(url){
-    console.log("LOW: " + url)
-    console.log("OLD LOW: " + oldLowURL)
     expData.lowUrlChanges = url
     if (url.length > oldLowURL.length) {
         expData.interaction = "LOW ADD" 
@@ -350,17 +346,6 @@ function trackLow(url){
 }
 
 function validate() {
-    //experimentr.addData(expData);
-     
-    if( expData.highUrlChanges ) {
-      //experimentr.addData(expData.highUrlChanges);
-    }
-    if( expData.medUrlChanges ) {
-      //experimentr.addData(expData.medUrlChanges);
-    }
-    if( expData.lowUrlChanges ) {
-      //experimentr.addData(expData.lowUrlChanges);
-    }
     expData.interaction = "RANK"
     experimentr.addData(expData)
     experimentr.endTimer('buildCategory')
