@@ -126,7 +126,6 @@ $(document).ready(function () {
 	    }
 	});
     }); 
-    experimentr.release();
     experimentr.startTimer('buildCategory');
 });
 

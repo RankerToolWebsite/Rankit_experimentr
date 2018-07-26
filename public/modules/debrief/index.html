@@ -25,6 +25,9 @@ Thank you again for your participation. Feel free submit any additional comments
 </style>
 
 <script>
+var expData = {};    
+expData.interaction = "";    
+    
 (function() {
   var postId  = experimentr.postId()
     , data    = {};
@@ -40,7 +43,9 @@ Thank you again for your participation. Feel free submit any additional comments
 
   function validate() {
     if( data.comments ) {
+      expData.interaction ="FEEDBACK"
       experimentr.addData(data);
+      experimentr.addData(expData);
       d3.select('#submitComments').attr('disabled', 'true');
       d3.select('#submitFeedback').text('Submit Successful');
     }
