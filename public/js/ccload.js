@@ -12,7 +12,10 @@ var min_num_of_objects = 2;
 var cc_observer;
 var min_num_of_non_empty_lists = 2
 var expData = {};
-var timesRanked = 0;
+expData.highUrlChanges = new Array()
+expData.medUrlChanges = new Array()
+expData.lowUrlChanges = new Array()
+expData.interaction = ""
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
@@ -307,12 +310,6 @@ function cc_urlUpdate() {
     experimentr.addData(expData)
     }
 
-
-
-expData.highUrlChanges = new Array()
-expData.medUrlChanges = new Array()
-expData.lowUrlChanges = new Array()
-
 function trackHigh(url){
     //console.log(url)
     expData.highUrlChanges.push(url)
@@ -330,8 +327,6 @@ function trackLow(url){
     //console.log(expData.lowUrlChanges)
 }
 
-var timesRanked = 0;
-
 function validate() {
     //experimentr.addData(expData);
      
@@ -344,11 +339,11 @@ function validate() {
     if( expData.lowUrlChanges ) {
       //experimentr.addData(expData.lowUrlChanges);
     }
-    timesRanked++
-    //experimentr.addData(timesRanked)
-    //console.log("YO: " + timesRanked)
+    expData.interaction = "RANK"
+    experimentr.addData(expData)
     experimentr.endTimer('buildCategory')
     experimentr.save();
+    expData.interaction = ""
     experimentr.next();
   }
 

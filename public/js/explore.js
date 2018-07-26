@@ -1,5 +1,7 @@
 var dataset = {}
 var weights = {}
+var expData = {};
+expData.interaction = ""
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
@@ -30,7 +32,7 @@ $(document).ready(function () {
 	renderData(data, keys)
     });
     //listener for rank button
-	document.querySelector('#previous').addEventListener('click', experimentr.previous); document.querySelector('#finish').addEventListener('click', experimentr.next);
+	document.querySelector('#previous').addEventListener('click', prevValidate); document.querySelector('#finish').addEventListener('click', finValidate);
     
     experimentr.showNext;
     experimentr.release;
@@ -250,6 +252,21 @@ function display () {
   }
 };
 
+function prevValidate(){
+    expData.interaction = "PREVIOUS"
+    experimentr.addData(expData)
+    experimentr.save();
+    expData.interaction = ""
+    experimentr.previous();
+}
+
+function finValidate() {
+    expData.interaction = "FINISH"
+    experimentr.addDara(expData)
+    experimentr.save();
+    expData.interaction = ""
+    experimentr.next(); 
+}
 
 
 function highlightColor(percent, color1, color2){
