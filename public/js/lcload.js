@@ -12,6 +12,8 @@ var expData = {};
 var oldURL = new Array()
 expData.UrlChanges = new Array()
 expData.interaction = ""
+expData.mode = "List"
+var tracking = 1;
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
@@ -76,7 +78,9 @@ $(document).ready(function () {
 	
 	//check if we need to populate page from URL
 	if ( lc_getParametersFromURL() !== undefined) {
-	    lc_populateBox();
+	    tracking = 0;
+        lc_populateBox();
+        tracking = 1;
 	    //barUpdate(confidence);
 	}
 	
@@ -96,7 +100,7 @@ $(document).ready(function () {
 	});
     });
     experimentr.release();
-    experimentr.startTimer('buildList');
+    experimentr.startTimer('build');
 });
 	
 /*********************** Functions ****************************************/
@@ -130,7 +134,7 @@ function handleLCSubmit() {
 function validate() {
     expData.interaction = "RANK"
     experimentr.addData(expData)
-    experimentr.endTimer('buildList')
+    experimentr.endTimer('build')
     experimentr.save();
     expData.interaction = ""
     experimentr.next();   
@@ -268,8 +272,11 @@ function lc_urlUpdate() {
     var list = Array.from(document.querySelectorAll('#lc-center .object')).map(x => x.id)
     var url = window.location.pathname + "?method=" + "lc" + "&" + "objects="
     history.pushState({}, 'List Comparison', url + list.toString())
+    
+    if (tracking = 1){
     trackChanges(list)
     experimentr.addData(expData)
+    }
 }
 
 function trackChanges(url){

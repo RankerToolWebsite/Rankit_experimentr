@@ -134,7 +134,7 @@ $(document).ready(function () {
 	    }
 	});
     }); 
-    experimentr.startTimer('buildCategory');
+    experimentr.startTimer('build');
 });
 
 /*********************** Functions ****************************************/
@@ -357,7 +357,7 @@ function trackLow(url){
 function validate() {
     expData.interaction = "RANK"
     experimentr.addData(expData)
-    experimentr.endTimer('buildCategory')
+    experimentr.endTimer('build')
     experimentr.save();
     expData.interaction = ""
     experimentr.next();

@@ -14,6 +14,7 @@ var oldLowURL = new Array()
 expData.highUrlChanges = new Array()
 expData.lowUrlChanges = new Array()
 expData.interaction = ""
+expData.mode = "Pairwise"
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
@@ -115,9 +116,7 @@ $(document).ready(function () {
 	    }
 	});
     });
-    
-    experimentr.release();
-    experimentr.startTimer('buildPair');
+    experimentr.startTimer('build');
 });
 	
 /*********************** Functions ****************************************/
@@ -156,7 +155,7 @@ function handlePWCSubmit() {
 function validate() {
     expData.interaction = "RANK"
     experimentr.addData(expData)
-    experimentr.endTimer('buildPair')
+    experimentr.endTimer('build')
     experimentr.save();
     expData.interaction = ""
     experimentr.next();
