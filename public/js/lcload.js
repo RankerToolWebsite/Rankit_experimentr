@@ -12,7 +12,6 @@ var expData = {};
 var oldURL = new Array()
 expData.UrlChanges = new Array()
 expData.interaction = ""
-expData.mode = "List"
 var tracking = 1;
 
 /*********** Initialize Page *****************/

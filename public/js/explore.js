@@ -34,7 +34,7 @@ $(document).ready(function () {
     //listener for rank button
 	document.querySelector('#previous').addEventListener('click', prevValidate); document.querySelector('#finish').addEventListener('click', finValidate);
     
-    experimentr.startTimer(explore);
+    experimentr.startTimer('explore');
 });
 
 /**************** Render bar chart *************************/
@@ -256,7 +256,7 @@ function prevValidate(){
     experimentr.addData(expData)
     experimentr.save();
     expData.interaction = ""
-    experimentr.endTimer(explore)
+    experimentr.endTimer('explore')
     experimentr.previous();
 }
 
@@ -265,7 +265,7 @@ function finValidate() {
     experimentr.addData(expData)
     experimentr.save();
     expData.interaction = ""
-    experimentr.endTimer(explore)
+    experimentr.endTimer('explore')
     experimentr.next(); 
 }
 

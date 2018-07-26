@@ -33,6 +33,8 @@
 <script>
 // experimentr.sequence uses an array, creates array with desired order of pages
 var Pages = new Array();
+var expData = {}
+expData.mode = "";
 
 //  USE FOR PRODUCTION 
 Pages[0] = 'modules/consent';
@@ -43,25 +45,31 @@ var userData = {};
     
 window.onload = function randomPage() {
     var x = Math.floor((Math.random() * 3) + 1);
-   // var x = 2;
-    //var modules = new Array();
+    //var x = 1;
     if (x == 1) { 
         userData.condition = "list";
         Pages.push("modules/instructions/");
     	Pages.push("modules/list/");
+        expData.mode = "List";
+        experimentr.addData(expData);
  	} else if (x == 2) {
         userData.condition = "categorical";
         Pages.push("modules/instructionscc/");
     	Pages.push("modules/categorical/");
+        expData.mode = "Category";
+        experimentr.addData(expData);
     } else {
         userData.condition = "pairwise";
         Pages.push("modules/instructionspwc/");
         Pages.push("modules/pairwise/");
+        expData.mode = "Pairwise";
+        experimentr.addData(expData);
     }
     Pages.push('modules/explore/');
     Pages.push('modules/debrief/');
     console.log(Pages);
 } 
+
 
 experimentr.sequence(Pages).start();
 
