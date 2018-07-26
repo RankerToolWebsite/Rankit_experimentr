@@ -19,6 +19,8 @@ expData.highUrlChanges = new Array()
 expData.medUrlChanges = new Array()
 expData.lowUrlChanges = new Array()
 expData.interaction = ""
+expData.mode = "Category"
+var tracking = 1;
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
@@ -102,13 +104,19 @@ $(document).ready(function () {
         
 	//check if we need to populate page from URL
 	if ( cc_getHighFromURL() !== undefined) {
+        var tracking = 0;
         cc_populateHighBox();
+        var tracking = 1;
 	}
         if ( cc_getMedFromURL() !== undefined) {
+        var tracking = 0;
         cc_populateMediumBox();
+        var tracking = 1;
 	}
         if ( cc_getLowFromURL() !== undefined) {
+        var tracking = 0;    
         cc_populateLowBox();
+        var tracking = 1;
 	}
 	
 	shuffleDataset();
@@ -306,10 +314,12 @@ function cc_urlUpdate() {
     var low = Array.from(document.querySelectorAll('#right .object')).map(x => x.id)
     var url = window.location.pathname + "?method=" + "cc" + "&" + "high=" + high.toString() + "&" + "medium=" + med.toString() + "&" + "low=" + low.toString()
     history.pushState({}, 'Categorical Comparison', url)
+    if (tracking = 1){
     trackHigh(high)
     trackMed(med)
     trackLow(low)
     experimentr.addData(expData)
+        }
     }
 
 
