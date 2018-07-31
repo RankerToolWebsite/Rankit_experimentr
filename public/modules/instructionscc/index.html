@@ -9,12 +9,22 @@
              <br>
              <p><strong>How to Interact:</strong></p>
              <p>>> Mouseover any of the colleges to obtain more details.</p>
-             <p>>> Drag and drop attributes from the pool to your list of ranked items</p>
+             <br>
+    <img id="mouseoverImg" src="" style="width:600px">
+            <p>>> Click “sort” button to order the colleges alphabetically"</p>
+            <p>>> Click “shuffle” button to randomize which colleges you see
+            </p>
+            <p>>>Use search bar to search for specific colleges.
+            </p>
+        <br>
+    <img id="srchImg" src="" style="width:600px"> 
+             <p>>> Drag colleges from the dataset to the left to place them in a category: “High”, “Medium” or “Low”</p>
+             <p>>> Place colleges in categories that correspond to your preference </p>
+       <img id="dragImg" src="" style="width:600px">
              <p>>> Navigate to your offical ranking by clicking "RANK!"</p>
-             <p>>> By clicking "Previous" you are able to go back to the build page</p>
-             <p>>> Navigate to a specific section by scrolling, clicking "Next" at botton left, or clicking the section tabs at the top.</p>
-             <p>>> Use the search bars to search for specific colleges.</p>
+             <p>>> By clicking "Edit Preferences" you are able to go back to the build page</p>
 
+    
 <img id="trainingImg" src="" style="width:600px">
 
 <p>
@@ -55,9 +65,9 @@
   }
 
   //training image
-  var imgsrc = "img/"+ userData.condition + ".gif";
-  d3.select('#training').select('#trainingImg').attr('src',imgsrc);
-  
+  d3.select('#training').select('#mouseoverImg').attr('src',"img/mouseover.gif");
+  d3.select('#training').select('#dragImg').attr('src',"img/ccdrag.gif");
+  d3.select('#training').select('#srchImg').attr('src',"img/sss.gif");
 
 }());
 </script>
