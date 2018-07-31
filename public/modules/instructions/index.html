@@ -9,19 +9,24 @@
 as examples from which to learn a ranking over all the colleges in the dataset.</p>
 
 <p><b>How to Interact:</b></p>
-<p> Mouseover an individual college to see its underlying data attributes.</p>
-<p> Drag colleges that you wish to specify your preferences about from the dataset on the left to
-the form on the right.</p>
+<p>>> Mouse over an individual college to see its data attributes.</p>
+<br>
+<img id="mouseoverImg" src="" style="width:600px">
+<p>>> Drag colleges from the left to the right, placing them in descending order of your preference.
+</p>
+<br>
+<img id="dragImg" src="" style="width:600px">
+<p>>> Click “sort” button to order the colleges alphabetically"</p>
+<p>>> Click “shuffle” button to randomize which colleges you see
+</p>
+<p>>>Use search bar to search for specific colleges.
+</p>
+<br>
+<img id="srchImg" src="" style="width:600px">    
 <p>>> Navigate to your offical ranking by clicking "RANK!"</p>
+<br>
 <p>>> By clicking "Previous" you are able to go back to the build page</p>
-<p>>> Navigate to a specific section by scrolling, clicking "Next" at botton left, or clicking the section tabs at the top.</p>
-<p>>> Use the search bars to search for specific colleges.</p>
-
-<div id="foresightTraining" class="foresightTraining">
-<p>>> Use the text box at the top to search for specific charts.</p>
-</div>
-
-<img id="trainingImg" src="" style="width:600px">
+<br>
 
 <p>
 <button id="start" type="button">Start Exploring >></button> You will not be able to return to this page
@@ -61,8 +66,9 @@ the form on the right.</p>
   }
 
   //training image
-  var imgsrc = "img/"+ userData.condition + ".gif";
-  d3.select('#training').select('#trainingImg').attr('src',imgsrc);
+  d3.select('#training').select('#mouseoverImg').attr('src',"img/mouseover.gif");
+  d3.select('#training').select('#dragImg').attr('src',"img/listdrag.gif");
+  d3.select('#training').select('#srchImg').attr('src',"img/sort.gif");
 
 
 }());
