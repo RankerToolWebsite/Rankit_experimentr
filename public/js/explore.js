@@ -6,29 +6,27 @@ expData.interaction = ""
 /*********** Initialize Page *****************/
 $(document).ready(function () {
 
-    //load data                                                                                                                                                                   
+    //load data
     d3.json("data/ranking.json", function(data) {
-        //save full dataset                                                                                                                                                       
+        //save full dataset                                  
         dataset = data;
 	var tempData = dataset[0];
 	var keys = renderHead(data[0]);
 	var table =  $('#table').DataTable({
+	    destroy: true,
 	    sScrollY: '100vh',
 	    sScrollX:  '100%',
 	    sScrollXInner: '100%',
 	    bscrollCollapse: false,
 	    pageLength: 25,
 	    searching: true,
-	    fixedColumns: {
-		leftColumns: 3,
-		heightMatch: "auto",
-		rightColumns: 0
-	    },
+	    
 	});
-	$('#table').on('draw.dt', function(e) {
-	    //highlightRows();
-	    //shadeRowsByconf(data);
-	})
+	new $.fn.dataTable.FixedColumns(table, {
+	    leftColumns: 3,
+	    heightMatch: "auto",
+	    rightColumns: 0
+	} );
 	renderData(data, keys)
     });
     //listener for rank button
@@ -37,145 +35,6 @@ $(document).ready(function () {
     experimentr.startTimer('explore');
 });
 
-/**************** Render bar chart *************************/
-/*
-document.getElementById("p1").innerHTML = "Impact of Attributes on Dataset Ranking";
-
-var colorScheme = ["#ffed6f","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5","#d9d9d9","#bc80bd"];
-var margin =  {top: 20, right: 10, bottom: 20, left: 40};
-var marginOverview = {top: 30, right: 10, bottom: 20, left: 40};
-var selectorHeight = 40;
-var width = 2000 - margin.left - margin.right;
-var height = 420 - margin.top - margin.bottom - selectorHeight;
-var heightOverview = 80 - marginOverview.top - marginOverview.bottom;
-var maxLength = d3.max(inputData.map(function(d){ return d.attribute.length}))
-var barWidth = maxLength * 7;
-var numBars = Math.round(width/barWidth);
-var isScrollDisplayed = barWidth * inputData.length > width;
-
-var xscale = d3.scale.ordinal()
-    .domain(inputData.slice(0,numBars).map(function (d) { return d.attribute; }))
-    .rangeBands([0, width], .2);
-
-var yscale = d3.scale.linear()
-    .domain([0, d3.max(inputData, function (d) { return d.weight; })])
-    .range([height, 0]);
-
-var color = d3.scale.ordinal()
-    .range(colorScheme);
-
-var xAxis  = d3.svg.axis().scale(xscale).orient("bottom");
-var yAxis  = d3.svg.axis().scale(yscale).orient("left");
-
-var svg = d3.select("#chart").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom + selectorHeight)
-    .attr("viewBox", "0 0 700 500")
-    .attr("preserveAspectRatio", "xMinYMin meet");
-
-var diagram = svg.append("g")
-    .attr("transform", "translate(" + margin.left + "," + 100 + ")");
-
-diagram.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0, " + height + ")")
-    .call(xAxis);
-
-var bars = diagram.append("g");
-
-bars.selectAll("rect")
-    .data(inputData.slice(0, numBars), function (d) {return d.attribute; })
-    .enter().append("rect")
-    .attr("class", "bar")
-    .attr("x", function (d) { return xscale(d.attribute); })
-    .attr("y", function (d) { return yscale(d.weight); })
-    .attr("width", xscale.rangeBand())
-    .attr("height", function (d) { return height - yscale(d.weight); })
-    .attr('fill', function(d, i) {
-        return color(d.attribute);
-    });
-
-var tooltip = d3.select("#chart")
-    .append('div')
-    .attr('class', 'tooltip');
-
-tooltip.append('div')
-    .attr('class', 'attribute');
-tooltip.append('div')
-    .attr('class', 'weight');
-
-svg.selectAll(".bar")
-    .on('mouseover', function(d) {
-        tooltip.select('.attribute').html("<b>" + d.attribute + "</b>");
-        tooltip.select('.weight').html("<b>Normalized Weight: " + d.weight + "</b>");
-	
-        tooltip.style('display', 'block');
-        tooltip.style('opacity',2);
-    })
-    .on('mousemove', function(d) {
-	
-        tooltip.style('top', (d3.event.layerY + 10) + 'px')
-            .style('left', (d3.event.layerX - 25) + 'px');
-    })
-    .on('mouseout', function(d) {
-        tooltip.style('display', 'none');
-        tooltip.style('opacity',0);
-    });
-
-
-if (isScrollDisplayed)
-{
-    var xOverview = d3.scale.ordinal()
-        .domain(inputData.map(function (d) { return d.attribute; }))
-        .rangeBands([0, width], .2);
-    yOverview = d3.scale.linear().range([heightOverview, 0]);
-    yOverview.domain(yscale.domain());
-    
-    var subBars = diagram.selectAll('.subBar')
-	.data(inputData)
-    
-    subBars.enter().append("rect")
-	.classed('subBar', true)
-	.attr({
-            height: function(d) {
-		return heightOverview - yOverview(d.weight);
-            },
-            width: function(d) {
-		return xOverview.rangeBand()
-            },
-            x: function(d) {
-		
-		return xOverview(d.attribute);
-            },
-            y: function(d) {
-		return height + heightOverview + yOverview(d.weight)
-            }
-	})
-    
-    var displayed = d3.scale.quantize()
-        .domain([0, width])
-        .range(d3.range(inputData.length));
-    
-    diagram.append("rect")
-        .attr("transform", "translate(0, " + (height + margin.bottom) + ")")
-        .attr("class", "mover")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("height", selectorHeight)
-        .attr("width", Math.round(parseFloat(numBars * width)/inputData.length))
-        .attr("pointer-events", "all")
-        .attr("cursor", "ew-resize")
-        .call(d3.behavior.drag().on("drag", display))
-        .on('mousemove', function(d) {
-            tooltip.style('display', 'none');
-            tooltip.style('opacity',0);
-        })
-        .on('mouseout', function(d) {
-            tooltip.style('display', 'none');
-            tooltip.style('opacity',0);
-        });
-}
-*/
 
 /****************** FUNCTIONS **********************/
 function display () {
@@ -407,9 +266,6 @@ function sumToOne(data) {
 
 ///////////////////////////
 
-function renderTable(data) {
-
-}
 
 function renderHead(datum) {
     const title = 'Title'
@@ -439,8 +295,6 @@ function renderHead(datum) {
 
 function renderData(data, keys) {
     var t = $('#table').dataTable();
-    // CODE TO DELETE IF NOT WORKING -PHS 2018
-    //t.Columns.remove("Confidence");
     let maxScore = -1; // Is this true?? can a score be negative
     data.forEach(function(row) {
 	if (row.Score > maxScore) {
@@ -466,8 +320,7 @@ function renderData(data, keys) {
 
 function searchTable(e) {
     var value = e.target.value;
-    var table = $('#table').DataTable();
-    table.search( value ).draw();
+    var table = $('#table').DataTable().search( value ).draw();
 }
 
 function parseData(raw) {
