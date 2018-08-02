@@ -2,6 +2,7 @@ var dataset = {}
 var weights = {}
 var expData = {};
 expData.interaction = ""
+expData.weights = new Array()
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
@@ -35,6 +36,7 @@ $(document).ready(function () {
 	document.querySelector('#previous').addEventListener('click', prevValidate); document.querySelector('#finish').addEventListener('click', finValidate);
     
     experimentr.startTimer('explore');
+    trackWeights();
 });
 
 /**************** Render bar chart *************************/
@@ -267,6 +269,15 @@ function finValidate() {
     expData.interaction = ""
     experimentr.endTimer('explore')
     experimentr.next(); 
+}
+
+function trackWeights() {
+	    d3.json("data/weights.json", function(data) {
+		weights = data[0]
+        delete weights["tau"]
+        expData.weights = weights
+        console.log(expData.weights)
+	    });
 }
 
 
