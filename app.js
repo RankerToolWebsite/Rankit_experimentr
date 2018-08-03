@@ -55,7 +55,8 @@ function get_rank(req, res){
     var process = spawn('python', ['public/python/build.py',
 				  req.query.pairs]);
     process.stdout.on('data', function(data) {
-	res.send(data.toString());
+	var ranking = data.toString();
+	res.send(ranking);
     });
     
     process.stderr.on('data', function(data) {
