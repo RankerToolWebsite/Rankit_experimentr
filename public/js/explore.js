@@ -5,9 +5,10 @@ expData.interaction = ""
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
-
+    
     //load data
-    d3.json("data/ranking.json", function(data) {
+    var source = experimentr.source();
+    d3.json(source, function(data) {
         //save full dataset                                  
         dataset = data;
 	var tempData = dataset[0];
@@ -30,7 +31,7 @@ $(document).ready(function () {
 	renderData(data, keys)
     });
     //listener for rank button
-	document.querySelector('#previous').addEventListener('click', prevValidate); document.querySelector('#finish').addEventListener('click', finValidate);
+    document.querySelector('#previous').addEventListener('click', prevValidate); document.querySelector('#finish').addEventListener('click', finValidate);
     
     experimentr.startTimer('explore');
 });
@@ -39,75 +40,72 @@ $(document).ready(function () {
 /****************** FUNCTIONS **********************/
 function display () {
     var x = parseInt(d3.select(this).attr("x")),
-        nx = x + d3.event.dx,
-        w = parseInt(d3.select(this).attr("width")),
-        f, nf, new_data, rects;
-
+    nx = x + d3.event.dx,
+    w = parseInt(d3.select(this).attr("width")),
+    f, nf, new_data, rects;
+    
     if ( nx < 0 || nx + w > width ) return;
-
+    
     d3.select(this).attr("x", nx);
-
+    
     f = displayed(x);
     nf = displayed(nx);
-
+    
     if ( f === nf ) return;
-
+    
     new_data = inputData.slice(nf, nf + numBars);
-
+    
     xscale.domain(new_data.map(function (d) { return d.attribute; }));
     diagram.select(".x.axis").call(xAxis);
-
+    
     rects = bars.selectAll("rect")
-      .data(new_data, function (d) {return d.attribute; });
-
-	 	rects.attr("x", function (d) { return xscale(d.attribute); });
-
-// 	  rects.attr("transform", function(d) { return "translate(" + xscale(d.attribute) + ",0)"; })
-
+	.data(new_data, function (d) {return d.attribute; });
+    
+    rects.attr("x", function (d) { return xscale(d.attribute); });
     rects.enter().append("rect")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-      .attr("class", "bar")
-      .attr("x", function (d) { return xscale(d.attribute); })
-      .attr("y", function (d) { return yscale(d.weight); })
-      .attr("width", xscale.rangeBand())
-      .attr("height", function (d) { return height - yscale(d.weight); })
-      .attr('fill', function(d, i) {
-        return color(d.attribute);
-      });
-
-      var tooltip = d3.select("#chart")
-      .append('div')
-      .attr('class', 'tooltip');
-
-      tooltip.append('div')
-      .attr('class', 'attribute');
-      tooltip.append('div')
-      .attr('class', 'weight');
-
-      if (tooltipCounter >= 1) {
+	.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+	.attr("class", "bar")
+	.attr("x", function (d) { return xscale(d.attribute); })
+	.attr("y", function (d) { return yscale(d.weight); })
+	.attr("width", xscale.rangeBand())
+	.attr("height", function (d) { return height - yscale(d.weight); })
+	.attr('fill', function(d, i) {
+            return color(d.attribute);
+	});
+    
+    var tooltip = d3.select("#chart")
+	.append('div')
+	.attr('class', 'tooltip');
+    
+    tooltip.append('div')
+	.attr('class', 'attribute');
+    tooltip.append('div')
+	.attr('class', 'weight');
+    
+    if (tooltipCounter >= 1) {
         tooltipCounter = 0;
-      }
-      else {
-      svg.selectAll(".bar")
-      .on('mouseover', function(d) {
-        tooltip.select('.attribute').html("<b>" + d.attribute + "</b>");
-        tooltip.select('.weight').html("<b>Normalized Weight: " + d.weight + "</b>");
-
-        tooltip.style('display', 'block');
-        tooltip.style('opacity',2);
-        tooltipCounter += 1;
-      })
-      .on('mousemove', function(d) {
-        tooltip.style('top', (d3.event.layerY + 10) + 'px')
-        .style('left', (d3.event.layerX - 25) + 'px');
-      })
-      .on('mouseout', function(d) {
-        tooltip.style('display', 'none');
-        tooltip.style('opacity',0);
-      });
-
-    rects.exit().remove();
-  }
+    }
+    else {
+	svg.selectAll(".bar")
+	    .on('mouseover', function(d) {
+		tooltip.select('.attribute').html("<b>" + d.attribute + "</b>");
+		tooltip.select('.weight').html("<b>Normalized Weight: " + d.weight + "</b>");
+		
+		tooltip.style('display', 'block');
+		tooltip.style('opacity',2);
+		tooltipCounter += 1;
+	    })
+	    .on('mousemove', function(d) {
+		tooltip.style('top', (d3.event.layerY + 10) + 'px')
+		    .style('left', (d3.event.layerX - 25) + 'px');
+	    })
+	    .on('mouseout', function(d) {
+		tooltip.style('display', 'none');
+		tooltip.style('opacity',0);
+	    });
+	
+	rects.exit().remove();
+    }
 };
 
 function prevValidate(){
@@ -208,7 +206,7 @@ function normalizeWeights(data) {
 	    "weight": current_normalized
 	});
     }
-    return dict
+    return dict;
 }
 
 function roundTo(n, digits) {
@@ -222,13 +220,13 @@ function roundTo(n, digits) {
 }
 
 function sumToOne(data) {
-    var dict = []
-    var sum = 0
+    var dict = [];
+    var sum = 0;
     for (i=0; i<data.length; i++){
 	if (data[i].weight < 0) {
-	    sum = sum + (-1)*data[i].weight
+	    sum = sum + (-1)*data[i].weight;
 	} else {
-	    sum = sum + data[i].weight
+	    sum = sum + data[i].weight;
 	}
     }
     

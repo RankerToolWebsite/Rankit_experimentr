@@ -3,7 +3,6 @@ var weights = 0;
 var counter = 0;
 var tooltipCounter = 0;
 var pool = document.querySelector('#top');
-//const target = document.querySelector('#lc-center');
 var dataset = {}
 var attributes = {}
 var min_num_of_objects = 2;
@@ -17,7 +16,7 @@ expData.interaction = ""
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
-
+    
     //load data
     d3.json("data/colleges.json", function(data) {
 	//save full dataset
@@ -34,28 +33,28 @@ $(document).ready(function () {
 	
 	//create sortable container for pool
 	const source_sortable = Sortable.create(pool, {
-	     group: {
-        name: 'list',
-        pull: 'clone',
-        revertClone: 'true',
-      },
-      onAdd: function(evt){
-        evt.item.parentNode.removeChild(evt.item)
-      },
-      animation: 300,
-      sort: false,
-      ghostClass: 'ghost',
+	    group: {
+		name: 'list',
+		pull: 'clone',
+		revertClone: 'true',
+	    },
+	    onAdd: function(evt){
+		evt.item.parentNode.removeChild(evt.item)
+	    },
+	    animation: 300,
+	    sort: false,
+	    ghostClass: 'ghost',
 	});
 	
-    add_to_sortable('.high')
-    add_to_sortable('.low')
-
+	add_to_sortable('.high')
+	add_to_sortable('.low')
+	
 	
 	//listener for rank button
-	document.querySelector('#submit').addEventListener('click', handlePWCSubmit);
+	document.querySelector('#submit').addEventListener('click', buildSubmit);
         
 	document.querySelector('#more').addEventListener('click', trackNewPair);
-            
+        
 	
 	var pwc_observer = new MutationObserver(function (mutations) {
 	    mutations.forEach(function (mutation) {
@@ -71,8 +70,8 @@ $(document).ready(function () {
 		}
 		else {
 		    $('#submit').removeAttr('disabled');
-		    handleBuildSubmit()
 		}
+		//MOTIVATORS
 		//barUpdate(confidence);
 		//console.log(weights);
 		//renderBarChart(weights,"#chart", colorScheme);
@@ -88,8 +87,8 @@ $(document).ready(function () {
 	
 	var pwc_center_node = document.getElementById('pwl');
 	pwc_observer.observe(pwc_center_node, pwc_observerConfig);
-	    
-    
+	
+	
 	//check if we need to populate page from URL
 	if ( pwc_getHighFromURL() !== undefined) {
 	    pwc_populateHighBox();
@@ -117,7 +116,7 @@ $(document).ready(function () {
     });
     experimentr.startTimer('build');
 });
-	
+
 /*********************** Functions ****************************************/
 
 
@@ -147,50 +146,36 @@ function trackNewPair(){
     expData.interaction = ""  
 }
 
-function handlePWCSubmit() {
-    validate();
+//log end of build session, advance to explore    
+function buildSubmit(){
+    expData.interaction = "RANK";
+    experimentr.addData(expData);
+    experimentr.endTimer('build');
+    experimentr.save();
+    expData.interaction = "";
+    var url = getRanking();
+    experimentr.next_json(url);   
 }
 
-function validate() {
-    expData.interaction = "RANK"
-    experimentr.addData(expData)
-    experimentr.endTimer('build')
-    experimentr.save();
-    expData.interaction = ""
-    experimentr.next();
-  }
-
-function handleBuildSubmit() {
-    const pwl = pwc_generatePairwise()
+function getRanking() {
+    //generate query string to fetch anking from backend
+    const pwl = pwc_generatePairwise();
     var pairs = JSON.stringify(pwl);    
-    if (pairs !== ""){
-	const url =  "build?pairs="+pairs
-	const xhr = new XMLHttpRequest()
-	xhr.open('GET', url, true)
-	xhr.setRequestHeader('Content-type', 'application/json')
-	
-	xhr.send()
-	xhr.onload = function () {
-	    d3.json("data/weights.json", function(data) {
-		confidence = data[0]["tau"]
-		weights = data[0]
-		delete weights["tau"]
-	    });
-	}
-    }
+    return "build?pairs="+pairs;
 }
 
 function pwc_generatePairwise() {
-      const highs = Array.from(document.querySelectorAll('.high .object')).map(x => x.id)
-      const lows = Array.from(document.querySelectorAll('.low .object')).map(x => x.id)
-
-      let pwl = []
-      for (let i = 0; i < highs.length; i++) {
+    const highs = Array.from(document.querySelectorAll('.high .object')).map(x => x.id)
+    const lows = Array.from(document.querySelectorAll('.low .object')).map(x => x.id)
+    
+    let pwl = []
+    for (let i = 0; i < highs.length; i++) {
         pwl.push({ 'high': highs[i], 'low': lows[i] })
-      }
-      console.log(pwl)
-      return pwl
+    }
+    console.log(pwl)
+    return pwl
 }
+
 //dataset should be accessed from json, contains all attributes
 //can call getSubsetData first
 function render(dataset) {
@@ -216,14 +201,14 @@ function generateTileHTML(x){
 
 //Takes what is in the data pool and returns their original ids as an integer array
 function getCurrentPool() {
-  return Array.from(document.querySelector('#top').children).map(x => parseInt(x.id))
+    return Array.from(document.querySelector('#top').children).map(x => parseInt(x.id))
 }
 
 //Takes what is in the ranked pool and returns their original ids as an integer array
 function getRankedID() {
-  var high = Array.from(document.querySelector('.high').children).map(x => parseInt(x.id))
-  var low = Array.from(document.querySelector('.low').children).map(x => parseInt(x.id))
-  return high.concat(low)
+    var high = Array.from(document.querySelector('.high').children).map(x => parseInt(x.id))
+    var low = Array.from(document.querySelector('.low').children).map(x => parseInt(x.id))
+    return high.concat(low)
 }
 
 
@@ -266,7 +251,7 @@ function searchDataset(e) {
     const newDataset = difference.filter(tile => re.test(tile.Title))
     render(newDataset)
     refresh_popovers()
-  }
+}
 
 function refresh_popovers(){
     $('.pop').popover({
@@ -278,41 +263,41 @@ function refresh_popovers(){
     });
 }
 
-   function handleMore() {
-      const pwl = document.querySelector('#pwl')
-      // const html = `<div class="pw"><div class="high list"></div><div class="low list"></div></div>`
-      const html = `<div class="pwx"><div class="pw"><div class="high list"></div><div class="low list"></div></div><div class="x" onclick="clearPW(event)"><i class="fas fa-times"></i></div></div>`
-      pwl.innerHTML += html
-        add_to_sortable('.high')
-        add_to_sortable('.low')
-    }
-        
+function handleMore() {
+    const pwl = document.querySelector('#pwl')
+    // const html = `<div class="pw"><div class="high list"></div><div class="low list"></div></div>`
+    const html = `<div class="pwx"><div class="pw"><div class="high list"></div><div class="low list"></div></div><div class="x" onclick="clearPW(event)"><i class="fas fa-times"></i></div></div>`
+    pwl.innerHTML += html
+    add_to_sortable('.high')
+    add_to_sortable('.low')
+}
 
-    function clearPW(e) {
-      const pwl = e.target.closest('#pwl')
-      console.log();
-      if (pwl.children.length > 1) {
+
+function clearPW(e) {
+    const pwl = e.target.closest('#pwl')
+    console.log();
+    if (pwl.children.length > 1) {
         const pwx = e.target.closest('.pwx');
         // console.log(pwx)
         pwx.remove()
-      } else {
+    } else {
         const pw = e.target.closest('.pwx').children[0];
         pw.children[0].innerHTML = "";
         pw.children[1].innerHTML = "";
-      }
     }
+}
 
 
 /****** Loading from URL ******************/
- function pwc_urlUpdate() {
-      const high = Array.from(document.querySelectorAll('.high > div')).map(x => x.id)
-      const low = Array.from(document.querySelectorAll('.low > div')).map(x => x.id)
-      var url = window.location.pathname + "?method=" + "pwc" + "&" + "left=" + high.toString() + "&" + "right=" + low.toString()
-      history.pushState({}, 'Pairwise Comparison', url)
-      trackHigh(high)
-      trackLow(low)
-      experimentr.addData(expData)
- }
+function pwc_urlUpdate() {
+    const high = Array.from(document.querySelectorAll('.high > div')).map(x => x.id)
+    const low = Array.from(document.querySelectorAll('.low > div')).map(x => x.id)
+    var url = window.location.pathname + "?method=" + "pwc" + "&" + "left=" + high.toString() + "&" + "right=" + low.toString()
+    history.pushState({}, 'Pairwise Comparison', url)
+    trackHigh(high)
+    trackLow(low)
+    experimentr.addData(expData)
+}
 //The following two functions checks length of the current box against old one to determine whether the interaction adds or subtracts
 function trackHigh(url){
     expData.highUrlChanges = url
@@ -354,23 +339,26 @@ function pwc_getParametersFromURL() {
     }
     return query_string;
 }
-     function pwc_getHighFromURL() {
+
+
+function pwc_getHighFromURL() {
     var selectedObjects = pwc_getParametersFromURL().left;
-
-     if (selectedObjects !== undefined) {
+    
+    if (selectedObjects !== undefined) {
 	return selectedObjects.split(',');
     }
     return selectedObjects;
-    }
-     
-    function pwc_getLowFromURL() {
+}
+
+
+function pwc_getLowFromURL() {
     var selectedObjects = pwc_getParametersFromURL().right;
-
-     if (selectedObjects !== undefined) {
+    
+    if (selectedObjects !== undefined) {
 	return selectedObjects.split(',');
     }
     return selectedObjects;
-    }
+}
 
 
 function pwc_populateHighBox() {
@@ -379,12 +367,13 @@ function pwc_populateHighBox() {
     var pwc_objectsFromURL = pwc_getHighFromURL();
     for (let i = 0; i < pwc_objectsFromURL.length; i++) {
 	if (numOfElem > 0) {
-          if (document.querySelectorAll('.low')[index + 1] === undefined) {
-            handleMore()
-          }
-          index = index + 1
-          numOfElem = 0
-        }document.querySelector('#top').removeChild(document.getElementById(pwc_objectsFromURL[i]))
+            if (document.querySelectorAll('.low')[index + 1] === undefined) {
+		handleMore()
+            }
+            index = index + 1
+            numOfElem = 0
+        }
+	document.querySelector('#top').removeChild(document.getElementById(pwc_objectsFromURL[i]));
 	var node = document.createElement("DIV");
 	var textnode = document.createTextNode(dataset[pwc_objectsFromURL[i]].Title);
 	node.appendChild(textnode);
@@ -393,23 +382,22 @@ function pwc_populateHighBox() {
 	node.setAttribute("tabindex", "0");
 	node.setAttribute("data-toggle", "popover");
 	document.querySelectorAll('.high')[index].appendChild(node);
-    numOfElem = numOfElem + 1
-	handleBuildSubmit();
+	numOfElem = numOfElem + 1
     }
 }
-     
-    function pwc_populateLowBox() {
+
+function pwc_populateLowBox() {
     var index = 0
     var numOfElem = 0
     var pwc_objectsFromURL = pwc_getLowFromURL();
     for (let i = 0; i < pwc_objectsFromURL.length; i++) {
 	if (numOfElem > 0) {
-          if (document.querySelectorAll('.low')[index + 1] === undefined) {
-            handleMore()
-          }
-          index = index + 1
-          numOfElem = 0
-        }//document.querySelector('#top').removeChild(document.getElementById(pwc_objectsFromURL[i]))
+            if (document.querySelectorAll('.low')[index + 1] === undefined) {
+		handleMore();
+            }
+            index = index + 1;
+            numOfElem = 0;
+        }
 	var node = document.createElement("DIV");
 	var textnode = document.createTextNode(dataset[pwc_objectsFromURL[i]].Title);
 	node.appendChild(textnode);
@@ -418,7 +406,7 @@ function pwc_populateHighBox() {
 	node.setAttribute("tabindex", "0");
 	node.setAttribute("data-toggle", "popover");
 	document.querySelectorAll('.low')[index].appendChild(node);
-    numOfElem = numOfElem + 1
-	handleBuildSubmit();
+	numOfElem = numOfElem + 1;
     }
 }
+

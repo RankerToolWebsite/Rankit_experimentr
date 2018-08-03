@@ -3,7 +3,8 @@ var experimentr = (function() {
     , sequence
     , current
     , mainDiv
-    , data = {};
+    , data = {}
+    , source;
 
   // Add a random postId for each new participant
   //data.postId = (+new Date()).toString(36);
@@ -17,6 +18,11 @@ var experimentr = (function() {
   // Accessor for data
   experimentr.data = function() {
     return data;
+  };
+
+// Accessor for input data source
+  experimentr.source = function() {
+    return source;
   };
 
   // Starts the experiment by loading the first module
@@ -64,6 +70,15 @@ var experimentr = (function() {
     experimentr.clearNext();
     experimentr.showNext();
     current = current + 1;
+    activate(current);
+  }
+
+  // Load the next module, saving pointer to the source url for json input to module
+  experimentr.next_json = function(url) {
+    experimentr.clearNext();
+    experimentr.showNext();
+    current = current + 1;
+    source = url;
     activate(current);
   }
 

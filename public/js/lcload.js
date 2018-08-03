@@ -125,48 +125,29 @@ function barUpdate(list_length) {
     document.getElementById("bar").setAttribute("style", "width:"+list_length+"%");
     document.getElementById("bar").textContent = list_length+"%"+" Confidence";
     }
-    
-function buildSubmit(){
-    getRanking(endBuild);
-}
 
-//log end of build session, advance to explore
-function endBuild() {
+//log end of build session, advance to explore    
+function buildSubmit(){
     expData.interaction = "RANK";
     experimentr.addData(expData);
     experimentr.endTimer('build');
     experimentr.save();
     expData.interaction = "";
-    experimentr.next();   
+    var url = getRanking();
+    experimentr.next_json(url);   
 }
 
-function getRanking(callback) {
-    //generate ranking on backend, save to file
+function getRanking() {
+    //generate query string to fetch anking from backend
     const pwl = lc_generatePairwise();
     var pairs = JSON.stringify(pwl);    
-    if (pairs !== ""){
-	const url = "build?pairs="+pairs;
-	const xhr = new XMLHttpRequest();
-	xhr.open('GET', url, true);
-	xhr.setRequestHeader('Content-type', 'application/json');
-	
-	xhr.send();
-	xhr.onload = function () {
-	    d3.json("data/weights.json", function(data) {
-		confidence = data[0]["tau"];
-		weights = data[0];
-		delete weights["tau"];
-	    });
-	}	
-    }
-    //perform next operation that reads ranking from file
-    callback();
+    return "build?pairs="+pairs;
 }
 
 
 function lc_generatePairwise() {
     const list = Array.from(document.querySelectorAll('#lc-center .object'));
-    const ids = list.map(x => x.id);
+    const ids = list.map(x => parseInt(x.id));
     // pairwise list to send back to server
     let pwl = [];
     for (let i = 0; i < ids.length - 1; i++) {
