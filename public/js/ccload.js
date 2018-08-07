@@ -19,7 +19,6 @@ expData.highUrlChanges = new Array()
 expData.medUrlChanges = new Array()
 expData.lowUrlChanges = new Array()
 expData.interaction = ""
-var tracking = 1;
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
@@ -47,40 +46,40 @@ $(document).ready(function () {
 	});
         
 	//create sortable container for preference collection
-    const high_sortable = Sortable.create(high, {
-      group: 'category',
-      animation: 300,
-      ghostClass: 'ghost',
-    })
-    const med_sortable = Sortable.create(med, {
-      group: 'category',
-      animation: 300,
-      ghostClass: 'ghost',
-    })
-    const low_sortable = Sortable.create(low, {
-      group: 'category',
-      animation: 300,
-      ghostClass: 'ghost',
-    })
+	const high_sortable = Sortable.create(high, {
+	    group: 'category',
+	    animation: 300,
+	    ghostClass: 'ghost',
+	})
+	const med_sortable = Sortable.create(med, {
+	    group: 'category',
+	    animation: 300,
+	    ghostClass: 'ghost',
+	})
+	const low_sortable = Sortable.create(low, {
+	    group: 'category',
+	    animation: 300,
+	    ghostClass: 'ghost',
+	})
 	
 	//listener for rank button
-	document.querySelector('#cc-submit').addEventListener('click', handleCCSubmit);
+	document.querySelector('#cc-submit').addEventListener('click', buildSubmit);
 	
 	var cc_observer = new MutationObserver(function (mutations) {
 	    mutations.forEach(function (mutation) {
-		cc_urlUpdate()
+		cc_urlUpdate();
 		
-		var num_of_non_empty_list = document.querySelector('#center').children.length > 0 ? 1 : 0
-		num_of_non_empty_list += document.querySelector('#left').children.length > 0 ? 1 : 0
-		num_of_non_empty_list += document.querySelector('#right').children.length > 0 ? 1 : 0
+		var num_of_non_empty_list = document.querySelector('#center').children.length > 0 ? 1 : 0;
+		num_of_non_empty_list += document.querySelector('#left').children.length > 0 ? 1 : 0;
+		num_of_non_empty_list += document.querySelector('#right').children.length > 0 ? 1 : 0;
 		
 		if (num_of_non_empty_list < min_num_of_non_empty_lists) {
 		    $('#cc-submit').attr('disabled', 'disabled');
 		}
 		else {
 		    $('#cc-submit').removeAttr('disabled');
-		    handleBuildSubmit()
 		}
+		//MOTIVATORS
 		//barUpdate(confidence);
 		//console.log(weights);
 		//renderBarChart(weights,"#chart", colorScheme);
@@ -103,19 +102,19 @@ $(document).ready(function () {
         
 	//check if we need to populate page from URL
 	if ( cc_getHighFromURL() !== undefined) {
-        var tracking = 0;
-        cc_populateHighBox();
-        var tracking = 1;
+            var tracking = 0;
+            cc_populateHighBox();
+            var tracking = 1;
 	}
         if ( cc_getMedFromURL() !== undefined) {
-        var tracking = 0;
-        cc_populateMediumBox();
-        var tracking = 1;
+            var tracking = 0;
+            cc_populateMediumBox();
+            var tracking = 1;
 	}
         if ( cc_getLowFromURL() !== undefined) {
-        var tracking = 0;    
-        cc_populateLowBox();
-        var tracking = 1;
+            var tracking = 0;    
+            cc_populateLowBox();
+            var tracking = 1;
 	}
 	
 	shuffleDataset();
@@ -140,7 +139,7 @@ $(document).ready(function () {
 
 
 function add_to_sortable(className) {
-    const all = document.querySelectorAll(className)
+    const all = document.querySelectorAll(className);
     
     all.forEach(t => Sortable.create(t, {
 	group: {
@@ -148,64 +147,54 @@ function add_to_sortable(className) {
 	    put: (to) => to.el.children.length < 1,
 	},
 	animation: 100,
-    }))
+    }));
 }
-
 
 function barUpdate(list_length) {
-    list_length = Math.floor(list_length)
-    document.getElementById("bar").setAttribute("aria-valuenow", list_length.toString())
-    document.getElementById("bar").setAttribute("style", "width:"+list_length+"%")
-    document.getElementById("bar").textContent = list_length+"%"+" Confidence"
+    list_length = Math.floor(list_length);
+    document.getElementById("bar").setAttribute("aria-valuenow", list_length.toString());
+    document.getElementById("bar").setAttribute("style", "width:"+list_length+"%");
+    document.getElementById("bar").textContent = list_length+"%"+" Confidence";
 }
 
+//log end of build session, advance to explore    
+function buildSubmit(){
+    expData.interaction = "RANK";
+    experimentr.addData(expData);
+    experimentr.endTimer('build');
+    experimentr.save();
+    expData.interaction = "";
+    var url = getRanking();
+    experimentr.next_json(url);   
+}
 
-
-function handleCCSubmit() {
-    validate();
-    }
-
-
-function handleBuildSubmit() {
-    const pwl = cc_generatePairwise()
-    var pairs = JSON.stringify(pwl);
-    if (pairs !== ""){
-	const url =  "build?pairs="+pairs
-	const xhr = new XMLHttpRequest()
-	xhr.open('GET', url, true)
-	xhr.setRequestHeader('Content-type', 'application/json')
-	
-	xhr.send()
-	xhr.onload = function () {
-            d3.json("data/weights.json", function(data) {
-		confidence = data[0]["tau"]
-		weights = data[0]
-		delete weights["tau"]
-	    });
-	}
-    }
+function getRanking() {
+    //generate query string to fetch anking from backend
+    const pwl = cc_generatePairwise();
+    var pairs = JSON.stringify(pwl);    
+    return "build?pairs="+pairs;
 }
 
 function cc_generatePairwise() {
-    const high = Array.from(document.querySelectorAll('#left .object')).map(x => x.id)
-      const med = Array.from(document.querySelectorAll('#center .object')).map(x => x.id)
-      const low = Array.from(document.querySelectorAll('#right .object')).map(x => x.id)
-      // pairwise list to send back to server
-      let pwl = []
+    const high = Array.from(document.querySelectorAll('#left .object')).map(x => x.id);
+    const med = Array.from(document.querySelectorAll('#center .object')).map(x => x.id);
+    const low = Array.from(document.querySelectorAll('#right .object')).map(x => x.id);
+    // pairwise list to send back to server
+    let pwl = [];
       for (let i = 0; i < high.length; i++) {
-        for (let j = 0; j < med.length; j++) {
-          pwl.push({ 'high': high[i], 'low': med[j] })
-        }
-        for (let j = 0; j < low.length; j++) {
-          pwl.push({ 'high': high[i], 'low': low[j] })
-        }
+          for (let j = 0; j < med.length; j++) {
+              pwl.push({ 'high': high[i], 'low': med[j] });
+          }
+          for (let j = 0; j < low.length; j++) {
+              pwl.push({ 'high': high[i], 'low': low[j] });
+          }
       }
-      for (let i = 0; i < med.length; i++) {
+    for (let i = 0; i < med.length; i++) {
         for (let j = 0; j < low.length; j++) {
-          pwl.push({ 'high': med[i], 'low': low[j] })
+            pwl.push({ 'high': med[i], 'low': low[j] });
         }
-      }
-      return pwl
+    }
+    return pwl;
 }
 
 //dataset should be accessed from json, contains all attributes
@@ -353,15 +342,6 @@ function trackLow(url){
     oldLowURL = url 
 }
 
-function validate() {
-    expData.interaction = "RANK"
-    experimentr.addData(expData)
-    experimentr.endTimer('build')
-    experimentr.save();
-    expData.interaction = ""
-    experimentr.next();
-  }
-
 
 function cc_getParametersFromURL() {
     var query_string = {};
@@ -413,7 +393,8 @@ function cc_getLowFromURL() {
 
 function cc_populateHighBox() {
     var cc_objectsFromURL = cc_getHighFromURL();
-    for (let i = 0; i < cc_objectsFromURL.length; i++) {document.querySelector('#top').removeChild(document.getElementById(cc_objectsFromURL[i]))
+    for (let i = 0; i < cc_objectsFromURL.length; i++) {
+	document.querySelector('#top').removeChild(document.getElementById(cc_objectsFromURL[i]))
 	var node = document.createElement("DIV");
 	var textnode = document.createTextNode(dataset[cc_objectsFromURL[i]].Title);
 	node.appendChild(textnode);
@@ -422,13 +403,14 @@ function cc_populateHighBox() {
 	node.setAttribute("tabindex", "0");
 	node.setAttribute("data-toggle", "popover");
 	document.querySelector('#left').appendChild(node);
-	handleBuildSubmit();
+//	handleBuildSubmit();
     }
 }
 
 function cc_populateMediumBox() {
     var cc_objectsFromURL = cc_getMedFromURL();
-    for (let i = 0; i < cc_objectsFromURL.length; i++) {document.querySelector('#top').removeChild(document.getElementById(cc_objectsFromURL[i]))
+    for (let i = 0; i < cc_objectsFromURL.length; i++) {
+	document.querySelector('#top').removeChild(document.getElementById(cc_objectsFromURL[i]))
 	var node = document.createElement("DIV");
 	var textnode = document.createTextNode(dataset[cc_objectsFromURL[i]].Title);
 	node.appendChild(textnode);
@@ -437,13 +419,14 @@ function cc_populateMediumBox() {
 	node.setAttribute("tabindex", "0");
 	node.setAttribute("data-toggle", "popover");
 	document.querySelector('#center').appendChild(node);
-	handleBuildSubmit();
+//	handleBuildSubmit();
     }
 }
 
 function cc_populateLowBox() {
     var cc_objectsFromURL = cc_getLowFromURL();
-    for (let i = 0; i < cc_objectsFromURL.length; i++) {document.querySelector('#top').removeChild(document.getElementById(cc_objectsFromURL[i]))
+    for (let i = 0; i < cc_objectsFromURL.length; i++) {
+	document.querySelector('#top').removeChild(document.getElementById(cc_objectsFromURL[i]))
 	var node = document.createElement("DIV");
 	var textnode = document.createTextNode(dataset[cc_objectsFromURL[i]].Title);
 	node.appendChild(textnode);
@@ -452,7 +435,7 @@ function cc_populateLowBox() {
 	node.setAttribute("tabindex", "0");
 	node.setAttribute("data-toggle", "popover");
 	document.querySelector('#right').appendChild(node);
-	handleBuildSubmit();
+//	handleBuildSubmit();
     }
 }
 

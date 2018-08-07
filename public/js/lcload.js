@@ -12,11 +12,11 @@ var expData = {};
 var oldURL = new Array()
 expData.UrlChanges = new Array()
 expData.interaction = ""
-var tracking = 1;
+//var tracking = 1;
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
-
+    
     //load data
     d3.json("data/colleges.json", function(data) {
 	//save full dataset
@@ -46,7 +46,7 @@ $(document).ready(function () {
 	});
 	
 	//listener for rank button
-	document.querySelector('#lc-submit').addEventListener('click', handleLCSubmit);
+	document.querySelector('#lc-submit').addEventListener('click', buildSubmit);
 	
 	lc_observer = new MutationObserver(function (mutations) {
 	    mutations.forEach(function (mutation) {
@@ -58,8 +58,8 @@ $(document).ready(function () {
 		}
 		else {
 		    $('#lc-submit').removeAttr('disabled');
-		    handleBuildSubmit();
 		}
+		//MOTIVATORS
 		//barUpdate(confidence);
 		//console.log(weights);
 		//renderBarChart(weights,"#chart", colorScheme);
@@ -77,9 +77,10 @@ $(document).ready(function () {
 	
 	//check if we need to populate page from URL
 	if ( lc_getParametersFromURL() !== undefined) {
-	    tracking = 0;
-        lc_populateBox();
-        tracking = 1;
+	    //tracking = 0;
+            lc_populateBox();
+            //tracking = 1;
+	    //MOTIVATOR
 	    //barUpdate(confidence);
 	}
 	
@@ -101,7 +102,7 @@ $(document).ready(function () {
     experimentr.release();
     experimentr.startTimer('build');
 });
-	
+
 /*********************** Functions ****************************************/
 
 
@@ -114,71 +115,55 @@ function add_to_sortable(className) {
 	    put: (to) => to.el.children.length < 1,
 	},
 	animation: 100,
-    }))
+    }));
 }
 
 
 function barUpdate(list_length) {
-    list_length = Math.floor(list_length)
-    document.getElementById("bar").setAttribute("aria-valuenow", list_length.toString())
-    document.getElementById("bar").setAttribute("style", "width:"+list_length+"%")
-    document.getElementById("bar").textContent = list_length+"%"+" Confidence"
-}
-
-
-function handleLCSubmit() {
-    validate();
-}
-
-function validate() {
-    expData.interaction = "RANK"
-    experimentr.addData(expData)
-    experimentr.endTimer('build')
-    experimentr.save();
-    expData.interaction = ""
-    experimentr.next();   
-}
-
-
-function handleBuildSubmit() {
-    const pwl = lc_generatePairwise()
-    var pairs = JSON.stringify(pwl);    
-    if (pairs !== ""){
-	const url = "build?pairs="+pairs
-	const xhr = new XMLHttpRequest()
-	xhr.open('GET', url, true)
-	xhr.setRequestHeader('Content-type', 'application/json')
-	
-	xhr.send()
-	xhr.onload = function () {
-	    d3.json("data/weights.json", function(data) {
-		confidence = data[0]["tau"]
-		weights = data[0]
-		delete weights["tau"]
-	    });
-	}
+    list_length = Math.floor(list_length);
+    document.getElementById("bar").setAttribute("aria-valuenow", list_length.toString());
+    document.getElementById("bar").setAttribute("style", "width:"+list_length+"%");
+    document.getElementById("bar").textContent = list_length+"%"+" Confidence";
     }
+
+//log end of build session, advance to explore    
+function buildSubmit(){
+    expData.interaction = "RANK";
+    experimentr.addData(expData);
+    experimentr.endTimer('build');
+    experimentr.save();
+    expData.interaction = "";
+    var url = getRanking();
+    experimentr.next_json(url);   
 }
+
+function getRanking() {
+    //generate query string to fetch anking from backend
+    const pwl = lc_generatePairwise();
+    var pairs = JSON.stringify(pwl);    
+    return "build?pairs="+pairs;
+}
+
 
 function lc_generatePairwise() {
-    const list = Array.from(document.querySelectorAll('#lc-center .object'))
-    const ids = list.map(x => x.id)
+    const list = Array.from(document.querySelectorAll('#lc-center .object'));
+    const ids = list.map(x => parseInt(x.id));
     // pairwise list to send back to server
-    let pwl = []
+    let pwl = [];
     for (let i = 0; i < ids.length - 1; i++) {
 	for (let j = i + 1; j < ids.length; j++) {
 	    pwl.push({ 'high': ids[i], 'low': ids[j] })
 	}
     }
-    return pwl
+    return pwl;
 }
 
 //dataset should be accessed from json, contains all attributes
 //can call getSubsetData first
 function render(dataset) {
     //const pool = document.querySelector('#top')
-    const html = dataset.map(x => generateTileHTML(x)).join('\n')
-    pool.innerHTML = html	  
+    const html = dataset.map(x => generateTileHTML(x)).join('\n');
+    pool.innerHTML = html;	  
 }
 
 function generateTileHTML(x){
@@ -190,20 +175,20 @@ function generateTileHTML(x){
 	var attrVal = x[attributes[i]];
         text = text + "<tr><td>" + attrName + "</td><td>" + attrVal + "</td></tr>";
     }
-    text = text + "</table>"
+    text = text + "</table>";
     //format tile display, use index in dataset as id
     return `<div tabindex="0" id="${id}" class="object noSelect pop"
-    data-toggle="popover" data-html="true" data-content="${text}">${x.Title}</div>`
+    data-toggle="popover" data-html="true" data-content="${text}">${x.Title}</div>`;
 }
 
 //Takes what is in the data pool and returns their original ids as an integer array
 function getCurrentPool() {
-  return Array.from(document.querySelector('#top').children).map(x => parseInt(x.id))
+  return Array.from(document.querySelector('#top').children).map(x => parseInt(x.id));
 }
 
 //Takes what is in the ranked pool and returns their original ids as an integer array
 function getRankedID() {
-  return Array.from(document.querySelector('#lc-center').children).map(x => parseInt(x.id))
+  return Array.from(document.querySelector('#lc-center').children).map(x => parseInt(x.id));
 }
 
 
@@ -217,10 +202,10 @@ function filterDataset(ids){
 }
 
 function sortDataset() {
-    var currentIds = getCurrentPool()
-    currentIds.sort(function(a, b){return a-b})
-    render(filterDataset(currentIds))
-    refresh_popovers()
+    var currentIds = getCurrentPool();
+    currentIds.sort(function(a, b){return a-b});
+    render(filterDataset(currentIds));
+    refresh_popovers();
 }
 
 function shuffleDataset() {
@@ -230,8 +215,8 @@ function shuffleDataset() {
 	const j = Math.floor(Math.random() * (i + 1));
 	[currentData[i], currentData[j]] = [currentData[j], currentData[i]];
     }
-    render(currentData)
-    refresh_popovers()
+    render(currentData);
+    refresh_popovers();
 }
 
 var filtered = [1, 2, 3, 4].filter(
@@ -246,13 +231,13 @@ function searchDataset(e) {
     //filters what is already ranked out of the dataset
     var rankedID = getRankedID();
     var rankedDataset = filterDataset(rankedID);
-    let difference = dataset.filter(tile => rankedDataset.indexOf(tile) == -1)
+    let difference = dataset.filter(tile => rankedDataset.indexOf(tile) == -1);
     //checks what is in the search bar and filters out anything that doesnt contain it
-    const value = e.target.value
-    const re = new RegExp(value, 'i')
-    const newDataset = difference.filter(tile => re.test(tile.Title))
-    render(newDataset)
-    refresh_popovers()
+    const value = e.target.value;
+    const re = new RegExp(value, 'i');
+    const newDataset = difference.filter(tile => re.test(tile.Title));
+    render(newDataset);
+    refresh_popovers();
   }
 
 function refresh_popovers(){
@@ -268,24 +253,24 @@ function refresh_popovers(){
 
 /****** Loading from URL ******************/
 function lc_urlUpdate() {
-    var list = Array.from(document.querySelectorAll('#lc-center .object')).map(x => x.id)
-    var url = window.location.pathname + "?method=" + "lc" + "&" + "objects="
-    history.pushState({}, 'List Comparison', url + list.toString())
+    var list = Array.from(document.querySelectorAll('#lc-center .object')).map(x => x.id);
+    var url = window.location.pathname + "?method=" + "lc" + "&" + "objects=";
+    history.pushState({}, 'List Comparison', url + list.toString());
     
     if (tracking = 1){
-    trackChanges(list)
-    experimentr.addData(expData)
+	trackChanges(list);
+	experimentr.addData(expData);
     }
 }
 
 function trackChanges(url){
-    expData.UrlChanges = url
+    expData.UrlChanges = url;
     if (url.length > oldURL.length){
-        expData.interaction = "ADD" 
+        expData.interaction = "ADD";
     } else if (url.length < oldURL.length) {
-        expData.interaction = "REMOVE"
+        expData.interaction = "REMOVE";
     }
-    oldURL = url 
+    oldURL = url; 
 }
 
 
@@ -318,7 +303,7 @@ function lc_getParametersFromURL() {
 function lc_populateBox() {
     var lc_objectsFromURL = lc_getParametersFromURL();
     for (let i = 0; i < lc_objectsFromURL.length; i++) {
-	document.querySelector('#top').removeChild(document.getElementById(lc_objectsFromURL[i]))
+	document.querySelector('#top').removeChild(document.getElementById(lc_objectsFromURL[i]));
 	var node = document.createElement("DIV");
 	var textnode = document.createTextNode(dataset[lc_objectsFromURL[i]].Title);
 	node.appendChild(textnode);
@@ -327,9 +312,6 @@ function lc_populateBox() {
 	node.setAttribute("tabindex", "0");
 	node.setAttribute("data-toggle", "popover");
 	document.querySelector('#lc-center').appendChild(node);
-	handleBuildSubmit();
     }
 }
-
-//experimentr.onNext(experimentr.endTimer('exploration'));
 
