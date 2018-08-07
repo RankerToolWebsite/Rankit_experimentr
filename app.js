@@ -10,6 +10,7 @@ var express     = require('express')
   , port        = process.argv[2] || 8000
   , rport       = process.argv[3] || 6379
   , debug       = process.argv[4] || null
+  , bodyParser      = require('body-parser')
 
 // Database setup
 redisClient = redis.createClient(rport)
@@ -46,43 +47,27 @@ app.post('/finish', function(req, res) {
   res.send(200)
 })
 
-//Enable python for ranking script
-var PythonShell = require('python-shell');
-/*
-var options = {
-    mode: 'text',
-    pythonPath: '/home/caitlin/anaconda3/bin/python3', 
-    pythonOptions: ['-u'],
-    // make sure you use an absolute path for scriptPath
-    scriptPath: 'public/python',
-    args: ['value1', 'value2', 'value3']
-};
+//run ranking script
+app.get('/build', get_rank);
 
-PythonShell.run('build.py', options, function (err, results) {
-    if (err) throw err;
-    // results is an array consisting of messages collected during execution
-    console.log('results: %j', results);
+function get_rank(req, res){
+    var spawn = require("child_process").spawn;
+    var process = spawn('python', ['public/python/build.py',
+				  req.query.pairs]);
+    process.stdout.on('data', function(data) {
+	var ranking = data.toString();
+	res.send(ranking);
     });
-*/
-
-app.get('/build', run_build);
-function run_build(req, res) {
-  var options = {
-    args:[req.query.pairs], // pairs of itmes extracted from build view
-    mode: 'text',
-    pythonPath: '/home/caitlin/anaconda3/bin/python3', 
-    pythonOptions: ['-u'],
-    // make sure you use an absolute path for scriptPath
-    scriptPath: 'public/python'
-  }
-  PythonShell.run('build.py', options, function (err, data) {
-      if (err) res.send(err);
-//      console.log(data);
-//      res.send(data.toString());
-  });
+    
+    process.stderr.on('data', function(data) {
+	console.log('stderr: ' + data);
+    });
+    
+    process.on('close', function(code) {
+	console.log('child process exited with code ' + code);
+	
+    });
 }
-
-//var pyshell = new PythonShell('my_script.py');
 
 // Handle POSTs from frontend
 app.post('/', function handlePost(req, res) {
