@@ -58,14 +58,14 @@ function get_rank(req, res){
 	var ranking = data.toString();
 	res.send(ranking);
     });
-    
+
     process.stderr.on('data', function(data) {
 	console.log('stderr: ' + data);
     });
-    
+
     process.on('close', function(code) {
 	console.log('child process exited with code ' + code);
-	
+
     });
 }
 

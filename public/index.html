@@ -26,6 +26,7 @@
   <link rel="stylesheet" type="text/css" href="css/reset.css" />
   <link rel="stylesheet" type="text/css" href="css/style.css" />
   <link rel="stylesheet" type="text/css" href="css/main.css" />
+ <link rel="stylesheet" type="text/css" href="css/list.css"/>
 
 <body></body>
 
@@ -44,8 +45,8 @@ Pages[0] = 'modules/consent';
 var userData = {};    
     
 window.onload = function randomPage() {
-    var x = Math.floor((Math.random() * 3) + 1);
-    //var x = 1;
+    //var x = Math.floor((Math.random() * 3) + 1);
+    var x = 2;
     if (x == 1) { 
         userData.condition = "list";
         Pages.push("modules/instructions/");

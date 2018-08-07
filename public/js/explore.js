@@ -6,11 +6,11 @@ expData.weights = new Array()
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
-    
+
     //load data
     var source = experimentr.source();
     d3.json(source, function(data) {
-        //save full dataset                                  
+        //save full dataset
         dataset = data;
 	var tempData = dataset[0];
 	var keys = renderHead(data[0]);
@@ -22,7 +22,7 @@ $(document).ready(function () {
 	    bscrollCollapse: false,
 	    pageLength: 25,
 	    searching: true,
-	    
+
 	});
 	new $.fn.dataTable.FixedColumns(table, {
 	    leftColumns: 3,
@@ -33,7 +33,7 @@ $(document).ready(function () {
     });
     //listener for rank button
     document.querySelector('#previous').addEventListener('click', prevValidate); document.querySelector('#finish').addEventListener('click', finValidate);
-    
+
     experimentr.startTimer('explore');
     trackWeights();
 });
@@ -45,24 +45,24 @@ function display () {
     nx = x + d3.event.dx,
     w = parseInt(d3.select(this).attr("width")),
     f, nf, new_data, rects;
-    
+
     if ( nx < 0 || nx + w > width ) return;
-    
+
     d3.select(this).attr("x", nx);
-    
+
     f = displayed(x);
     nf = displayed(nx);
-    
+
     if ( f === nf ) return;
-    
+
     new_data = inputData.slice(nf, nf + numBars);
-    
+
     xscale.domain(new_data.map(function (d) { return d.attribute; }));
     diagram.select(".x.axis").call(xAxis);
-    
+
     rects = bars.selectAll("rect")
 	.data(new_data, function (d) {return d.attribute; });
-    
+
     rects.attr("x", function (d) { return xscale(d.attribute); });
     rects.enter().append("rect")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
@@ -74,16 +74,16 @@ function display () {
 	.attr('fill', function(d, i) {
             return color(d.attribute);
 	});
-    
+
     var tooltip = d3.select("#chart")
 	.append('div')
 	.attr('class', 'tooltip');
-    
+
     tooltip.append('div')
 	.attr('class', 'attribute');
     tooltip.append('div')
 	.attr('class', 'weight');
-    
+
     if (tooltipCounter >= 1) {
         tooltipCounter = 0;
     }
@@ -92,7 +92,7 @@ function display () {
 	    .on('mouseover', function(d) {
 		tooltip.select('.attribute').html("<b>" + d.attribute + "</b>");
 		tooltip.select('.weight').html("<b>Normalized Weight: " + d.weight + "</b>");
-		
+
 		tooltip.style('display', 'block');
 		tooltip.style('opacity',2);
 		tooltipCounter += 1;
@@ -105,7 +105,7 @@ function display () {
 		tooltip.style('display', 'none');
 		tooltip.style('opacity',0);
 	    });
-	
+
 	rects.exit().remove();
     }
 };
@@ -125,7 +125,7 @@ function finValidate() {
     experimentr.save();
     expData.interaction = ""
     experimentr.endTimer('explore')
-    experimentr.next(); 
+    experimentr.next();
 }
 
 function trackWeights() {
@@ -159,7 +159,7 @@ function highlightRows(){
 }
 
 function shadeRowsByconf(data){
-    
+
     trs = $('#data > tr')
     for (i=0; i<trs.length; i++) {
 	confidence = data[i].Confidence
@@ -240,14 +240,14 @@ function sumToOne(data) {
 	    sum = sum + data[i].weight;
 	}
     }
-    
+
     for (j=0; j<data.length; j++) {
 	if (data[j].weight < 0) {
 	    dict.push({
 		"attribute": data[j].attribute,
 		"weight": roundTo((-1)*(data[j].weight/sum), 2)
 	    });
-	    
+
 	} else {
 	    dict.push({
 		"attribute": data[j].attribute,
@@ -282,7 +282,7 @@ function renderHead(datum) {
     const score = 'Score'
     var w = 'Weights = '
     var data = Object.keys(datum)
-    
+
     if (data.indexOf(score) > 0) {
 	data.splice(data.indexOf(score), 1);
 	data.unshift(score);
@@ -335,4 +335,3 @@ function searchTable(e) {
 function parseData(raw) {
     return JSON.parse(raw.substring(1, raw.length - 1))
 }
-

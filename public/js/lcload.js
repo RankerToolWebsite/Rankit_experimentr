@@ -4,8 +4,8 @@ var counter = 0;
 var tooltipCounter = 0;
 var pool = document.querySelector('#top');
 var target = document.querySelector('#lc-center');
-var dataset = {}
-var attributes = {}
+var dataset = {};
+var attributes = {};
 var min_num_of_objects = 2;
 var lc_observer;
 var expData = {};
@@ -16,7 +16,7 @@ expData.interaction = ""
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
-    
+
     //load data
     d3.json("data/colleges.json", function(data) {
 	//save full dataset
@@ -30,7 +30,7 @@ $(document).ready(function () {
 	}
 	//initialize data pool
 	render(data);
-	
+
 	//create sortable container for pool
 	const source_sortable = Sortable.create(pool, {
 	    group: 'list',
@@ -44,14 +44,14 @@ $(document).ready(function () {
 	    animation: 300,
 	    ghostClass: 'ghost',
 	});
-	
+
 	//listener for rank button
 	document.querySelector('#lc-submit').addEventListener('click', buildSubmit);
-	
+
 	lc_observer = new MutationObserver(function (mutations) {
 	    mutations.forEach(function (mutation) {
 		lc_urlUpdate();
-		
+
 		const list_length = document.querySelector('#lc-center').children.length;
 		if (list_length < min_num_of_objects) {
 		    $('#lc-submit').attr('disabled', 'disabled');
@@ -66,15 +66,15 @@ $(document).ready(function () {
 		//document.getElementById("p1").innerHTML = "Impact of Attributes on Dataset Ranking";
 	    });
 	});
-	
+
 	// Node, config
 	var lc_observerConfig = {
 	    childList: true
 	};
-	
+
 	var lc_center_node = document.getElementById('lc-center');
 	lc_observer.observe(lc_center_node, lc_observerConfig);
-	
+
 	//check if we need to populate page from URL
 	if ( lc_getParametersFromURL() !== undefined) {
 	    //tracking = 0;
@@ -83,14 +83,14 @@ $(document).ready(function () {
 	    //MOTIVATOR
 	    //barUpdate(confidence);
 	}
-	
+
 	shuffleDataset();
 	refresh_popovers();
-	
+
 	$('.popover-dismiss').popover({
 	    trigger: 'focus'
 	})
-	
+
 	$('body').on('click', function (e) {
 	    // did not click a popover toggle or popover
 	    if ($(e.target).data('toggle') !== 'popover'
@@ -105,10 +105,9 @@ $(document).ready(function () {
 
 /*********************** Functions ****************************************/
 
-
 function add_to_sortable(className) {
     const all = document.querySelectorAll(className)
-    
+
     all.forEach(t => Sortable.create(t, {
 	group: {
 	    name: 'list',
@@ -126,7 +125,7 @@ function barUpdate(list_length) {
     document.getElementById("bar").textContent = list_length+"%"+" Confidence";
     }
 
-//log end of build session, advance to explore    
+//log end of build session, advance to explore
 function buildSubmit(){
     expData.interaction = "RANK";
     experimentr.addData(expData);
@@ -134,13 +133,13 @@ function buildSubmit(){
     experimentr.save();
     expData.interaction = "";
     var url = getRanking();
-    experimentr.next_json(url);   
+    experimentr.next_json(url);
 }
 
 function getRanking() {
     //generate query string to fetch anking from backend
     const pwl = lc_generatePairwise();
-    var pairs = JSON.stringify(pwl);    
+    var pairs = JSON.stringify(pwl);
     return "build?pairs="+pairs;
 }
 
@@ -163,7 +162,7 @@ function lc_generatePairwise() {
 function render(dataset) {
     //const pool = document.querySelector('#top')
     const html = dataset.map(x => generateTileHTML(x)).join('\n');
-    pool.innerHTML = html;	  
+    pool.innerHTML = html;
 }
 
 function generateTileHTML(x){
@@ -256,7 +255,7 @@ function lc_urlUpdate() {
     var list = Array.from(document.querySelectorAll('#lc-center .object')).map(x => x.id);
     var url = window.location.pathname + "?method=" + "lc" + "&" + "objects=";
     history.pushState({}, 'List Comparison', url + list.toString());
-    
+
     if (tracking = 1){
 	trackChanges(list);
 	experimentr.addData(expData);
@@ -270,7 +269,7 @@ function trackChanges(url){
     } else if (url.length < oldURL.length) {
         expData.interaction = "REMOVE";
     }
-    oldURL = url; 
+    oldURL = url;
 }
 
 
@@ -314,4 +313,3 @@ function lc_populateBox() {
 	document.querySelector('#lc-center').appendChild(node);
     }
 }
-

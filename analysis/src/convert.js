@@ -7,7 +7,12 @@ var j2c    = require('json2csv')
       'postId',
       'primingType',
       'valenceDiff',
-      'time_diff_experiment'
+      'time_diff_experiment',
+      'expData.highUrlChanges',
+      'expData.medUrlChanges',
+      'expData.lowUrlChanges',
+      'expData.UrlChanges',
+      'expData.interaction'
     ]
   , data
 
