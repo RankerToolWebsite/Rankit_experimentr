@@ -54,23 +54,22 @@ function get_rank(req, res){
     var spawn = require("child_process").spawn;
     var process = spawn('python', ['public/python/build.py',
 				  req.query.pairs]);
-    process.stdout.on('data', function(data) {
-	var ranking = data.toString();
-	res.send(ranking);
-    });
 
-    process.stderr.on('data', function(data) {
-	console.log('stderr: ' + data);
+    var str = ''
+    process.stdout.on('data', function(data) {
+	    str = str + data.toString()
     });
+    process.stdout.on('end', function() {
+      res.send(str)
+    })
 
     process.on('close', function(code) {
-	console.log('child process exited with code ' + code);
-
+	    console.log('child process exited with code ' + code);
     });
 }
 
 // Handle POSTs from frontend
-app.post('/', function handlePost(req, res) {
+app.post('/save', function handlePost(req, res) {
   // Get experiment data from request body
   var d = req.body
   // If a postId doesn't exist, add one (it's random, based on date)
