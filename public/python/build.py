@@ -3,8 +3,6 @@ import pandas as pd
 import json
 import sys
 from sklearn.linear_model import SGDClassifier
-import pyximport
-pyximport.install()
 from math import log10, floor
 
 
@@ -61,16 +59,12 @@ def build(dataset, pairs) :
 #     scale outputs for display
     y_pred=scale(y_pred)
 
-#     format output
-    weights_table = pd.DataFrame(weights)
-    weights_table.index = dataset_copy.columns
-
 #     predicted score for each item
     dataset['Score'] = y_pred
 #     ordinal ranking for each item
     dataset['Rank'] = dataset['Score'].rank(ascending=False)
 
-    return dataset, weights_table
+    return dataset
 
 
 
@@ -86,9 +80,7 @@ pairs = pd.read_json(s)
 
 dataset = pd.read_json(json.dumps(dataset_list))
 
-rank, weights = build(dataset=dataset, pairs=pairs)
+rank = build(dataset=dataset, pairs=pairs)
 
-#save weights to file
-weights.to_json('public/data/weights.json')
 print(rank.to_json(orient='records'))
 
