@@ -52,7 +52,7 @@ app.get('/build', get_rank);
 
 function get_rank(req, res){
     var spawn = require("child_process").spawn;
-    var process = spawn('python', ['public/python/build.py',
+    var process = spawn('python3', ['public/python/build.py',
 				  req.query.pairs]);
 
     var str = ''
