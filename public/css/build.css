@@ -119,7 +119,7 @@
       background-color: var(--brick);
   }
   .scrollingDragInner {
-    max-height: 80vh;
+    max-height: 105vh;
     /*max-width: 200px;    */
     overflow-y: auto;
   }
@@ -193,7 +193,7 @@
     .build-pool-header {
       grid-area: build-top;
       background-color: var(--teal);
-      min-height: 160px;
+      min-height: 100px;
       padding: 16px;
     }
 
