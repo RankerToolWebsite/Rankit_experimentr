@@ -5,27 +5,19 @@
 <!-- Calls to /scripts are redirected to /node_modules/ on the server -->
 <script src="/scripts/d3/d3.min.js"></script>
 <script src="experimentr.js"></script>
-
-  <script src="js/lib/jquery.min.js"></script>
+<script src="js/lib/jquery.min.js"></script>
 <!--  <script src="js/lib/tether.min.js"></script> -->
   <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
 <!--  <script src="js/lib/bootstrap-tooltip.js"></script> -->
 <script type="text/javascript" src="js/lib/Sortable.js"></script>
 
-<style>
-
-
-
-</style>
-
-
+<style></style>
 
 <link rel="stylesheet" type="text/css" href="css/reset.css" />
 <link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="css/build.css" />
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 <link rel="stylesheet" type="text/css" href="css/main.css" />
- <link rel="stylesheet" type="text/css" href="css/list.css"/>
 
 <body></body>
 
@@ -35,35 +27,32 @@
 var Pages = new Array();
 var expData = {}
 expData.mode = "";
+var userData = {};    
 
 //  USE FOR PRODUCTION 
-Pages[0] = 'modules/consent';
-    
 //on page load choose a random module and place it in correct place in the array  
-    
-var userData = {};    
-    
+Pages[0] = 'modules/consent';   
 window.onload = function randomPage() {
-    var x = Math.floor((Math.random() * 3) + 1);
-    //var x = 2;
-    if (x == 1) { 
-        userData.condition = "list";
-        Pages.push("modules/instructions/");
-    	Pages.push("modules/list/");
-        expData.mode = "List";
-        experimentr.addData(expData);
- 	} else if (x == 2) {
-        userData.condition = "categorical";
-        Pages.push("modules/instructionscc/");
-    	Pages.push("modules/categorical/");
-        expData.mode = "Category";
-        experimentr.addData(expData);
-    } else {
-        userData.condition = "pairwise";
-        Pages.push("modules/instructionspwc/");
-        Pages.push("modules/pairwise/");
-        expData.mode = "Pairwise";
-        experimentr.addData(expData);
+var x = Math.floor((Math.random() * 3) + 1);
+//var x = 3;
+if (x == 1) { 
+    userData.condition = "list";
+    Pages.push("modules/instructions/");
+    Pages.push("modules/list/");
+    expData.mode = "List";
+    experimentr.addData(expData);
+} else if (x == 2) {
+    userData.condition = "categorical";
+    Pages.push("modules/instructionscc/");
+    Pages.push("modules/categorical/");
+    expData.mode = "Category";
+    experimentr.addData(expData);
+} else {
+    userData.condition = "pairwise";
+    Pages.push("modules/instructionspwc/");
+    Pages.push("modules/pairwise/");
+    expData.mode = "Pairwise";
+    experimentr.addData(expData);
     }
     Pages.push('modules/explore/');
     Pages.push('modules/debrief/');
