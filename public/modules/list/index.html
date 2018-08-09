@@ -1,11 +1,10 @@
+<link rel="stylesheet" type="text/css" href="css/reset.css" />
 <link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="css/build.css" />
-<link rel="stylesheet" type="text/css" href="css/reset.css" />
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 <link rel="stylesheet" type="text/css" href="css/main.css" />
-<link rel="stylesheef" type="text/css" href="css/list.css"/>
 
-<!--<style>
+<style>
   #build-method {
   grid-area: header;
   display: flex;
@@ -28,10 +27,21 @@
   #build-method .active {
   width: 200%;
   }
-</style> -->
+</style>
 
 <div id="build-container">
-  
+      <div class="build-pool-header">
+      <div style="float: left; width: 60%;">
+        <!-- Dataset name header -->
+        <h1 style="position:relative; right:5px" class="title">
+          <b>
+            Build: Colleges
+          </b>
+          <br>
+        </h1>
+      </div>
+      
+    </div>
   <!-- this is the left side of the build view -->
   <div id="build-left">
     
@@ -57,11 +67,11 @@
   <div id="build-right">
     <br><br>
     <div id="lc-wrapper-grid">
-      
-      <!--<div class="legend-label">
+
+      <div class="legend-label">
         <div>HIGH <i class="fas fa-arrow-up"></i></div>
         <div>LOW  <i class="fas fa-arrow-down"></i></div>
-      </div> -->
+      </div>
       <!-- this is the lists -->
       <div id="lc-list">
         <div class="scrollingDragInner box">
