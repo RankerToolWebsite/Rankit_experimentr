@@ -17,11 +17,11 @@
   .legend-label {
   grid-area: legend;
   margin: 16px;
-  padding: 50px 10px;
-  text-align: center;
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  float: left;
   }
   
   #build-method .active {
@@ -70,12 +70,12 @@
 
       <div class="legend-label">
         <div>HIGH <i class="fas fa-arrow-up"></i></div>
-        <div>LOW  <i class="fas fa-arrow-down"></i></div>
+        <div, style="margin-top: 385px">LOW  <i class="fas fa-arrow-down"></i></div>
       </div>
       <!-- this is the lists -->
       <div id="lc-list">
         <div class="scrollingDragInner box">
-          <div id="lc-center" class="list lcb" style="height: 60vh"></div>
+          <div id="lc-center" class="list lcb" style="height: 55vh"></div>
         </div>
         <!--<div class="progress">
          <div id="bar" class="progress-bar progress-bar-striped active" role="progressbar"
