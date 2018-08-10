@@ -7,7 +7,10 @@
 
 <br>
 <p>
-Thank you again for your participation. Feel free submit any additional comments below.
+Thank you again, your participaction and feedback will help us evaluate the usability<br>  and functionality of our application, and provide us with guidelines for improvement.
+<br>    
+<br>    
+Feel free submit any additional comments below.
 </p>
 
 <textarea name="textarea" rows="10" cols="50">Leave feedback here</textarea>
@@ -37,7 +40,7 @@ expData.interaction = "";
 
   function validate() {
     if( data.comments ) {
-      expData.interaction ="FEEDBACK"
+      expData.interaction ="FINISH TEST"
       experimentr.addData(data);
       experimentr.addData(expData);
       d3.select('#submitComments').attr('disabled', 'true');

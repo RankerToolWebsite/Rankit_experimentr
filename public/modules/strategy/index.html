@@ -59,7 +59,7 @@ Thank you! The experiment is almost complete. Please fill out the following demo
     
     <div id="question5"><b>5. The system displayed all the details about the colleges that I needed to compare them. </b>
     <br>
-    <div id="question6s">
+    <div id="question5s">
         <input type="radio" id="d1" name="question5" value= -2> Strongly Disagree   
         <input type="radio" id="d2" name="question5" value=-1> Disagree   
         <input type="radio" id="d3" name="question5" value=0> Neutral  
@@ -67,6 +67,11 @@ Thank you! The experiment is almost complete. Please fill out the following demo
         <input type="radio" id="d5" name="question5" value=2> Strongly Agree  
     </div>
 </div> <br>
+  
+<p>
+<b>6. Please describe the strategy in  which you ranked your preferred colleges. </b>
+</p>   
+<textarea name="textarea" rows="10" cols="50" placeholder="Type your answer here"></textarea> <br>   
 
 <button id="submitAnswers" type="button">Submit</button>    
 <div id="submitFeedback"></div>    
@@ -101,18 +106,28 @@ d3.selectAll('input')
   .on('change', function() { data.question5 = this.value; add(); });    
 
     d3.select('#submitAnswers')
-    .on('click', function () {  validate(); });
+    .on('click', function () {  addResponse(); validate(); });
     
   function add() {
-      expData.interaction ="QUESTIONS"
+      expData.interaction ="QUESTION";
       experimentr.addData(data);
       experimentr.addData(expData);
   }
-    
+    function addResponse(){
+      var response = d3.select('#strategy').select('textarea');
+      data.response = response.property('value');
+      experimentr.addData(data);
+      experimentr.addData(expData);
+    }
+
   function validate(){
-      if( data.question1 && data.question2 && data.question3 && data.question4 && data.question5) {
-          experimentr.next()
+      if( data.question1 && data.question2 && data.question3 && data.question4 && data.question5 && data.response){
+      expData.interaction="SUBMIT SUCCESFUL";
+      experimentr.addData(expData);
+      experimentr.next()
       } else {
+      expData.interaction="SUBMIT FAIL";
+      experimentr.addData(expData);          
       d3.select('#submitFeedback').text('It is required to fill out all questions').style('fill', 'red');    
       }
   }

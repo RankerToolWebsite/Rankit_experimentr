@@ -26,9 +26,11 @@
 <br>
 <p><strong>How to Operate the Explore Page:</strong></p> 
 <p>>> Navigate to your system-generated ranking of the remaining items by clicking "RANK!"</p>
-<p>>> When exploring your final ranking, you may scroll down for more colleges in the list, and scroll to the right for more information on a particular college, as shown in the table.</p>
-<p>>> You may look through multiple pages of the results. If you want to refine your choices and obtain a new system-generated ranking, click "Edit Preferences" to go back to the Build tool.</p>
-<p><img id="rankImg" src="" style="width:600px"></p>
+<p><img id="rankImg" src="" style="width:600px"></p> <br>
+<p>>> When exploring your final ranking, you may scroll down for more colleges in the list, and scroll to the right for more information on a particular college, as shown in the table. You also may look through multiple pages of the results. </p>
+<p><img id="scrollImg" src="" style="width:600px"></p>    
+<p>>> If you want to refine your choices and obtain a new system-generated ranking, click "Edit Preferences" to go back to the Build tool.</p>
+<p><img id="editImg" src="" style="width:600px"></p>
 
 <br>
 <p id="explorebutton">
@@ -82,7 +84,10 @@
   d3.select('#training').select('#mouseoverImg').attr('src',"img/mouseover.gif");
   d3.select('#training').select('#dragImg').attr('src',"img/ccdrag.gif");
   d3.select('#training').select('#srchImg').attr('src',"img/sss.gif");
-  d3.select('#training').select('#rankImg').attr('src',"img/RANK.gif");    
+  d3.select('#training').select('#rankImg').attr('src',"img/RANK.gif");
+  d3.select('#training').select('#rankImg').attr('src',"img/catrank.gif");
+  d3.select('#training').select('#scrollImg').attr('src',"img/scrollstep.gif");
+  d3.select('#training').select('#editImg').attr('src',"img/catedit.gif");
 
 }());
 </script>
