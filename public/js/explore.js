@@ -1,8 +1,6 @@
 var dataset = {}
-var weights = {}
 var expData = {};
 expData.interaction = ""
-expData.weights = new Array()
 
 /*********** Initialize Page *****************/
 $(document).ready(function () {
@@ -35,7 +33,6 @@ $(document).ready(function () {
     document.querySelector('#previous').addEventListener('click', prevValidate); document.querySelector('#finish').addEventListener('click', finValidate);
 
     experimentr.startTimer('explore');
-    trackWeights();
 });
 
 
@@ -110,6 +107,7 @@ function display () {
     }
 };
 
+
 function prevValidate(){
     expData.interaction = "PREVIOUS"
     experimentr.addData(expData)
@@ -118,6 +116,7 @@ function prevValidate(){
     experimentr.endTimer('explore')
     experimentr.previous();
 }
+
 
 function finValidate() {
     expData.interaction = "FINISH"
@@ -128,20 +127,12 @@ function finValidate() {
     experimentr.next();
 }
 
-function trackWeights() {
-	    d3.json("data/weights.json", function(data) {
-		weights = data[0]
-        delete weights["tau"]
-        expData.weights = weights
-        console.log(expData.weights)
-	    });
-}
-
 
 function highlightColor(percent, color1, color2){
     color = d3.scale.linear().domain([0, 1]).interpolate(d3.interpolateHcl).range([d3.rgb(color1), d3.rgb(color2)])
     return color(percent)
 }
+
 
 function highlightRows(){
     const raw_highlighted = '{{list|tojson}}'
@@ -307,23 +298,22 @@ function renderData(data, keys) {
     let maxScore = -1; // Is this true?? can a score be negative
     data.forEach(function(row) {
 	if (row.Score > maxScore) {
-	    maxScore = row.Score;
+            maxScore = row.Score;
 	}
     });
     const html = data.map(x => {
-	const dataScore = x.Score;
-	x.ScoreNum = x.Score;
-	const dataConf = x.Confidence;
+        const dataScore = x.Score;
+        x.ScoreNum = x.Score;
+        const dataConf = x.Confidence;
 	x.Score = `
-	    <div class="bar-chart-bar">
-	    <div class="inTableBar" style="width: ${(dataScore / ((maxScore !== 0) ? maxScore : 0.01)) * 100}%;background-color: #6a6265"></div>
-	    </div>
-	    `
+            <div class="bar-chart-bar">
+            <div class="inTableBar" style="width: ${(dataScore / ((maxScore !== 0) ? maxScore : 0.01)) * 100}%;background-color: #6a6265"></div>
+            </div>
+            `
 	var props = keys
 	    .map(k => x[k])
 	t.fnAddData(props, false);
-    }
-			 )
+    })
     t.fnDraw();
 }
 

@@ -1,5 +1,4 @@
 var confidence = 0;
-var weights = 0;
 var counter = 0;
 var tooltipCounter = 0;
 var pool = document.querySelector('#top');
@@ -8,12 +7,12 @@ var attributes = {}
 var min_num_of_objects = 2;
 var pwc_observer;
 var expData = {};
-var oldHighURL = new Array()
-var oldLowURL = new Array()
-expData.highUrlChanges = new Array()
-expData.lowUrlChanges = new Array()
-expData.interaction = ""
-
+var oldHighURL = new Array();
+var oldLowURL = new Array();
+expData.highUrlChanges = new Array();
+expData.lowUrlChanges = new Array();
+expData.interaction = "";
+expData.model = "";
 /*********** Initialize Page *****************/
 $(document).ready(function () {
     
@@ -151,9 +150,10 @@ function buildSubmit(){
     expData.interaction = "RANK";
     experimentr.addData(expData);
     experimentr.endTimer('build');
+    var url = getRanking();
+    expData.model = url.substr(url.indexOf('=')+1);
     experimentr.save();
     expData.interaction = "";
-    var url = getRanking();
     experimentr.next_json(url);   
 }
 

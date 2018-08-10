@@ -1,5 +1,5 @@
+
 var confidence = 0;
-var weights = 0;
 var counter = 0;
 var tooltipCounter = 0;
 var pool = document.querySelector('#top');
@@ -10,8 +10,9 @@ var min_num_of_objects = 2;
 var lc_observer;
 var expData = {};
 var oldURL = new Array()
-expData.UrlChanges = new Array()
-expData.interaction = ""
+expData.UrlChanges = new Array();
+expData.interaction = "";
+expData.model = "";
 //var tracking = 1;
 
 /*********** Initialize Page *****************/
@@ -130,9 +131,10 @@ function buildSubmit(){
     expData.interaction = "RANK";
     experimentr.addData(expData);
     experimentr.endTimer('build');
+    var url = getRanking();
+    expData.model = url.substr(url.indexOf('=')+1);
     experimentr.save();
     expData.interaction = "";
-    var url = getRanking();
     experimentr.next_json(url);
 }
 
