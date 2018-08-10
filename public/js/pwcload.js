@@ -225,7 +225,9 @@ function sortDataset() {
     var currentIds = getCurrentPool()
     currentIds.sort(function(a, b){return a-b})
     render(filterDataset(currentIds))
-    refresh_popovers()
+    refresh_popovers();
+    expData.interaction="SORT";
+    experimentr.addData(expData);
 }
 
 function shuffleDataset() {
@@ -235,8 +237,10 @@ function shuffleDataset() {
 	const j = Math.floor(Math.random() * (i + 1));
 	[currentData[i], currentData[j]] = [currentData[j], currentData[i]];
     }
-    render(currentData)
-    refresh_popovers()
+    render(currentData);
+    refresh_popovers();
+    expData.interaction="SHUFFLE";
+    experimentr.addData(expData);
 }
 
 function searchDataset(e) {

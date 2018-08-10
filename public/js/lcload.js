@@ -205,6 +205,8 @@ function sortDataset() {
     currentIds.sort(function(a, b){return a-b});
     render(filterDataset(currentIds));
     refresh_popovers();
+    expData.interaction="SORT";
+    experimentr.addData(expData);
 }
 
 function shuffleDataset() {
@@ -216,6 +218,8 @@ function shuffleDataset() {
     }
     render(currentData);
     refresh_popovers();
+    expData.interaction="SHUFFLE";
+    experimentr.addData(expData);
 }
 
 var filtered = [1, 2, 3, 4].filter(
