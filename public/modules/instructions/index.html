@@ -2,34 +2,35 @@
 
 <h2>List Comparison Instructions</h2> <br>
 
-<p> On the next page, you will use an interactive tool to create a personalized College Ranking </p>
+<p> On the next page, you will use an interactive tool to create a personalized College Ranking. </p>
 
+<br>
 <p><strong>Task: </strong></p>
-<p>Your task is to rank however many colleges provided you want to, with the "best" on top. You will be provided a ranking based off your input.      Afterwards, you will be asked to describe some of your findings, and answer a few questions on the understanding of the visualization.</p>
+<p>Your task is to rank as many of the provided colleges as desired, with the "best" colleges on the top of the list. Afterwards, the system will provide you with a ranking of the entire list based on your initial choices.</p>
+<p>At that point, you may click Edit Preferences to return to the Build page and refine your choices. When you are finished with the ranking tool, you will be asked to describe some of your findings, and answer a few questions on your experience with this interactive rank building system.</p>
 
+<br>
 <p><b>How to Operate the Build Page:</b></p>
 <p>>> Mouse over an individual college to see its data attributes.</p>
 <p><img id="mouseoverImg" src="" style="width:600px"></p>
 <br>
-<p>>> Drag colleges from the left to the right, placing them in descending order of your preference.
+<p>>> Drag colleges from the pool on the left to the list on the right, placing them in descending order of your preference.
 </p>
 <p><img id="dragImg" src="" style="width:600px"></p>
 <br>
-<p>>> Click “sort” button to order the colleges alphabetically"</p>
-<p>>> Click “shuffle” button to randomize which colleges you see
-</p>
-<p>>>Use search bar to search for specific colleges.
-</p>
+<p>>> Click the “sort” button to order the colleges alphabetically"</p>
+<p>>> Click the “shuffle” button to randomize which colleges you see.</p>
+<p>>> Use the search bar to find specific colleges in the Build list.</p>
 <p><img id="srchImg" src="" style="width:600px"></p> 
-<br>
-<p>>> Navigate to your offical ranking by clicking "RANK!"</p>
-<p><img id="rankImg" src="" style="width:600px"></p>
-   
-<p><strong>How to Operate the Explore Page:</strong></p> 
-<p>>> When exploring your final ranking scroll horizonatally or vertially for more information</p>
-<p>>> Look through pages of results,and click "Edit Preferences" to go back and change your preferences </p>
 
-<p>
+<p><strong>How to Operate the Explore Page:</strong></p> 
+<p>>> Navigate to your system-generated ranking of the remaining items by clicking "RANK!"</p>
+<p>>> When exploring your final ranking, you may scroll down for more colleges in the list, and scroll to the right for more information on a particular college, as shown in the table.</p>
+<p>>> You may look through multiple pages of the results. If you want to refine your choices and obtain a new system-generated ranking, click "Edit Preferences" to go back to the Build tool.</p>
+<p><img id="rankImg" src="" style="width:600px"></p>
+
+<br>
+<p id="explorebutton">
 <button id="start" type="button">Start Exploring >></button> You will not be able to return to this page
 </p>
 
@@ -37,6 +38,12 @@
 </div>
 
 <style>
+  #explorebutton {
+    float: right;
+  }
+  .shadowed {
+    filter: drop-shadow(9px 9px 9px rgba(0,0,0,0.3));
+  }
   #fadeInstruction {
     display: none;
   }
@@ -51,6 +58,9 @@
 
 <script>
 (function() {
+
+  // add shadow style to all images
+  d3.selectAll('img').classed('shadowed', true);
 
   experimentr.hideNext();
   experimentr.startTimer('training');
