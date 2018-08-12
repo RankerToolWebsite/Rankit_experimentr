@@ -82,6 +82,9 @@ var expData = {};
 expData.interaction = "";    
     
 (function() {
+    
+  experimentr.startTimer('strategy');    
+    
   var postId  = experimentr.postId()
     , data    = {};
     
@@ -120,10 +123,11 @@ d3.selectAll('input')
       experimentr.addData(expData);
     }
 
-  function validate(){
+  function validate(){ß
       if( data.question1 && data.question2 && data.question3 && data.question4 && data.question5 && data.response){
       expData.interaction="SUBMIT SUCCESFUL";
       experimentr.addData(expData);
+      experimentr.endTimer('strategy');      
       experimentr.next()
       } else {
       expData.interaction="SUBMIT FAIL";
