@@ -4,12 +4,11 @@
   
   <p>Please read the following instructions carefully. <strong>You will not be able to return to this page once you begin the experiment!</strong></p>
   
-  <br>
   <p><strong>Task: </strong></p>
   
   <p> On the next page, you will use an interactive tool to create a personalized college ranking. 
     First, you will use the Build Tool to enter your preferences about colleges in the dataset.
-    Choose as many colleges as you wish and place each one in a category. 
+    Choose as many colleges as you wish and place each one into a ranked list. 
     After you make your selections, the system will provide you with a ranking of the entire dataset of colleges based on your initial choices.</p>
   
   <p>You may inspect your ranking and return to the Build page to refine your preferences as many times as you like. 
@@ -20,14 +19,15 @@
   <p><b>How to Operate the Build Page:</b></p>
   <ul>
     <li>
-    <p> Mouse over an individual college to see its data attributes.</p>
-    <p><img id="mouseoverImg" src="" style="width:600px"></p>
-    <br/>
+      <p> Mouse over an individual college to see its data attributes.</p>
+      <p><img id="mouseoverImg" src="" style="width:600px"></p>
+      <br/>
     </li>
     
     <li>
-      <p>Drag colleges from the dataset to the left to place them in a category on the right.</p>
-      <p>Place your top choices in the “High” category, your least preferred colleges in the “Low” category, and colleges in the middle in the “Medium” category. </p>
+      <p>Drag colleges from the dataset on the left to the list on the right. Place the most preferred colleges at the top of the list, 
+	and the rest in descending order of your preference.
+      </p>
       <p><img id="dragImg" src="" style="width:600px"></p>
       <br/>
     </li>
@@ -62,16 +62,16 @@
       <p><img id="editImg" src="" style="width:600px"></p>
       <br/>
     </li>  
-  </ul> 
+  </ul>
   
   <br>
   <p id="explorebutton">
-    <button id="start" type="button">Start Exploring >></button> You will not be able to return to this page.
-  </p>
+    <button id="start" type="button">Start Exploring >></button> You will not be able to return to this page
+  </p>  
 </div>
 
 <style>
- #explorebutton {
+  #explorebutton {
     float: right;
   }
   .shadowed {
@@ -90,11 +90,10 @@
 </style>
 
 <script>
-    
-  // add shadow style to all images
-  d3.selectAll('img').classed('shadowed', true);    
-    
 (function() {
+
+  // add shadow style to all images
+  d3.selectAll('img').classed('shadowed', true);
 
   experimentr.hideNext();
   experimentr.startTimer('training');
@@ -112,12 +111,12 @@
 
   //training image
   d3.select('#training').select('#mouseoverImg').attr('src',"img/mouseover.gif");
-  d3.select('#training').select('#dragImg').attr('src',"img/ccdrag.gif");
+  d3.select('#training').select('#dragImg').attr('src',"img/listdrag.gif");
   d3.select('#training').select('#srchImg').attr('src',"img/sss.gif");
-  d3.select('#training').select('#rankImg').attr('src',"img/RANK.gif");
-  d3.select('#training').select('#rankImg').attr('src',"img/catrank.gif");
-  d3.select('#training').select('#scrollImg').attr('src',"img/scrollstep.gif");
-  d3.select('#training').select('#editImg').attr('src',"img/catedit.gif");
+ d3.select('#training').select('#rankImg').attr('src',"img/listrank.gif");
+ d3.select('#training').select('#scrollImg').attr('src',"img/scrollstep.gif");
+ d3.select('#training').select('#editImg').attr('src',"img/listedit.gif");
+
 
 }());
 </script>
