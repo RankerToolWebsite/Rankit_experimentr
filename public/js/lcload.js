@@ -1,4 +1,3 @@
-
 var confidence = 0;
 var counter = 0;
 var tooltipCounter = 0;
@@ -13,8 +12,10 @@ var oldURL = new Array()
 expData.UrlChanges = new Array();
 expData.interaction = "";
 expData.model = "";
+expData.pop_time = 0;
 var tracking = 1;
-
+var pop_start = 0;
+var pop_end = 0;
 /*********** Initialize Page *****************/
 $(document).ready(function () {
 
@@ -85,33 +86,41 @@ $(document).ready(function () {
 	    //barUpdate(confidence);
 	}
 
+	//initialize pool randomly
 	shuffleDataset();
-	var $popover =     $('.pop').popover({
-	trigger: 'hover',
-	delay: {
-	    show:"1000",
-	    hide:"0"
-	}
-    }).hover(function(e) {
-    e.preventDefault();
-    });
-        
 
+	//iniitalize popovers
+	var $popover = $('.pop').popover({
+	    trigger: 'hover',
+	    delay: {
+		show:"1000",
+		hide:"0"
+	    }
+	}).hover(function(e) {
+	    e.preventDefault();
+	});
+        
 	$('.popover-dismiss').popover({
 	    trigger: 'focus'
 	})
         
-    $popover.on('shown.bs.popover', function(e) {
-    console.log("show");
-    });
-
-    $popover.on("hidden.bs.popover", function(e) {
-    console.log("hide");
-});
-
-    
-        
-   
+	//log when users are reading popovers
+	$popover.on('shown.bs.popover', function(e) {
+	    pop_start = new Date().getMilliseconds();	    
+	    console.log(pop_start);
+	});
+	
+	$popover.on("hidden.bs.popover", function(e) {
+	    pop_end = new Date().getMilliseconds();
+	    var pop_time = pop_end - pop_start
+	    console.log(pop_time);
+	    if (pop_time > 250){
+		expData.pop_time = pop_time;
+		experimentr.addData(expData);
+		experimentr.save()
+	    }
+	}); 
+	
 	$('body').on('click', function (e) {
 	    // did not click a popover toggle or popover
 	    if ($(e.target).data('toggle') !== 'popover'
