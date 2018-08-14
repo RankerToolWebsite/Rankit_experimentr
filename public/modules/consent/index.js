@@ -28,6 +28,7 @@
 
       if( workers.indexOf(data.workerId) == -1 ) {
         d3.select('#consentYes').attr('disabled', null);
+        d3.select('#IDFeedback').text('ID Succesfully Checked!'); 
       } else {
         d3.select('#invalidMessage').style('display', 'inline');
       }

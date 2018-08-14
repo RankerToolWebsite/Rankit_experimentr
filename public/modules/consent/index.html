@@ -12,14 +12,21 @@
 	    presented with a dataset of colleges, and asked to input your preferences about some of them. 
 	    From this partial information that you provide, the system will learn a global ranking over all 
 	    the items in the dataset. Then you will be asked to give feedback on your experience and 
-	    understanding of the ranking process.</p><br/>
+	    understanding of the ranking process.</p>
 
+        <p>
+        <strong>This HIT requires the use of Google Chrome.</strong>
+        </p>
+        
+      
 <p>
-Please enter your Amazon Worker Id. <strong>You may only complete this HIT once.</strong> Subsequent completions (e.g. reading the same story twice) will not be accepted:
+Please enter your Amazon Worker Id. <strong> You may only complete this HIT once.</strong> Subsequent completions will not be accepted:
 <br>
 
 <input type="text" id="workerId" name="workerId" disabled="true" size="30" />
-<button id="checkId" type="button">Check ID</button>
+<button id="checkId" type="button">Check ID</button> 
+<p id="IDFeedback"></p> 
+
 <br>
 
 <span id="invalidMessage">
@@ -61,10 +68,6 @@ Our records show that you have taken part in this study before, so we cannot all
 <button id="consentYes" disabled="true" type="button" style="margin-top: 5px">I Agree</button>
 </p>
 
-<p>
-<strong>Note: this HIT requires a modern browser. If you are not using Chrome or Firefox, the "I Agree" button may not activate even after entering your Worker Id.</strong>
-</p>
-
 </div>
 </div>
 </body>
@@ -80,6 +83,10 @@ Our records show that you have taken part in this study before, so we cannot all
     overflow-y: scroll;
     padding: 15px;
   }
+    
+    #IDFeedback{
+     display: inline;
+}
 </style>
 
 <script src="modules/consent/index.js"></script>
