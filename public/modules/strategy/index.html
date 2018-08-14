@@ -123,7 +123,7 @@ d3.selectAll('input')
       experimentr.addData(expData);
     }
 
-  function validate(){ß
+  function validate(){
       if( data.question1 && data.question2 && data.question3 && data.question4 && data.question5 && data.response){
       expData.interaction="SUBMIT SUCCESFUL";
       experimentr.addData(expData);
@@ -132,7 +132,7 @@ d3.selectAll('input')
       } else {
       expData.interaction="SUBMIT FAIL";
       experimentr.addData(expData);          
-      d3.select('#submitFeedback').text('It is required to fill out all questions').style('fill', 'red');    
+      d3.select('#submitFeedback').text('It is required to fill out all questions');    
       }
   }
 }());
