@@ -22,7 +22,7 @@ $(document).ready(function () {
     //load data
     d3.json("data/colleges.json", function(data) {
 	//save full dataset
-	dataset = data;
+	dataset = data; 
 	dataset.sort((a, b) => a.Title.localeCompare(b.Title));
 	//save list of data attributes
 	attributes = Object.keys(data[0]);
@@ -79,9 +79,10 @@ $(document).ready(function () {
 
 	//check if we need to populate page from URL
 	if ( lc_getParametersFromURL() !== undefined) {
-	    //tracking = 0;
-            lc_populateBox();
-            //tracking = 1;
+	    tracking = 0;
+        oldURL = lc_getParametersFromURL();
+        lc_populateBox();
+        tracking = 1;
 	    //MOTIVATOR
 	    //barUpdate(confidence);
 	}
@@ -309,6 +310,8 @@ function trackChanges(url){
         expData.interaction = "ADD";
     } else if (url.length < oldURL.length) {
         expData.interaction = "REMOVE";
+    } else {
+        console.log("reload page")
     }
     oldURL = url;
 }
