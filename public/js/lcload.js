@@ -78,7 +78,7 @@ $(document).ready(function () {
 	lc_observer.observe(lc_center_node, lc_observerConfig);
 
 	//check if we need to populate page from URL
-	if ( lc_getParametersFromURL() !== undefined) {
+	if ( !lc_getParametersFromURL().includes("")) {
 	    tracking = 0;
         oldURL = lc_getParametersFromURL();
         lc_populateBox();
@@ -300,7 +300,6 @@ function lc_urlUpdate() {
 
     if (tracking = 1){
 	trackChanges(list);
-	experimentr.addData(expData);
     }
 }
 
@@ -308,10 +307,10 @@ function trackChanges(url){
     expData.UrlChanges = url;
     if (url.length > oldURL.length){
         expData.interaction = "ADD";
+        experimentr.addData(expData);
     } else if (url.length < oldURL.length) {
         expData.interaction = "REMOVE";
-    } else {
-        console.log("reload page")
+        experimentr.addData(expData);
     }
     oldURL = url;
 }

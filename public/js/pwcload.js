@@ -13,6 +13,7 @@ expData.highUrlChanges = new Array();
 expData.lowUrlChanges = new Array();
 expData.interaction = "";
 expData.model = "";
+var tracking = 1;
 /*********** Initialize Page *****************/
 $(document).ready(function () {
     
@@ -89,12 +90,18 @@ $(document).ready(function () {
 	
 	
 	//check if we need to populate page from URL
-	if ( pwc_getHighFromURL() !== undefined) {
+	if ( !pwc_getHighFromURL().includes("")) {
+        tracking = 0;
+        oldHighURL = pwc_getHighFromURL();
 	    pwc_populateHighBox();
+        tracking = 1;
 	    //barUpdate(confidence);
 	}
-        if ( pwc_getLowFromURL() !== undefined) {
+        if ( !pwc_getLowFromURL().includes("")) {
+        tracking = 0;
+        oldLowURL = pwc_getLowFromURL();
 	    pwc_populateLowBox();
+        tracking = 1;
 	    //barUpdate(confidence);
 	}
 	
@@ -298,17 +305,20 @@ function pwc_urlUpdate() {
     const low = Array.from(document.querySelectorAll('.low > div')).map(x => x.id)
     var url = window.location.pathname + "?method=" + "pwc" + "&" + "left=" + high.toString() + "&" + "right=" + low.toString()
     history.pushState({}, 'Pairwise Comparison', url)
+    if (tracking = 1) {
     trackHigh(high)
     trackLow(low)
-    experimentr.addData(expData)
+    }
 }
 //The following two functions checks length of the current box against old one to determine whether the interaction adds or subtracts
 function trackHigh(url){
     expData.highUrlChanges = url
     if (url.length > oldHighURL.length) {
-        expData.interaction = "LEFT ADD" 
+        expData.interaction = "LEFT ADD"
+        experimentr.addData(expData)
     } else if (url.length < oldHighURL.length) {
         expData.interaction = "LEFT REMOVE"
+        experimentr.addData(expData)
     }
     oldHighURL = url 
 }
@@ -316,9 +326,11 @@ function trackHigh(url){
 function trackLow(url){
     expData.lowUrlChanges = url
     if (url.length > oldLowURL.length) {
-        expData.interaction = "RIGHT ADD" 
+        expData.interaction = "RIGHT ADD"
+        experimentr.addData(expData)
     } else if (url.length < oldLowURL.length) {
         expData.interaction = "RIGHT REMOVE"
+        experimentr.addData(expData)
     }
     oldLowURL = url 
 }

@@ -14,6 +14,7 @@ var expData = {};
 var oldHighURL = new Array()
 var oldMedURL = new Array()
 var oldLowURL = new Array()
+var tracking = 1;
 expData.highUrlChanges = new Array()
 expData.medUrlChanges = new Array()
 expData.lowUrlChanges = new Array()
@@ -100,20 +101,23 @@ $(document).ready(function () {
 	cc_observer.observe(cc_right_node, cc_observerConfig);
         
 	//check if we need to populate page from URL
-	if ( cc_getHighFromURL() !== undefined) {
-            var tracking = 0;
+	if ( !cc_getHighFromURL().includes("")) {
+            tracking = 0;
+            oldHighURL = cc_getHighFromURL();
             cc_populateHighBox();
-            var tracking = 1;
+            tracking = 1;
 	}
-        if ( cc_getMedFromURL() !== undefined) {
-            var tracking = 0;
+        if ( !cc_getMedFromURL().includes("")) {
+            tracking = 0;
+            oldMedURL = cc_getMedFromURL();
             cc_populateMediumBox();
-            var tracking = 1;
+            tracking = 1;
 	}
-        if ( cc_getLowFromURL() !== undefined) {
-            var tracking = 0;    
+        if ( !cc_getLowFromURL().includes("")) {
+            tracking = 0;
+            oldLowURL = cc_getLowFromURL();
             cc_populateLowBox();
-            var tracking = 1;
+            tracking = 1;
 	}
 	
 	shuffleDataset();
@@ -310,7 +314,6 @@ function cc_urlUpdate() {
     trackHigh(high)
     trackMed(med)
     trackLow(low)
-    experimentr.addData(expData)
         }
     }
 
@@ -319,9 +322,11 @@ function cc_urlUpdate() {
 function trackHigh(url){
     expData.highUrlChanges = url
     if (url.length > oldHighURL.length) {
-        expData.interaction = "HIGH ADD" 
+        expData.interaction = "HIGH ADD"
+        experimentr.addData(expData)
     } else if (url.length < oldHighURL.length) {
         expData.interaction = "HIGH REMOVE"
+        experimentr.addData(expData)
     }
     oldHighURL = url 
 }
@@ -329,9 +334,11 @@ function trackHigh(url){
 function trackMed(url){
     expData.medUrlChanges = url
     if (url.length > oldMedURL.length) {
-        expData.interaction = "MED ADD" 
+        expData.interaction = "MED ADD"
+        experimentr.addData(expData)
     } else if (url.length < oldMedURL.length) {
         expData.interaction = "MED REMOVE"
+        experimentr.addData(expData)
     }
     oldMedURL = url 
 }
@@ -339,9 +346,11 @@ function trackMed(url){
 function trackLow(url){
     expData.lowUrlChanges = url
     if (url.length > oldLowURL.length) {
-        expData.interaction = "LOW ADD" 
+        expData.interaction = "LOW ADD"
+        experimentr.addData(expData)
     } else if (url.length < oldLowURL.length) {
         expData.interaction = "LOW REMOVE"
+        experimentr.addData(expData)
     }
     oldLowURL = url 
 }
