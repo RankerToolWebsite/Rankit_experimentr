@@ -90,7 +90,7 @@ $(document).ready(function () {
 	
 	
 	//check if we need to populate page from URL
-    if ( cc_getHighFromURL() !== undefined){
+    if ( pwc_getHighFromURL() !== undefined){
 	   if ( !pwc_getHighFromURL().includes("")) {
         tracking = 0;
         oldHighURL = pwc_getHighFromURL();
@@ -100,7 +100,7 @@ $(document).ready(function () {
 	   }
     }
 
-    if ( cc_getLowFromURL() !== undefined){ 
+    if ( pwc_getLowFromURL() !== undefined){ 
         if ( !pwc_getLowFromURL().includes("")) {
         tracking = 0;
         oldLowURL = pwc_getLowFromURL();

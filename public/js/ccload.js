@@ -309,13 +309,25 @@ function refresh_popovers(){
     });
 }
 
-
+function filterGhost(list){
+    if ( list !== undefined){
+    for (var i = 0; i < list.length; i++) {
+        if (list[i + 1] == list[i]){  
+            list.splice(i + 1, 1);
+            }
+        }
+        return list;
+    } 
+}
 
 /****** Loading from URL ******************/
 function cc_urlUpdate() {
     var high = Array.from(document.querySelectorAll('#left .object')).map(x => x.id)
     var med = Array.from(document.querySelectorAll('#center .object')).map(x => x.id)
     var low = Array.from(document.querySelectorAll('#right .object')).map(x => x.id)
+    high = filterGhost(high);
+    med = filterGhost(med);
+    low = filterGhost(low);
     var url = window.location.pathname + "?method=" + "cc" + "&" + "high=" + high.toString() + "&" + "medium=" + med.toString() + "&" + "low=" + low.toString()
     history.pushState({}, 'Categorical Comparison', url)
     if (tracking = 1){

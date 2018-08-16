@@ -297,7 +297,6 @@ function lc_urlUpdate() {
     var list = Array.from(document.querySelectorAll('#lc-center .object')).map(x => x.id);
     var url = window.location.pathname + "?method=" + "lc" + "&" + "objects=";
     history.pushState({}, 'List Comparison', url + list.toString());
-
     if (tracking = 1){
 	trackChanges(list);
     }
