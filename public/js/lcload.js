@@ -14,8 +14,7 @@ expData.interaction = "";
 expData.model = "";
 expData.pop_time = 0;
 var tracking = 1;
-var pop_start = 0;
-var pop_end = 0;
+
 /*********** Initialize Page *****************/
 $(document).ready(function () {
 
@@ -88,7 +87,7 @@ $(document).ready(function () {
 	}
 
 	//initialize pool randomly
-	shuffleDataset();
+	shuffle();
 
 	//iniitalize popovers
 	var $popover = $('.pop').popover({
@@ -97,8 +96,6 @@ $(document).ready(function () {
 		show:"1000",
 		hide:"0"
 	    }
-	}).hover(function(e) {
-	    e.preventDefault();
 	});
         
 	$('.popover-dismiss').popover({
@@ -107,20 +104,19 @@ $(document).ready(function () {
         
 	//log when users are reading popovers
 	$popover.on('shown.bs.popover', function(e) {
-	    pop_start = new Date().getMilliseconds();	    
-	    console.log(pop_start);
+	    var pop_start = e.timeStamp;
+	    $(this).popover().on("hidden.bs.popover", function(e) {
+		var pop_end = e.timeStamp;
+		var pop_time = pop_end - pop_start
+		if (pop_time > 500){
+		    expData.pop_time = pop_time;
+		    experimentr.addData(expData);
+		    experimentr.save();
+		}
+		$(this).off(e);
+	    })
 	});
 	
-	$popover.on("hidden.bs.popover", function(e) {
-	    pop_end = new Date().getMilliseconds();
-	    var pop_time = pop_end - pop_start
-	    console.log(pop_time);
-	    if (pop_time > 250){
-		expData.pop_time = pop_time;
-		experimentr.addData(expData);
-		experimentr.save()
-	    }
-	}); 
 	
 	$('body').on('click', function (e) {
 	    // did not click a popover toggle or popover
@@ -245,7 +241,13 @@ function sortDataset() {
     experimentr.addData(expData);
 }
 
-function shuffleDataset() {
+function shuffleDataset(){
+    expData.interaction="SHUFFLE";
+    experimentr.addData(expData);
+    shuffle();
+}
+
+function shuffle() {
     var currentIds = getCurrentPool();
     var currentData = filterDataset(currentIds);
     for (let i = currentData.length - 1; i > 0; i--) {
@@ -254,16 +256,7 @@ function shuffleDataset() {
     }
     render(currentData);
     refresh_popovers();
-    expData.interaction="SHUFFLE";
-    experimentr.addData(expData);
 }
-
-var filtered = [1, 2, 3, 4].filter(
-  function(e) {
-    return this.indexOf(e) < 0;
-  },
-  [2, 4]
-);
 
 function searchDataset(e) {
     var currentData = dataset

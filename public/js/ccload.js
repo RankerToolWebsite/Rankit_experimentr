@@ -101,39 +101,64 @@ $(document).ready(function () {
 	cc_observer.observe(cc_right_node, cc_observerConfig);
         
 	//check if we need to populate page from URL
-    if ( cc_getHighFromURL() !== undefined){
-	   if ( !cc_getHighFromURL().includes("")) {
-            tracking = 0;
-            oldHighURL = cc_getHighFromURL();
-            cc_populateHighBox();
-            tracking = 1;
-	   }
-    }
+	if ( cc_getHighFromURL() !== undefined){
+	    if ( !cc_getHighFromURL().includes("")) {
+		tracking = 0;
+		oldHighURL = cc_getHighFromURL();
+		cc_populateHighBox();
+		tracking = 1;
+	    }
+	}
         
-    if ( cc_getMedFromURL() !== undefined){
-        if ( !cc_getMedFromURL().includes("")) {
-            tracking = 0;
-            oldMedURL = cc_getMedFromURL();
-            cc_populateMediumBox();
-            tracking = 1;
-	   }
-    }
+	if ( cc_getMedFromURL() !== undefined){
+            if ( !cc_getMedFromURL().includes("")) {
+		tracking = 0;
+		oldMedURL = cc_getMedFromURL();
+		cc_populateMediumBox();
+		tracking = 1;
+	    }
+	}
         
-    if ( cc_getLowFromURL() !== undefined){    
-        if ( !cc_getLowFromURL().includes("")) {
-            tracking = 0;
-            oldLowURL = cc_getLowFromURL();
-            cc_populateLowBox();
-            tracking = 1;
-	   }
-    }
+	if ( cc_getLowFromURL() !== undefined){    
+            if ( !cc_getLowFromURL().includes("")) {
+		tracking = 0;
+		oldLowURL = cc_getLowFromURL();
+		cc_populateLowBox();
+		tracking = 1;
+	    }
+	}
 	
-	shuffleDataset();
-	refresh_popovers();
+	//initialize pool randomly
+	shuffle();
 	
+	//iniitalize popovers
+	var $popover = $('.pop').popover({
+	    trigger: 'hover',
+	    delay: {
+		show:"1000",
+		hide:"0"
+	    }
+	});
+	   	
 	$('.popover-dismiss').popover({
 	    trigger: 'focus'
 	})
+	
+	//log when users are reading popovers
+	$popover.on('shown.bs.popover', function(e) {
+	    var pop_start = e.timeStamp;
+	    $(this).popover().on("hidden.bs.popover", function(e) {
+		var pop_end = e.timeStamp;
+		var pop_time = pop_end - pop_start
+		if (pop_time > 500){
+		    expData.pop_time = pop_time;
+		    experimentr.addData(expData);
+		    experimentr.save();
+		}
+		$(this).off(e);
+	    })
+	});
+	
 	
 	$('body').on('click', function (e) {
 	    // did not click a popover toggle or popover
@@ -273,6 +298,12 @@ function sortDataset() {
 }
 
 function shuffleDataset() {
+    expData.interaction="SHUFFLE";
+    experimentr.addData(expData);
+    shuffle();
+}
+
+function shuffle(){
     var currentIds = getCurrentPool();
     var currentData = filterDataset(currentIds);
     for (let i = currentData.length - 1; i > 0; i--) {
@@ -281,8 +312,6 @@ function shuffleDataset() {
     }
     render(currentData);
     refresh_popovers();
-    expData.interaction="SHUFFLE";
-    experimentr.addData(expData);
 }
 
 function searchDataset(e) {
