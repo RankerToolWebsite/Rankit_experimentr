@@ -101,24 +101,32 @@ $(document).ready(function () {
 	cc_observer.observe(cc_right_node, cc_observerConfig);
         
 	//check if we need to populate page from URL
-	if ( !cc_getHighFromURL().includes("")) {
+    if ( cc_getHighFromURL() !== undefined){
+	   if ( !cc_getHighFromURL().includes("")) {
             tracking = 0;
             oldHighURL = cc_getHighFromURL();
             cc_populateHighBox();
             tracking = 1;
-	}
+	   }
+    }
+        
+    if ( cc_getMedFromURL() !== undefined){
         if ( !cc_getMedFromURL().includes("")) {
             tracking = 0;
             oldMedURL = cc_getMedFromURL();
             cc_populateMediumBox();
             tracking = 1;
-	}
+	   }
+    }
+        
+    if ( cc_getLowFromURL() !== undefined){    
         if ( !cc_getLowFromURL().includes("")) {
             tracking = 0;
             oldLowURL = cc_getLowFromURL();
             cc_populateLowBox();
             tracking = 1;
-	}
+	   }
+    }
 	
 	shuffleDataset();
 	refresh_popovers();

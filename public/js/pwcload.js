@@ -90,20 +90,25 @@ $(document).ready(function () {
 	
 	
 	//check if we need to populate page from URL
-	if ( !pwc_getHighFromURL().includes("")) {
+    if ( cc_getHighFromURL() !== undefined){
+	   if ( !pwc_getHighFromURL().includes("")) {
         tracking = 0;
         oldHighURL = pwc_getHighFromURL();
 	    pwc_populateHighBox();
         tracking = 1;
 	    //barUpdate(confidence);
-	}
+	   }
+    }
+
+    if ( cc_getLowFromURL() !== undefined){ 
         if ( !pwc_getLowFromURL().includes("")) {
         tracking = 0;
         oldLowURL = pwc_getLowFromURL();
 	    pwc_populateLowBox();
         tracking = 1;
 	    //barUpdate(confidence);
-	}
+	   }
+    }
 	
 	shuffleDataset();
 	refresh_popovers();

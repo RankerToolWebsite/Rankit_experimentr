@@ -78,7 +78,7 @@ $(document).ready(function () {
 	lc_observer.observe(lc_center_node, lc_observerConfig);
 
 	//check if we need to populate page from URL
-	if ( !lc_getParametersFromURL().includes("")) {
+	if ( lc_getParametersFromURL() !== undefined) {
 	    tracking = 0;
         oldURL = lc_getParametersFromURL();
         lc_populateBox();
