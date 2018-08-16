@@ -43,7 +43,7 @@ $(document).ready(function () {
 	    },
 	    animation: 300,
 	    sort: false,
-	    ghostClass: '',
+	    ghostClass: 'ghost',
 	});
 	
 	add_to_sortable('.high')
@@ -184,6 +184,7 @@ function trackNewPair(){
 
 //log end of build session, advance to explore    
 function buildSubmit(){
+    pwc_urlUpdate();
     expData.interaction = "RANK";
     experimentr.addData(expData);
     experimentr.endTimer('build');
@@ -332,17 +333,47 @@ function clearPW(e) {
     }
 }
 
-function filterGhost(x){
-    if (!x.classList.contains('sortable-ghost')){  
-        return x.id
-        }
-    } 
 
+function filterHighGhost(list){
+    if ( list !== undefined){
+    if (list.length == 1){
+        return list
+    }
+    current =
+    Array.from(document.querySelectorAll('.high > div'));
+        
+    for (var i = 0; i < current.length; i++) {
+        if (!current[i].draggable == false){  
+            list.splice(i, 1);
+            }
+        }
+        return list;
+    } 
+}
+
+function filterLowGhost(list){
+    if ( list !== undefined){
+    if (list.length == 1){
+        return list
+    }
+    current =
+    Array.from(document.querySelectorAll('.low > div'));
+        
+    for (var i = 0; i < current.length; i++) {
+        if (!current[i].draggable == false){  
+            list.splice(i, 1);
+            }
+        }
+        return list;
+    } 
+}
 
 /****** Loading from URL ******************/
 function pwc_urlUpdate() {
-    const high = Array.from(document.querySelectorAll('.high > div')).map(x => filterGhost(x))
-    const low = Array.from(document.querySelectorAll('.low > div')).map(x => filterGhost(x))
+    const high = Array.from(document.querySelectorAll('.high > div')).map(x => x.id)
+    filterHighGhost(high)
+    const low = Array.from(document.querySelectorAll('.low > div')).map(x => x.id)
+    filterLowGhost(low)
     var url = window.location.pathname + "?method=" + "pwc" + "&" + "left=" + high.toString() + "&" + "right=" + low.toString()
     history.pushState({}, 'Pairwise Comparison', url)
     if (tracking = 1) {
