@@ -43,7 +43,7 @@ $(document).ready(function () {
 	    },
 	    animation: 300,
 	    sort: false,
-	    ghostClass: 'ghost',
+	    ghostClass: '',
 	});
 	
 	add_to_sortable('.high')
@@ -332,11 +332,17 @@ function clearPW(e) {
     }
 }
 
+function filterGhost(x){
+    if (!x.classList.contains('sortable-ghost')){  
+        return x.id
+        }
+    } 
+
 
 /****** Loading from URL ******************/
 function pwc_urlUpdate() {
-    const high = Array.from(document.querySelectorAll('.high > div')).map(x => x.id)
-    const low = Array.from(document.querySelectorAll('.low > div')).map(x => x.id)
+    const high = Array.from(document.querySelectorAll('.high > div')).map(x => filterGhost(x))
+    const low = Array.from(document.querySelectorAll('.low > div')).map(x => filterGhost(x))
     var url = window.location.pathname + "?method=" + "pwc" + "&" + "left=" + high.toString() + "&" + "right=" + low.toString()
     history.pushState({}, 'Pairwise Comparison', url)
     if (tracking = 1) {

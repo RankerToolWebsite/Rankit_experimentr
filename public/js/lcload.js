@@ -284,10 +284,22 @@ function refresh_popovers(){
     });
 }
 
+function filterGhost(list){
+    if ( list !== undefined){
+    for (var i = 0; i < list.length; i++) {
+        if (list[i + 1] == list[i]){  
+            list.splice(i + 1, 1);
+            }
+        }
+        return list;
+    } 
+}
+
 
 /****** Loading from URL ******************/
 function lc_urlUpdate() {
     var list = Array.from(document.querySelectorAll('#lc-center .object')).map(x => x.id);
+    list = filterGhost(list);
     var url = window.location.pathname + "?method=" + "lc" + "&" + "objects=";
     history.pushState({}, 'List Comparison', url + list.toString());
     if (tracking = 1){
