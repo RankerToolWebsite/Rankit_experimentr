@@ -90,7 +90,7 @@ $(document).ready(function () {
 	
 	
 	//check if we need to populate page from URL
-    if ( cc_getHighFromURL() !== undefined){
+    if ( pwc_getHighFromURL() !== undefined){
 	   if ( !pwc_getHighFromURL().includes("")) {
         tracking = 0;
         oldHighURL = pwc_getHighFromURL();
@@ -100,22 +100,47 @@ $(document).ready(function () {
 	   }
     }
 
-    if ( cc_getLowFromURL() !== undefined){ 
+    if ( pwc_getLowFromURL() !== undefined){ 
         if ( !pwc_getLowFromURL().includes("")) {
         tracking = 0;
         oldLowURL = pwc_getLowFromURL();
 	    pwc_populateLowBox();
         tracking = 1;
 	    //barUpdate(confidence);
-	   }
+	}
     }
 	
-	shuffleDataset();
-	refresh_popovers();
+	//initialize pool randomly
+	shuffle();
+	
+	//iniitalize popovers
+	var $popover = $('.pop').popover({
+	    trigger: 'hover',
+	    delay: {
+		show:"1000",
+		hide:"0"
+	    }
+	});
 	
 	$('.popover-dismiss').popover({
 	    trigger: 'focus'
 	})
+	
+	//log when users are reading popovers
+	$popover.on('shown.bs.popover', function(e) {
+	    var pop_start = e.timeStamp;
+	    $(this).popover().on("hidden.bs.popover", function(e) {
+		var pop_end = e.timeStamp;
+		var pop_time = pop_end - pop_start
+		if (pop_time > 500){
+		    expData.pop_time = pop_time;
+		    experimentr.addData(expData);
+		    experimentr.save();
+		}
+		$(this).off(e);
+	    })
+	});
+	
 	
 	$('body').on('click', function (e) {
 	    // did not click a popover toggle or popover
@@ -243,6 +268,12 @@ function sortDataset() {
 }
 
 function shuffleDataset() {
+    expData.interaction="SHUFFLE";
+    experimentr.addData(expData);
+    shuffle();
+}
+
+function shuffle(){
     var currentIds = getCurrentPool();
     var currentData = filterDataset(currentIds);
     for (let i = currentData.length - 1; i > 0; i--) {
@@ -251,8 +282,6 @@ function shuffleDataset() {
     }
     render(currentData);
     refresh_popovers();
-    expData.interaction="SHUFFLE";
-    experimentr.addData(expData);
 }
 
 function searchDataset(e) {
