@@ -14,7 +14,6 @@ expData.lowUrlChanges = new Array();
 expData.interaction = "";
 expData.model = "";
 var tracking = 1;
-var poppy = "popover";
 /*********** Initialize Page *****************/
 $(document).ready(function () {
     
@@ -337,7 +336,6 @@ function clearPW(e) {
 
 function filterHighGhost(list){
     if ( list !== undefined){
-    console.log(list);
     if (list.length == 1){
         return list
     }
@@ -345,7 +343,7 @@ function filterHighGhost(list){
     Array.from(document.querySelectorAll('.high > div'));
         
     for (var i = 0; i < current.length; i++) {
-        if (!current[i].draggable == false || current[i].id.includes(poppy)){  
+        if (!current[i].draggable == false || current[i].id.includes("pop")){  
             list.splice(i, 1);
             }
         }
@@ -364,7 +362,7 @@ function filterLowGhost(list){
     Array.from(document.querySelectorAll('.low > div'));
         
     for (var i = 0; i < current.length; i++) {
-        if (!current[i].draggable == false || current[i].id.icludes(poppy)){  
+        if (!current[i].draggable == false || current[i].id.includes("pop")){  
             list.splice(i, 1);
             }
         }
