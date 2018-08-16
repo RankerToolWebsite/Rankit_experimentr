@@ -14,6 +14,7 @@ expData.lowUrlChanges = new Array();
 expData.interaction = "";
 expData.model = "";
 var tracking = 1;
+var string = "popover";
 /*********** Initialize Page *****************/
 $(document).ready(function () {
     
@@ -336,6 +337,7 @@ function clearPW(e) {
 
 function filterHighGhost(list){
     if ( list !== undefined){
+    console.log(list);
     if (list.length == 1){
         return list
     }
