@@ -7,13 +7,13 @@ var attributes = {}
 var min_num_of_objects = 2;
 var pwc_observer;
 var expData = {};
-var oldHighURL = new Array();
-var oldLowURL = new Array();
+var high = new Array();
+var low = new Array();
 expData.highUrlChanges = new Array();
 expData.lowUrlChanges = new Array();
 expData.interaction = "";
 expData.model = "";
-var tracking = 1;
+
 /*********** Initialize Page *****************/
 $(document).ready(function () {
     
@@ -46,10 +46,10 @@ $(document).ready(function () {
 	    ghostClass: 'ghost',
 	});
 	
-	add_to_sortable('.high')
-	add_to_sortable('.low')
+	high_to_sortable('.high')
+	low_to_sortable('.low')
 	
-	
+
 	//listener for rank button
 	document.querySelector('#submit').addEventListener('click', buildSubmit);
         
@@ -58,12 +58,11 @@ $(document).ready(function () {
 	
 	var pwc_observer = new MutationObserver(function (mutations) {
 	    mutations.forEach(function (mutation) {
-		pwc_urlUpdate()
-		
-		const high_length = document.querySelectorAll('.high > div').length
-		const low_length = document.querySelectorAll('.low > div').length
-		
-		const list_num = (high_length > 0 ? 1 : 0) + (low_length > 0 ? 1 : 0)
+
+		const high_length = document.querySelectorAll('.high > div').length;
+		const low_length = document.querySelectorAll('.low > div').length;
+                
+		const list_num = (high_length > 0 ? 1 : 0) + (low_length > 0 ? 1 : 0);
 		
 		if ((high_length != low_length) || (list_num < min_num_of_objects)) {
 		    $('#submit').attr('disabled', 'disabled');
@@ -90,25 +89,19 @@ $(document).ready(function () {
 	
 	
 	//check if we need to populate page from URL
-    if ( pwc_getHighFromURL() !== undefined){
-	   if ( !pwc_getHighFromURL().includes("")) {
-        tracking = 0;
-        oldHighURL = pwc_getHighFromURL();
-	    pwc_populateHighBox();
-        tracking = 1;
-	    //barUpdate(confidence);
-	   }
-    }
-
-    if ( pwc_getLowFromURL() !== undefined){ 
-        if ( !pwc_getLowFromURL().includes("")) {
-        tracking = 0;
-        oldLowURL = pwc_getLowFromURL();
-	    pwc_populateLowBox();
-        tracking = 1;
-	    //barUpdate(confidence);
+	if ( pwc_getHighFromURL() !== undefined){
+	    if ( !pwc_getHighFromURL().includes("")) {
+		pwc_populateHighBox();
+		//barUpdate(confidence);
+	    }
 	}
-    }
+	
+	if ( pwc_getLowFromURL() !== undefined){ 
+            if ( !pwc_getLowFromURL().includes("")) {
+		pwc_populateLowBox();
+		//barUpdate(confidence);
+	    }
+	}
 	
 	//initialize pool randomly
 	shuffle();
@@ -135,7 +128,6 @@ $(document).ready(function () {
 		if (pop_time > 500){
 		    expData.pop_time = pop_time;
 		    experimentr.addData(expData);
-		    experimentr.save();
 		}
 		$(this).off(e);
 	    })
@@ -155,8 +147,7 @@ $(document).ready(function () {
 
 /*********************** Functions ****************************************/
 
-
-function add_to_sortable(className) {
+function high_to_sortable(className) {
     const all = document.querySelectorAll(className)
     
     all.forEach(t => Sortable.create(t, {
@@ -165,9 +156,52 @@ function add_to_sortable(className) {
 	    put: (to) => to.el.children.length < 1,
 	},
 	animation: 100,
+	onAdd: function(e){
+	    high.push(e.item.id);
+            expData.interaction = "LEFT ADD";
+	    expData.highUrlChanges = high;
+            experimentr.addData(expData);
+	    pwc_urlUpdate();
+	},
+	onRemove: function(e){
+	    var index = high.indexOf(e.item.id);
+	    high.splice(index, 1);
+            expData.interaction = "LEFT REMOVE";
+	    expData.highUrlChanges = high;
+            experimentr.addData(expData);
+	    pwc_urlUpdate();
+	}
     }))
 }
 
+function low_to_sortable(className) {
+    const all = document.querySelectorAll(className)
+    
+    all.forEach(t => Sortable.create(t, {
+	group: {
+	    name: 'list',
+	    put: (to) => to.el.children.length < 1,
+	},
+	animation: 100,
+	onAdd: function(e){
+	    low.push(e.item.id);
+	    expData.interaction = "RIGHT ADD"
+	    expData.lowUrlChanges = low;
+            experimentr.addData(expData);
+	    pwc_urlUpdate();
+
+	},
+	onRemove: function(e){
+	    var index = low.indexOf(e.item.id);
+	    low.splice(index, 1);
+            expData.interaction = "RIGHT REMOVE"
+	    expData.lowUrlChanges = low;
+            experimentr.addData(expData);
+	    pwc_urlUpdate();
+
+	}
+    }))
+}
 
 function barUpdate(list_length) {
     list_length = Math.floor(list_length)
@@ -184,14 +218,14 @@ function trackNewPair(){
 
 //log end of build session, advance to explore    
 function buildSubmit(){
-    pwc_urlUpdate();
     expData.interaction = "RANK";
-    experimentr.addData(expData);
-    experimentr.endTimer('build');
     var url = getRanking();
     expData.model = url.substr(url.indexOf('=')+1);
+    experimentr.addData(expData);
+    experimentr.endTimer('build');
     experimentr.save();
     expData.interaction = "";
+    expData.model = "";
     experimentr.next_json(url);   
 }
 
@@ -203,12 +237,9 @@ function getRanking() {
 }
 
 function pwc_generatePairwise() {
-    const highs = Array.from(document.querySelectorAll('.high .object')).map(x => x.id)
-    const lows = Array.from(document.querySelectorAll('.low .object')).map(x => x.id)
-    
     let pwl = []
-    for (let i = 0; i < highs.length; i++) {
-        pwl.push({ 'high': highs[i], 'low': lows[i] })
+    for (let i = 0; i < high.length; i++) {
+        pwl.push({ 'high': high[i], 'low': low[i] })
     }
     console.log(pwl)
     return pwl
@@ -314,8 +345,8 @@ function handleMore() {
     // const html = `<div class="pw"><div class="high list"></div><div class="low list"></div></div>`
     const html = `<div class="pwx"><div class="pw"><div class="high list"></div><div class="low list"></div></div><div class="x" onclick="clearPW(event)"><i class="fas fa-times"></i></div></div>`
     pwl.innerHTML += html
-    add_to_sortable('.high')
-    add_to_sortable('.low')
+    high_to_sortable('.high')
+    low_to_sortable('.low')
 }
 
 
@@ -334,88 +365,10 @@ function clearPW(e) {
 }
 
 
-function filterHighGhost(list){
-    //only proceed if list has items
-    if ( list !== undefined){
-    //needed for the first element added, it will be considered a ghost    
-    if (list.length == 1){
-        //dont include popover
-        if (!list.id.includes("pop")){
-        return list
-        }
-    }
-    current =
-    Array.from(document.querySelectorAll('.high > div'));
-    
-    //checks if item is being dragged or is a popover, is so it removes them      
-    for (var i = 0; i < current.length; i++) {
-        if (!current[i].draggable == false || current[i].id.includes("pop")){  
-            list.splice(i, 1);
-            }
-        }
-        return list;
-    } 
-}
-
-function filterLowGhost(list){
-    //only proceed if list has items
-    if ( list !== undefined){
-    //needed for the first element added, it will be considered a ghost
-    if (list.length == 1){
-        //dont include popover
-        if (!list.id.includes("pop")){
-        return list
-        }
-    }
-    current =
-    Array.from(document.querySelectorAll('.low > div'));
-    
-    //checks if item is being dragged or is a popover, is so it removes them    
-    for (var i = 0; i < current.length; i++) {
-        if (!current[i].draggable == false || current[i].id.includes("pop")){
-            list.splice(i, 1);
-            }
-        }
-        return list;
-    } 
-}
-
 /****** Loading from URL ******************/
 function pwc_urlUpdate() {
-    const high = Array.from(document.querySelectorAll('.high > div')).map(x => x.id)
-    const low = Array.from(document.querySelectorAll('.low > div')).map(x => x.id)
-    filterHighGhost(high)
-    filterLowGhost(low)
     var url = window.location.pathname + "?method=" + "pwc" + "&" + "left=" + high.toString() + "&" + "right=" + low.toString()
     history.pushState({}, 'Pairwise Comparison', url)
-    if (tracking = 1) {
-    trackHigh(high)
-    trackLow(low)
-    }
-}
-//The following two functions checks length of the current box against old one to determine whether the interaction adds or subtracts
-function trackHigh(url){
-    expData.highUrlChanges = url
-    if (url.length > oldHighURL.length) {
-        expData.interaction = "LEFT ADD"
-        experimentr.addData(expData)
-    } else if (url.length < oldHighURL.length) {
-        expData.interaction = "LEFT REMOVE"
-        experimentr.addData(expData)
-    }
-    oldHighURL = url 
-}
-
-function trackLow(url){
-    expData.lowUrlChanges = url
-    if (url.length > oldLowURL.length) {
-        expData.interaction = "RIGHT ADD"
-        experimentr.addData(expData)
-    } else if (url.length < oldLowURL.length) {
-        expData.interaction = "RIGHT REMOVE"
-        experimentr.addData(expData)
-    }
-    oldLowURL = url 
 }
 
 function pwc_getParametersFromURL() {
@@ -481,8 +434,11 @@ function pwc_populateHighBox() {
 	node.setAttribute("tabindex", "0");
 	node.setAttribute("data-toggle", "popover");
 	document.querySelectorAll('.high')[index].appendChild(node);
+	high.push(pwc_objectsFromURL[i]);
 	numOfElem = numOfElem + 1
     }
+    expData.highUrlChanges = high;
+    experimentr.addData(expData);
 }
 
 function pwc_populateLowBox() {
@@ -505,7 +461,10 @@ function pwc_populateLowBox() {
 	node.setAttribute("tabindex", "0");
 	node.setAttribute("data-toggle", "popover");
 	document.querySelectorAll('.low')[index].appendChild(node);
+	low.push(pwc_objectsFromURL[i]);
 	numOfElem = numOfElem + 1;
     }
+    expData.lowUrlChanges = low;
+    experimentr.addData(expData);
 }
 
