@@ -335,13 +335,19 @@ function clearPW(e) {
 
 
 function filterHighGhost(list){
+    //only proceed if list has items
     if ( list !== undefined){
+    //needed for the first element added, it will be considered a ghost    
     if (list.length == 1){
+        //dont include popover
+        if (!list.id.includes("pop")){
         return list
+        }
     }
     current =
     Array.from(document.querySelectorAll('.high > div'));
-        
+    
+    //checks if item is being dragged or is a popover, is so it removes them      
     for (var i = 0; i < current.length; i++) {
         if (!current[i].draggable == false || current[i].id.includes("pop")){  
             list.splice(i, 1);
@@ -356,13 +362,17 @@ function filterLowGhost(list){
     if ( list !== undefined){
     //needed for the first element added, it will be considered a ghost
     if (list.length == 1){
+        //dont include popover
+        if (!list.id.includes("pop")){
         return list
+        }
     }
     current =
     Array.from(document.querySelectorAll('.low > div'));
-        
+    
+    //checks if item is being dragged or is a popover, is so it removes them    
     for (var i = 0; i < current.length; i++) {
-        if (!current[i].draggable == false || current[i].id.includes("pop")){  
+        if (!current[i].draggable == false || current[i].id.includes("pop")){
             list.splice(i, 1);
             }
         }
@@ -373,8 +383,8 @@ function filterLowGhost(list){
 /****** Loading from URL ******************/
 function pwc_urlUpdate() {
     const high = Array.from(document.querySelectorAll('.high > div')).map(x => x.id)
-    filterHighGhost(high)
     const low = Array.from(document.querySelectorAll('.low > div')).map(x => x.id)
+    filterHighGhost(high)
     filterLowGhost(low)
     var url = window.location.pathname + "?method=" + "pwc" + "&" + "left=" + high.toString() + "&" + "right=" + low.toString()
     history.pushState({}, 'Pairwise Comparison', url)
