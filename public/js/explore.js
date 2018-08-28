@@ -14,7 +14,7 @@ $(document).ready(function () {
 	var keys = renderHead(data[0]);
 	var table =  $('#table').DataTable({
 	    destroy: true,
-	    sScrollY: '100vh',
+	    sScrollY: '60vh',
 	    sScrollX:  '100%',
 	    sScrollXInner: '100%',
 	    bscrollCollapse: false,

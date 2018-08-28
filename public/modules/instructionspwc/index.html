@@ -1,76 +1,73 @@
-<div id="training">
-  
-  <h2>Instructions</h2> <br>
-  
-  <p>Please read the following instructions carefully. <strong>You will not be able to return to this page once you begin the experiment!</strong></p>
-  
-  <br>
-  <p><strong>Task: </strong></p>
-  <p> On the next page, you will use an interactive tool to create a personalized college ranking. 
-    First, you will use the Build Tool to enter your preferences about colleges in the dataset.
-    Choose as many colleges as you wish and arrange them as pairs. 
-    After you make your selections, the system will provide you with a ranking of the entire dataset of colleges based on your initial choices.</p>
-  
-  <p>You may inspect your ranking and return to the Build page to refine your preferences as many times as you like. 
-    When you are finished with the ranking tool, you will be asked to describe your findings, and answer a few 
-    questions on your experience with this interactive rank building system.</p>
-  
-  <br>
-  <p><b>How to Operate the Build Page:</b></p>
-  <ul>
-    <li>
-      <p> Mouse over an individual college to see its data attributes.</p>
-      <p><img id="mouseoverImg" src="" style="width:600px"></p>
-      <br/>
-    </li>
-    
-    <li>
-      <p>Drag colleges from the dataset on the left to form pairs on the right. 
-	For each pair, place the preferred college on the left under “High” and the less preferred college on the right under “Low”. 
-	Each college can be used in multiple pairs.</p>
-      <p><img id="dragImg" src="" style="width:600px"></p>
-      <br/>
-    </li>
-    
-    <li>
-      <p> Click the “sort” button to order the colleges alphabetically.</p>
-      <p> Click the “shuffle” button to randomize which colleges you see.</p>
-      <p> Use the search bar to search for specific colleges.</p>
-      <p><img id="srchImg" src="" style="width:600px"></p> 
-      <br/>
-    </li>  
-  </ul> 
-  
-  <p><strong>Viewing the Rank Explorer Page:</strong></p> 
-  <ul>
-    <li>
-      <p> Navigate to your system-generated ranking of the remaining items by clicking "RANK!".</p>
-      <p><img id="rankImg" src="" style="width:600px"></p> <br>
-      <br/>
-    </li>
-    
-    <li>
-      <p> To exploring your ranking, scroll down for more colleges in the list,
-	and scroll to the right for more information on a particular college. 
-	You also may look through multiple pages of the results. </p>
-      <p><img id="scrollImg" src="" style="width:600px"></p>    
-      <br/>
-    </li>
-    
-    <li>
-      <p> If you want to refine your choices and obtain a new system-generated ranking, click “Edit Preferences” to go back to the Build tool.</p>
-      <p><img id="editImg" src="" style="width:600px"></p>
-      <br/>
-    </li>  
-  </ul> 
-  
-  <br>
-  <p id="explorebutton">
-    <button id="start" type="button">Start Exploring >></button> You will not be able to return to this page
-  </p>
-  
-  
-</div>
+<div id="training" class="container">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+      <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+	<div>
+	  <h2>Instructions</h2> <br>
+	  
+	  <p>Please read the following instructions carefully. <strong>You will not be able to return to this page once you begin the experiment!</strong></p>
+	  
+	  <p><strong>Task: </strong></p>
+	  
+	  <p> On the next page, you will use an interactive tool to create a personalized college ranking. 
+	    First, you will use the Build Tool to enter your preferences about colleges in the dataset.
+	    Choose as many colleges as you wish and arrange them as pairs. 
+	    After you make your selections, the system will provide you with a ranking of the entire dataset of colleges based on your initial choices.</p>
+	  
+	  <p>You may return to the Build page to refine your preferences as many times as you like, 
+	    in order to create a high quality ranking which reflects your preferences.</p>
+	</div>
+	<div class="row">
+	  <br>
+	  <p><b>Create Your Ranking:</b></p>
+	</div>
+	<div class="row">
+	  <p><img id="dragImg" src=""></p>
+	  </br>
+	  <p>Drag colleges from the dataset on the left to form pairs on the right. 
+	    For each pair, place the preferred college on the left under “High” and the less preferred college on the right under “Low”. 
+	    Each college can be used in multiple pairs. Click "Rank" to see your generated ranking. Click "Edit Preferences" to go back to the Build tool.</p>
+	  <br/>
+	</div>   
+	
+	<div class="row">
+	  <p><b>Interact with the data:</b></p>
+	  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+	    <p><img id="mouseoverImg" src=""></p>
+	    </br>
+	    <p> Mouse over an individual college to see its data attributes.</p>
+	    <br/>
+	  </div>
+	  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+	    <p><img id="srchImg" src=""></p> 
+	    </br>
+	    <p> Click the “sort” button to order the colleges alphabetically.</p>
+	    <p> Click the “shuffle” button to randomize which colleges you see.</p>
+	    <p> Use the search bar to search for specific colleges.</p>
+	    <br/>
+	  </div>  
+	</div>
+	<div class="row">
+	  <p>When you are satisfied with your ranking click the "Finish Ranking" button</p>
+	  <br/>
+	  <p><b>Share your ranking strategy:</b></p>
+	  <p><img id="strategy" src="" style="width:500px"></p> <br>
+	  </br>
+	  <p>When you are finished with the ranking tool, you will be asked to describe your findings, and answer a few 
+	    questions on your experience with this interactive rank building system.</p>
+	</div> 
+	
+	<br>
+	<p id="explorebutton">
+	  <button id="start" type="button">Start Exploring >></button> You will not be able to return to this page
+	</p>  
+      </div>
+    </div> 
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+  </div> 
+</div> 
+
 
 <style>
     #explorebutton {
@@ -113,13 +110,13 @@
 
   //training image
   d3.select('#training').select('#mouseoverImg').attr('src',"img/mouseover.gif");
-  d3.select('#training').select('#dragImg').attr('src',"img/pwcdrag.gif");
+  d3.select('#training').select('#dragImg').attr('src',"img/pairs_loop_small.gif");
   d3.select('#training').select('#srchImg').attr('src',"img/sss.gif");
   d3.select('#training').select('#rankImg').attr('src',"img/RANK.gif");
   d3.select('#training').select('#rankImg').attr('src',"img/pairrank.gif");
   d3.select('#training').select('#scrollImg').attr('src',"img/scrollstep.gif");
   d3.select('#training').select('#editImg').attr('src',"img/pairedit.gif");    
-  
+  d3.select('#training').select('#strategy').attr('src',"img/strategy.png");  
 
 }());
 </script>
