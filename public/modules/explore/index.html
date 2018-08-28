@@ -32,9 +32,29 @@
   </table>
 </div>
 
-<button type="button" id="previous" class="btn submit" >Edit Preferences</button>
-<button type="button" id="finish" class="btn submit" >Finish Ranking</button>
+<button type="button" class="previous btn submit" >Edit Preferences</button>
+<button type="button" class="btn submit" data-toggle="modal" data-target="#myModal">Finish Ranking</button>
 
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Complete Ranking Task</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you are satisfied with your ranking? </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="previous btn submit" data-dismiss="modal" onclick="prevValidate()"><b>No</b> - Return to edit preferences</button>
+	  <button type="button" class="finish btn submit" data-dismiss="modal"><b>Yes</b> - Finish Ranking</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 <script type="text/javascript" src="js/lib/pace.min.js"></script>
 <script type="text/javascript" src="js/lib/datatables.min.js"></script>
 <script type="text/javascript" src="js/explore.js"></script>

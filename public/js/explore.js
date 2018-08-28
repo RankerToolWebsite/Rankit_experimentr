@@ -30,7 +30,8 @@ $(document).ready(function () {
 	renderData(data, keys)
     });
     //listener for rank button
-    document.querySelector('#previous').addEventListener('click', prevValidate); document.querySelector('#finish').addEventListener('click', finValidate);
+    document.querySelector('.previous').addEventListener('click', prevValidate); 
+    document.querySelector('.finish').addEventListener('click', finValidate);
 
     experimentr.startTimer('explore');
 });

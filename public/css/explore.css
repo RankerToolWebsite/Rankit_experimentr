@@ -335,3 +335,6 @@ svg {
   height: 20px;
 }
 
+.modal-body p{
+    color: black;
+}
