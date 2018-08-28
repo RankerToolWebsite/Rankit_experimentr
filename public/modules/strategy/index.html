@@ -129,7 +129,8 @@
   expData.interaction="SUBMIT SUCCESFUL";
   experimentr.addData(expData);
   experimentr.endTimer('strategy');      
-  experimentr.next()
+  experimentr.save();
+  experimentr.next();
   } else {
   expData.interaction="SUBMIT FAIL";
   experimentr.addData(expData);          

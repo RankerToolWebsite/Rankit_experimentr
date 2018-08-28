@@ -2,22 +2,18 @@ var confidence = 0;
 var counter = 0;
 var tooltipCounter = 0;
 var pool = document.querySelector('#top');
-var med = document.querySelector('#center')
-var high = document.querySelector('#left')
-var low = document.querySelector('#right')
 var dataset = {}
 var attributes = {}
 var min_num_of_objects = 2;
 var cc_observer;
 var min_num_of_non_empty_lists = 2
 var expData = {};
-var oldHighURL = new Array()
-var oldMedURL = new Array()
-var oldLowURL = new Array()
-var tracking = 1;
-expData.highUrlChanges = new Array()
-expData.medUrlChanges = new Array()
-expData.lowUrlChanges = new Array()
+var high = new Array();
+var medium = new Array();
+var low = new Array();
+expData.highUrlChanges = new Array();
+expData.medUrlChanges = new Array();
+expData.lowUrlChanges = new Array();
 expData.interaction = "";
 expData.model = "";
 /*********** Initialize Page *****************/
@@ -46,21 +42,68 @@ $(document).ready(function () {
 	});
         
 	//create sortable container for preference collection
-	const high_sortable = Sortable.create(high, {
+	const high_sortable = Sortable.create(document.querySelector('#left'), {
 	    group: 'category',
 	    animation: 300,
 	    ghostClass: 'ghost',
+	    onAdd: function(e){
+	    	high.push(e.item.id);
+            	expData.interaction = "HIGH ADD"
+	    	expData.highUrlChanges = high;
+            	experimentr.addData(expData);
+	    	cc_urlUpdate();
+	    },
+	    onRemove: function(e){
+		var index = high.indexOf(e.item.id);
+		high.splice(index, 1);
+		expData.interaction = "HIGH REMOVE";
+		expData.highUrlChanges = high;
+		experimentr.addData(expData);
+		cc_urlUpdate();
+	    }
 	})
-	const med_sortable = Sortable.create(med, {
+	const med_sortable = Sortable.create(document.querySelector('#center'), {
 	    group: 'category',
 	    animation: 300,
 	    ghostClass: 'ghost',
-	})
-	const low_sortable = Sortable.create(low, {
+	    onAdd: function(e){
+	    	high.push(e.item.id);
+            	expData.interaction = "MED ADD";
+	    	expData.medUrlChanges = medium;
+            	experimentr.addData(expData);
+	    	cc_urlUpdate();
+	    },
+	    onRemove: function(e){
+		var index = medium.indexOf(e.item.id);
+		medium.splice(index, 1);
+		expData.interaction = "MED REMOVE";
+		expData.medUrlChanges = medium;
+		experimentr.addData(expData);
+		cc_urlUpdate();
+	    }
+	});
+	
+	const low_sortable = Sortable.create(document.querySelector('#right'), {
 	    group: 'category',
 	    animation: 300,
 	    ghostClass: 'ghost',
-	})
+	    onAdd: function(e){
+	    	high.push(e.item.id);
+            	expData.interaction = "LOW ADD";
+	    	expData.lowUrlChanges = low;
+            	experimentr.addData(expData);
+	    	cc_urlUpdate();
+	    },
+	    onRemove: function(e){
+		var index = low.indexOf(e.item.id);
+		low.splice(index, 1);
+		expData.interaction = "LOW REMOVE";
+		expData.lowUrlChanges = low;
+		experimentr.addData(expData);
+		cc_urlUpdate();
+	    }
+	});
+	
 	
 	//listener for rank button
 	document.querySelector('#cc-submit').addEventListener('click', buildSubmit);
@@ -103,28 +146,19 @@ $(document).ready(function () {
 	//check if we need to populate page from URL
 	if ( cc_getHighFromURL() !== undefined){
 	    if ( !cc_getHighFromURL().includes("")) {
-		tracking = 0;
-		oldHighURL = cc_getHighFromURL();
 		cc_populateHighBox();
-		tracking = 1;
 	    }
 	}
         
 	if ( cc_getMedFromURL() !== undefined){
             if ( !cc_getMedFromURL().includes("")) {
-		tracking = 0;
-		oldMedURL = cc_getMedFromURL();
 		cc_populateMediumBox();
-		tracking = 1;
 	    }
 	}
         
 	if ( cc_getLowFromURL() !== undefined){    
             if ( !cc_getLowFromURL().includes("")) {
-		tracking = 0;
-		oldLowURL = cc_getLowFromURL();
 		cc_populateLowBox();
-		tracking = 1;
 	    }
 	}
 	
@@ -168,23 +202,12 @@ $(document).ready(function () {
 	    }
 	});
     }); 
+
     experimentr.startTimer('build');
 });
 
 /*********************** Functions ****************************************/
 
-
-function add_to_sortable(className) {
-    const all = document.querySelectorAll(className);
-    
-    all.forEach(t => Sortable.create(t, {
-	group: {
-	    name: 'category',
-	    put: (to) => to.el.children.length < 1,
-	},
-	animation: 100,
-    }));
-}
 
 function barUpdate(list_length) {
     list_length = Math.floor(list_length);
@@ -197,11 +220,12 @@ function barUpdate(list_length) {
 function buildSubmit(){
     expData.interaction = "RANK";
     experimentr.addData(expData);
-    experimentr.endTimer('build');
     var url = getRanking();
     expData.model = url.substr(url.indexOf('=')+1);
     experimentr.save();
+    experimentr.endTimer('build');
     expData.interaction = "";
+    expData.model = "";
     experimentr.next_json(url);   
 }
 
@@ -213,22 +237,19 @@ function getRanking() {
 }
 
 function cc_generatePairwise() {
-    const high = Array.from(document.querySelectorAll('#left .object')).map(x => x.id);
-    const med = Array.from(document.querySelectorAll('#center .object')).map(x => x.id);
-    const low = Array.from(document.querySelectorAll('#right .object')).map(x => x.id);
     // pairwise list to send back to server
     let pwl = [];
-      for (let i = 0; i < high.length; i++) {
-          for (let j = 0; j < med.length; j++) {
-              pwl.push({ 'high': high[i], 'low': med[j] });
-          }
-          for (let j = 0; j < low.length; j++) {
-              pwl.push({ 'high': high[i], 'low': low[j] });
-          }
-      }
-    for (let i = 0; i < med.length; i++) {
+    for (let i = 0; i < high.length; i++) {
+        for (let j = 0; j < medium.length; j++) {
+            pwl.push({ 'high': high[i], 'low': medium[j] });
+        }
         for (let j = 0; j < low.length; j++) {
-            pwl.push({ 'high': med[i], 'low': low[j] });
+            pwl.push({ 'high': high[i], 'low': low[j] });
+        }
+    }
+    for (let i = 0; i < medium.length; i++) {
+        for (let j = 0; j < low.length; j++) {
+            pwl.push({ 'high': medium[i], 'low': low[j] });
         }
     }
     return pwl;
@@ -238,8 +259,8 @@ function cc_generatePairwise() {
 //can call getSubsetData first
 function render(dataset) {
     //const pool = document.querySelector('#top')
-    const html = dataset.map(x => generateTileHTML(x)).join('\n')
-    pool.innerHTML = html	  
+    const html = dataset.map(x => generateTileHTML(x)).join('\n');
+    pool.innerHTML = html;	  
 }
 
 function generateTileHTML(x){
@@ -251,31 +272,33 @@ function generateTileHTML(x){
 	var attrVal = x[attributes[i]];
         text = text + "<tr><td>" + attrName + "</td><td>" + attrVal + "</td></tr>";
     }
-    text = text + "</table>"
+    text = text + "</table>";
     //format tile display, use index in dataset as id
-    return `<div tabindex="0" id="${id}" class="object noSelect pop"
-    data-toggle="popover" data-html="true" data-content="${text}">${x.Title}</div>`
+    return `<div tabindex="0" id="${id}" class="object noSelect pop";
+    data-toggle="popover" data-html="true" data-content="${text}">${x.Title}</div>`;
 }
 
 //Takes what is in the data pool and returns their original ids as an integer array
 function getCurrentPool() {
-  return Array.from(document.querySelector('#top').children).map(x => parseInt(x.id))
+    return Array.from(document.querySelector('#top').children).map(x => parseInt(x.id));
 }
+
 
 //Takes what is in the ranked Item box and returns their Titles in a string array
 function getRankedObjects() {
-    var left = Array.from(document.querySelector('#left').children).map(x => x.innerText)
-    var center = Array.from(document.querySelector('#center').children).map(x => x.innerText)
-    var right = Array.from(document.querySelector('#right').children).map(x => x.innerText)
+    var left = Array.from(document.querySelector('#left').children).map(x => x.innerText);
+    var center = Array.from(document.querySelector('#center').children).map(x => x.innerText);
+    var right = Array.from(document.querySelector('#right').children).map(x => x.innerText);
     return left.concat(center).concat(right)
-    }
+}
+
 
 //Takes what is in the ranked pool and returns their original ids as an integer array
 function getRankedID() {
-    var left = Array.from(document.querySelector('#left').children).map(x => parseInt(x.id))
-    var center = Array.from(document.querySelector('#center').children).map(x => parseInt(x.id))
-    var right = Array.from(document.querySelector('#right').children).map(x => parseInt(x.id))
-    return left.concat(center).concat(right)
+    var left = Array.from(document.querySelector('#left').children).map(x => parseInt(x.id));
+    var center = Array.from(document.querySelector('#center').children).map(x => parseInt(x.id));
+    var right = Array.from(document.querySelector('#right').children).map(x => parseInt(x.id));
+    return left.concat(center).concat(right);
 }
 
 
@@ -285,14 +308,14 @@ function filterDataset(ids){
     ids.forEach(function(d) {
 	currentData.push(dataset[d]);
     });
-    return currentData
+    return currentData;
 }
 
 function sortDataset() {
-    var currentIds = getCurrentPool()
-    currentIds.sort(function(a, b){return a-b})
-    render(filterDataset(currentIds))
-    refresh_popovers()
+    var currentIds = getCurrentPool();
+    currentIds.sort(function(a, b){return a-b});
+    render(filterDataset(currentIds));
+    refresh_popovers();
     expData.interaction="SORT";
     experimentr.addData(expData);
 }
@@ -315,18 +338,18 @@ function shuffle(){
 }
 
 function searchDataset(e) {
-    var currentData = dataset
+    var currentData = dataset;
     //filters what is already ranked out of the dataset
     var rankedID = getRankedID();
     var rankedDataset = filterDataset(rankedID);
-    let difference = dataset.filter(tile => rankedDataset.indexOf(tile) == -1)
+    let difference = dataset.filter(tile => rankedDataset.indexOf(tile) == -1);
     //checks what is in the search bar and filters out anything that doesnt contain it
-    const value = e.target.value
-    const re = new RegExp(value, 'i')
+    const value = e.target.value;
+    const re = new RegExp(value, 'i');
     const newDataset = difference.filter(tile => re.test(tile.Title))
-    render(newDataset)
-    refresh_popovers()
-  }
+    render(newDataset);
+    refresh_popovers();
+}
 
 function refresh_popovers(){
     $('.pop').popover({
@@ -338,72 +361,16 @@ function refresh_popovers(){
     });
 }
 
-function filterGhost(list){
-    if ( list !== undefined){
-    for (var i = 0; i < list.length; i++) {
-        if (list[i + 1] == list[i]){  
-            list.splice(i + 1, 1);
-            }
-        }
-        return list;
-    } 
-}
 
 /****** Loading from URL ******************/
 function cc_urlUpdate() {
-    var high = Array.from(document.querySelectorAll('#left .object')).map(x => x.id)
-    var med = Array.from(document.querySelectorAll('#center .object')).map(x => x.id)
-    var low = Array.from(document.querySelectorAll('#right .object')).map(x => x.id)
-    high = filterGhost(high);
-    med = filterGhost(med);
-    low = filterGhost(low);
-    var url = window.location.pathname + "?method=" + "cc" + "&" + "high=" + high.toString() + "&" + "medium=" + med.toString() + "&" + "low=" + low.toString()
-    history.pushState({}, 'Categorical Comparison', url)
-    if (tracking = 1){
-    trackHigh(high)
-    trackMed(med)
-    trackLow(low)
-        }
-    }
-
-
-//The following three functions checks length of the current box against old one to determine whether the interaction adds or subtracts
-function trackHigh(url){
-    expData.highUrlChanges = url
-    if (url.length > oldHighURL.length) {
-        expData.interaction = "HIGH ADD"
-        experimentr.addData(expData)
-    } else if (url.length < oldHighURL.length) {
-        expData.interaction = "HIGH REMOVE"
-        experimentr.addData(expData)
-    }
-    oldHighURL = url 
+    var url = window.location.pathname + "?method=" + "cc" + "&" + 
+	"high=" + high.toString() + "&" + 
+	"medium=" + medium.toString() + "&" + 
+	"low=" + low.toString();
+    history.pushState({}, 'Categorical Comparison', url);
 }
-
-function trackMed(url){
-    expData.medUrlChanges = url
-    if (url.length > oldMedURL.length) {
-        expData.interaction = "MED ADD"
-        experimentr.addData(expData)
-    } else if (url.length < oldMedURL.length) {
-        expData.interaction = "MED REMOVE"
-        experimentr.addData(expData)
-    }
-    oldMedURL = url 
-}
-
-function trackLow(url){
-    expData.lowUrlChanges = url
-    if (url.length > oldLowURL.length) {
-        expData.interaction = "LOW ADD"
-        experimentr.addData(expData)
-    } else if (url.length < oldLowURL.length) {
-        expData.interaction = "LOW REMOVE"
-        experimentr.addData(expData)
-    }
-    oldLowURL = url 
-}
-
+ 
 
 function cc_getParametersFromURL() {
     var query_string = {};
@@ -426,7 +393,7 @@ function cc_getParametersFromURL() {
     return query_string;
 }
 
-    function cc_getHighFromURL() {
+function cc_getHighFromURL() {
     var selectedObjects = cc_getParametersFromURL().high;
 
      if (selectedObjects !== undefined) {
@@ -465,7 +432,7 @@ function cc_populateHighBox() {
 	node.setAttribute("tabindex", "0");
 	node.setAttribute("data-toggle", "popover");
 	document.querySelector('#left').appendChild(node);
-//	handleBuildSubmit();
+	high.push(cc_objectsFromURL[i]);
     }
 }
 
@@ -481,7 +448,7 @@ function cc_populateMediumBox() {
 	node.setAttribute("tabindex", "0");
 	node.setAttribute("data-toggle", "popover");
 	document.querySelector('#center').appendChild(node);
-//	handleBuildSubmit();
+	medium.push(cc_objectsFromURL[i]);
     }
 }
 
@@ -497,7 +464,7 @@ function cc_populateLowBox() {
 	node.setAttribute("tabindex", "0");
 	node.setAttribute("data-toggle", "popover");
 	document.querySelector('#right').appendChild(node);
-//	handleBuildSubmit();
+	low.push(cc_objectsFromURL[i]);
     }
 }
 
