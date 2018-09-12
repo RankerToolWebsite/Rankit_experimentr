@@ -14,7 +14,7 @@ $(document).ready(function () {
 	var keys = renderHead(data[0]);
 	var table =  $('#table').DataTable({
 	    destroy: true,
-	    sScrollY: '100vh',
+	    sScrollY: '60vh',
 	    sScrollX:  '100%',
 	    sScrollXInner: '100%',
 	    bscrollCollapse: false,
@@ -30,7 +30,8 @@ $(document).ready(function () {
 	renderData(data, keys)
     });
     //listener for rank button
-    document.querySelector('#previous').addEventListener('click', prevValidate); document.querySelector('#finish').addEventListener('click', finValidate);
+    document.querySelector('.previous').addEventListener('click', prevValidate); 
+    document.querySelector('.finish').addEventListener('click', finValidate);
 
     experimentr.startTimer('explore');
 });

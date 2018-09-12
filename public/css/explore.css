@@ -66,7 +66,6 @@ body {
 
   }
   #TableData{
-    max-width: 95%;
     margin: auto;
   }
   h1.title {
@@ -336,3 +335,6 @@ svg {
   height: 20px;
 }
 
+.modal-body p{
+    color: black;
+}

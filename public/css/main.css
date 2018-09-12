@@ -6,13 +6,13 @@
 }
 
 body {
-  margin: 1em auto 4em auto;
+  margin: 1em auto 4em auto !important;
   width: 1080px;
 }
 
-#experimentr {
+/*#experimentr {
   margin: 4em auto 1em auto;
-}
+}*/
 
 #control {
   margin-top: 1em;

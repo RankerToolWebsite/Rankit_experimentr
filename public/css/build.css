@@ -119,14 +119,23 @@
       background-color: var(--brick);
   }
   .scrollingDragInner {
-    max-height: 85vh;
+    max-height: 75vh;
     /*max-width: 200px;    */
     overflow-y: auto;
   }
+  .scrollingDragInner.cat {
+    max-height: 16vh;
+    overflow-y: auto;
+  }
+
+  .list.ccb {
+  max-height: 15vh;
+  margin: 0px;
+  padding: 0px;
+  }
 
   .box {
-    margin: 16px;
-    padding: 8px;
+    margin: 8px;
     border: 4px solid var(--brick);
     -moz-border-radius: 4px;
 	  -webkit-border-radius: 4px;
